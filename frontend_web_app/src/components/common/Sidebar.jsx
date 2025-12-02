@@ -4,6 +4,7 @@ import rawSidebarItems from '../../data/sidebarItems.json';
 import { buildQueryString, parseQueryParams } from '../../utils/filter';
 import { getSidebarExpandedMap, setSidebarExpandedMap, isBrowser } from '../../utils/storage';
 import Badge from './Badge';
+import { getIconComponent } from '../../utils/icons';
 
 /**
  * PUBLIC_INTERFACE
@@ -30,6 +31,7 @@ function Sidebar({ onItemClick }) {
         const group = sanitizeText(g.group);
         const slug = sanitizeSlug(g.slug);
         const blurb = sanitizeText(g.blurb);
+        const icon = sanitizeText(g.icon);
         const items = Array.isArray(g.items) ? g.items : [];
         const cleanItems = items
           .map((it) => {
@@ -38,14 +40,15 @@ function Sidebar({ onItemClick }) {
             const itemSlug = sanitizeSlug(it.slug);
             const badge = it.badge && (it.badge === 'New' || it.badge === '🔥') ? it.badge : undefined;
             const blurbIt = sanitizeText(it.blurb);
+            const iconIt = sanitizeText(it.icon);
 
             if (!label || !itemSlug) return null;
-            return { label, to, slug: itemSlug, badge, blurb: blurbIt };
+            return { label, to, slug: itemSlug, badge, blurb: blurbIt, icon: iconIt };
           })
           .filter(Boolean);
 
         if (!group || !slug || cleanItems.length === 0) return null;
-        return { group, slug, blurb, items: cleanItems };
+        return { group, slug, blurb, icon, items: cleanItems };
       })
       .filter(Boolean);
 
@@ -167,7 +170,13 @@ function Sidebar({ onItemClick }) {
               onClick={() => toggleGroup(group.slug)}
               className="flex w-full items-center justify-between rounded-t-md bg-white px-3 py-2 text-left text-sm font-semibold text-gray-800 transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
             >
-              <span>{group.group}</span>
+              <span className="inline-flex items-center gap-2">
+                {(() => {
+                  const GroupIcon = getIconComponent(group.icon);
+                  return <GroupIcon className="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" />;
+                })()}
+                {group.group}
+              </span>
               <svg
                 className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
                 viewBox="0 0 24 24"
@@ -203,8 +212,15 @@ function Sidebar({ onItemClick }) {
                         }`}
                         aria-current={active ? 'page' : undefined}
                       >
-                        {/* Render label as plain text, never interpreted as HTML */}
-                        <span className="truncate">{it.label}</span>
+                        {/* Left side: icon + label */}
+                        <span className="flex min-w-0 items-center gap-2">
+                          {(() => {
+                            const ItemIcon = getIconComponent(it.icon || it.slug);
+                            return <ItemIcon className={`h-4 w-4 ${active ? 'text-blue-600 dark:text-blue-300' : 'text-gray-500 dark:text-gray-400'}`} aria-hidden="true" />;
+                          })()}
+                          <span className="truncate">{it.label}</span>
+                        </span>
+                        {/* Right side: badge + chevron */}
                         <div className="ml-2 flex items-center gap-2">
                           {renderBadge(it.badge)}
                           <svg
