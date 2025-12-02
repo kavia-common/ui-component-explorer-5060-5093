@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { getComponentById } from '../utils/data';
 import Breadcrumbs from '../components/common/Breadcrumbs';
 import PreviewCanvas from '../components/explorer/PreviewCanvas';
-import CodeTabs from '../components/explorer/CodeTabs';
 import PropControls from '../components/explorer/PropControls';
 import { copyCodeSnippet } from '../utils/copy';
 import { getPreviewProps } from '../utils/preview';

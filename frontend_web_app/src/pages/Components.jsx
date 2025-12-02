@@ -153,7 +153,11 @@ function ComponentsPage() {
               </div>
 
               {mode === 'preview' ? (
-                <PreviewCanvas className="bg-white dark:bg-gray-900" header={<Toggle id={item.id} mode={mode} />}>
+                <PreviewCanvas
+                  className="bg-white dark:bg-gray-900"
+                  title="Live Preview"
+                  header={<Toggle id={item.id} mode={mode} />}
+                >
                   {previewNode}
                 </PreviewCanvas>
               ) : (

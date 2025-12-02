@@ -12,8 +12,18 @@ import { oceanTheme } from '../../utils/tokens';
  * - note?: string (footnote or helper)
  * - children?: ReactNode (if provided, takes precedence over registry)
  * - header?: ReactNode (optional header actions, e.g., toggle buttons)
+ * - title?: string (optional title to show on the preview header; defaults to "Live Preview")
  */
-function PreviewCanvas({ height = 140, componentId, overrideProps, note, children, header }) {
+function PreviewCanvas({
+  height = 140,
+  componentId,
+  overrideProps,
+  note,
+  children,
+  header,
+  title = 'Live Preview',
+}) {
+  // Internal container for the preview area
   const Container = ({ children: c }) => (
     <div
       className={`flex items-center justify-center rounded-md border border-dashed border-gray-300 ${oceanTheme.classes.gradientSubtle} p-4 dark:border-gray-700`}
@@ -25,17 +35,22 @@ function PreviewCanvas({ height = 140, componentId, overrideProps, note, childre
     </div>
   );
 
+  // Resolve content to render inside the preview area
   let content = children;
   if (!content && componentId) {
     const Comp = getPreviewComponent(componentId);
     const previewProps = { ...getPreviewProps(componentId), ...(overrideProps || {}) };
-    content = <Comp {...previewProps} />;
+    content = typeof Comp === 'function' ? <Comp {...previewProps} /> : null;
   }
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-800">
       <div className="mb-2 flex items-center justify-between">
-        <div className="text-sm font-medium text-slate-800 dark:text-slate-200">Live Preview</div>
+        <div className="text-sm font-medium text-slate-800 dark:text-slate-200">
+          {title}
+        </div>
+        {/* Only render header actions if explicitly passed by parent.
+            This prevents PreviewCanvas from injecting its own toggle. */}
         {header ? <div className="flex items-center gap-2">{header}</div> : null}
       </div>
       <Container>
