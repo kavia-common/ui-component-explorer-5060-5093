@@ -29,6 +29,17 @@ import BreadcrumbSample from './samples/BreadcrumbSample';
 import DatePickerBasic from './samples/DatePickerBasic';
 import ColorPickerBasic from './samples/ColorPickerBasic';
 import GenericPlaceholder from './samples/GenericPlaceholder';
+import Input from './samples/Input.jsx';
+import InputGroup from './samples/InputGroup.jsx';
+import Textarea from './samples/Textarea.jsx';
+import FileInput from './samples/FileInput.jsx';
+import Checkbox from './samples/Checkbox.jsx';
+import Radio from './samples/Radio.jsx';
+import Switch from './samples/Switch.jsx';
+import Select from './samples/Select.jsx';
+import RangeSlider from './samples/RangeSlider.jsx';
+import ColorPickerTailwind from './samples/ColorPickerTailwind.jsx';
+import TimePicker from './samples/TimePicker.jsx';
 
 /* Layout & Content samples */
 import Container from './samples/Container.jsx';
@@ -165,6 +176,63 @@ const registry = {
     component: ColorPickerBasic,
     defaultProps: { color: '#2563EB', onChange: () => {} },
     previewProps: { color: '#2563EB' }
+  },
+
+  /* Basic Forms */
+  'form-input': {
+    component: Input,
+    defaultProps: { label: 'Label', placeholder: 'Type here', helper: 'Helper text' },
+    previewProps: { label: 'Label', placeholder: 'Type here' }
+  },
+  'form-input-group': {
+    component: InputGroup,
+    defaultProps: { label: 'Website', addon: 'https://', placeholder: 'example.com', button: 'Go' },
+    previewProps: { label: 'Website' }
+  },
+  'form-textarea': {
+    component: Textarea,
+    defaultProps: { label: 'Message', rows: 4, placeholder: 'Write your message...' },
+    previewProps: { label: 'Message' }
+  },
+  'form-file': {
+    component: FileInput,
+    defaultProps: {},
+    previewProps: {}
+  },
+  'form-checkbox': {
+    component: Checkbox,
+    defaultProps: { label: 'Subscribe to newsletter', defaultChecked: true },
+    previewProps: { label: 'Subscribe to newsletter' }
+  },
+  'form-radio': {
+    component: Radio,
+    defaultProps: { options: ['Monthly', 'Yearly'] },
+    previewProps: { options: ['Monthly', 'Yearly'] }
+  },
+  'form-switch': {
+    component: Switch,
+    defaultProps: { label: 'Enable notifications', defaultOn: true },
+    previewProps: { label: 'Enable notifications' }
+  },
+  'form-select': {
+    component: Select,
+    defaultProps: { label: 'Country', options: ['United States','Canada','United Kingdom'] },
+    previewProps: { label: 'Country' }
+  },
+  'form-range': {
+    component: RangeSlider,
+    defaultProps: { min: 0, max: 100, step: 1, defaultValue: 40 },
+    previewProps: { defaultValue: 40 }
+  },
+  'form-color-tailwind': {
+    component: ColorPickerTailwind,
+    defaultProps: { defaultValue: '#2563EB' },
+    previewProps: { defaultValue: '#2563EB' }
+  },
+  'form-time': {
+    component: TimePicker,
+    defaultProps: { label: 'Select time', defaultValue: '09:30' },
+    previewProps: { label: 'Select time' }
   },
 
   /* Layout & Content (functional) */
