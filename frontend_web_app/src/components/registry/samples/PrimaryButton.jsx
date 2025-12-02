@@ -12,7 +12,7 @@ function PrimaryButton({ label = 'Primary', onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-800"
+      className="inline-flex items-center rounded-md px-4 py-2 text-sm font-semibold text-white transition bg-main-gradient hover:brightness-105 active:brightness-95 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-800"
     >
       {label}
     </button>

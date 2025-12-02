@@ -22,3 +22,48 @@ body {
 code {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
+
+/* Custom gradient utilities */
+/* Background: App global background gradient */
+.bg-app-gradient {
+  background: linear-gradient(87deg, #95bff0 20%, #ac7de9 80%);
+}
+/* Main accent gradient (for brand, primary actions) */
+.bg-main-gradient {
+  background: linear-gradient(45deg, #af2497 10%, #902d9a 20%, #1840a0 100%);
+}
+/* Text gradient using main accent */
+.text-main-gradient {
+  background: linear-gradient(45deg, #af2497 10%, #902d9a 20%, #1840a0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Dark mode contrast fallbacks */
+@media (prefers-color-scheme: dark) {
+  .bg-app-gradient {
+    /* fall back to a darker solid to preserve contrast behind surfaces */
+    background: linear-gradient(87deg, #0f172a 10%, #111827 90%);
+  }
+  .bg-main-gradient {
+    /* keep gradient but deepen stops slightly for contrast atop dark surfaces */
+    background: linear-gradient(45deg, #8e1f82 10%, #7a2686 20%, #153280 100%);
+  }
+  .text-main-gradient {
+    /* retain gradient text; contrast is adequate on light surfaces in dark theme container cards */
+    background: linear-gradient(45deg, #c93aa9 10%, #a739a9 20%, #2b5fd1 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* Utility to ensure gradient text works in Safari */
+.text-transparent {
+  color: transparent !important;
+}
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}

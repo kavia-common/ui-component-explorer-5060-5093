@@ -12,7 +12,7 @@ function SimpleNavbar({ brand = 'Ocean', links = [{ label: 'Home' }, { label: 'C
     <header className="w-full max-w-3xl rounded-md border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-sm dark:border-gray-800 dark:bg-gray-900/80">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="h-6 w-6 rounded-md bg-gradient-to-br from-blue-500 to-amber-400 shadow-sm" />
+          <div className="h-6 w-6 rounded-md bg-main-gradient shadow-sm ring-1 ring-black/5" />
           <span className="text-sm font-semibold text-gray-900 dark:text-white">{brand}</span>
         </div>
         <nav className="flex items-center gap-4 text-sm text-gray-700 dark:text-gray-200">

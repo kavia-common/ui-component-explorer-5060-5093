@@ -14,7 +14,12 @@ module.exports = {
         text: "#111827"
       },
       backgroundImage: {
-        "ocean-gradient": "linear-gradient(135deg, rgba(59,130,246,0.10), #f9fafb)"
+        // legacy subtle bg
+        "ocean-gradient": "linear-gradient(135deg, rgba(59,130,246,0.10), #f9fafb)",
+        // new app background gradient (bg-app)
+        "app-gradient": "linear-gradient(87deg, #95bff0 20%, #ac7de9 80%)",
+        // new main accent gradient (main color)
+        "main-gradient": "linear-gradient(45deg, #af2497 10%, #902d9a 20%, #1840a0 100%)"
       }
     }
   },

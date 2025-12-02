@@ -24,7 +24,7 @@ function Button({
     'inline-flex items-center justify-center rounded-md font-semibold transition focus:outline-none focus:ring-2';
   const variants = {
     primary:
-      'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300 dark:focus:ring-blue-800',
+      'text-white bg-main-gradient hover:brightness-105 active:brightness-95 shadow-sm focus:ring-2 focus:ring-offset-0 focus:ring-blue-300 dark:focus:ring-blue-800',
     secondary:
       'bg-white text-gray-800 border border-gray-200 hover:bg-gray-50 focus:ring-blue-300 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-blue-800',
     ghost:

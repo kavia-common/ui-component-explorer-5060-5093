@@ -82,7 +82,9 @@ function MainLayout() {
   const categories = getCategories();
 
   return (
-    <div className="min-h-screen bg-background text-text">
+    <div className="min-h-screen text-text bg-app-gradient">
+      {/* subtle overlay to keep Ocean surfaces readable */}
+      <div className="pointer-events-none fixed inset-0 bg-white/40 dark:bg-black/30" aria-hidden="true" />
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-gray-200 bg-surface/80 backdrop-blur-md dark:border-gray-800 dark:bg-gray-900/70" role="banner">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
@@ -99,8 +101,10 @@ function MainLayout() {
               </svg>
             </button>
             <Link to="/" className="flex items-center gap-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-amber-400 shadow-sm" />
-              <span className="text-lg font-semibold text-gray-900 dark:text-white">UI Component Explorer</span>
+              <div className="h-8 w-8 rounded-lg bg-main-gradient shadow-sm ring-1 ring-black/5" />
+              <span className="text-lg font-semibold bg-clip-text text-transparent text-main-gradient">
+                UI Component Explorer
+              </span>
             </Link>
           </div>
 
@@ -174,7 +178,7 @@ function MainLayout() {
         </aside>
 
         {/* Main content */}
-        <main className="min-h-[70vh] bg-ocean-gradient p-4 md:p-6" role="main">
+        <main className="min-h-[70vh] p-4 md:p-6" role="main">
           <div className="rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <Outlet />
           </div>
@@ -183,7 +187,7 @@ function MainLayout() {
 
       {/* Mobile Main content (full width) */}
       <div className="mx-auto max-w-7xl md:hidden">
-        <main className="min-h-[70vh] bg-ocean-gradient p-4 md:p-6">
+        <main className="min-h-[70vh] p-4 md:p-6">
           <div className="rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <Outlet />
           </div>
@@ -195,12 +199,12 @@ function MainLayout() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 text-sm text-gray-600 dark:text-gray-300">
           <span>© {new Date().getFullYear()} UI Component Explorer</span>
           <a
-            className="text-blue-600 hover:underline dark:text-blue-400"
+            className="text-blue-600 hover:underline dark:text-blue-400 focus:outline-none focus:ring-2 focus:ring-primary"
             href="https://reactjs.org"
             target="_blank"
             rel="noreferrer"
           >
-            Built with React + Tailwind
+            <span className="bg-clip-text text-transparent text-main-gradient">Built with React + Tailwind</span>
           </a>
         </div>
       </footer>
