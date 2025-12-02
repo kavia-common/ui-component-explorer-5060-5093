@@ -46,7 +46,10 @@ function CodeTabs({ code = '' }) {
           </Button>
         </div>
       </div>
-      <pre className="custom-scrollbar max-h-[420px] overflow-auto bg-gray-900 p-4 text-xs leading-relaxed text-gray-100">
+      <pre
+        className="custom-scrollbar max-h-[420px] overflow-auto bg-gray-900 p-4 text-xs leading-relaxed text-gray-100"
+        style={{ whiteSpace: 'pre', wordBreak: 'normal', overflowWrap: 'normal' }}
+      >
         <code>{normalized || '<div />'}</code>
       </pre>
     </div>

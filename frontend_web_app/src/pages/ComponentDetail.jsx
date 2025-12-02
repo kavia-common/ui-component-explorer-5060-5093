@@ -4,6 +4,7 @@ import { getComponentById } from '../utils/data';
 import Breadcrumbs from '../components/common/Breadcrumbs';
 import PreviewCanvas from '../components/explorer/PreviewCanvas';
 import PropControls from '../components/explorer/PropControls';
+import CodeBlock from '../components/explorer/CodeBlock';
 import { copyCodeSnippet } from '../utils/copy';
 import { getPreviewProps } from '../utils/preview';
 import Meta from '../components/common/Meta';
@@ -134,25 +135,13 @@ function ComponentDetail() {
 
       {mode === 'code' ? (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_320px]">
-          <div className="rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-800">
-            <div className="flex items-center justify-between border-b border-gray-200 p-2 dark:border-gray-700">
-              <div className="flex items-center gap-2 px-2 text-sm font-medium text-slate-800 dark:text-slate-200">
-                Code
-              </div>
-              <div className="px-2">
-                <button
-                  type="button"
-                  onClick={handleCopyInCode}
-                  className="inline-flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-800 transition hover:bg-gray-50 focus:outline-none focus-ring-main-gradient dark:border-gray-700 dark:bg-gray-800 dark:text-slate-100 dark:hover:bg-gray-700"
-                  aria-label="Copy code"
-                >
-                  Copy
-                </button>
-              </div>
-            </div>
-            <pre className="custom-scrollbar max-h-[420px] overflow-auto bg-gray-900 p-4 text-xs leading-relaxed text-gray-100">
-              <code>{snippet || '<div />'}</code>
-            </pre>
+          <div>
+            {/* Use reusable CodeBlock to render formatted, multi-line code with preserved whitespace */}
+            {/*
+              Keep copy button in header and preserve overflow/scrolling.
+              Default language set to 'jsx' since snippets are JSX/HTML-like.
+            */}
+            <CodeBlock code={snippet} language="jsx" title="Code" />
           </div>
           <div className="space-y-4">
             <PropControls controls={controls} onChange={handleControlChange} />

@@ -7,6 +7,7 @@ import registry from '../components/registry';
 import { getAllComponents } from '../utils/data';
 import { copyCodeSnippet } from '../utils/copy';
 import { oceanTheme } from '../utils/tokens';
+import CodeBlock from '../components/explorer/CodeBlock';
 
 /**
  * PUBLIC_INTERFACE
@@ -161,26 +162,11 @@ function ComponentsPage() {
                   {previewNode}
                 </PreviewCanvas>
               ) : (
-                <div className="rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-800">
-                  <div className="flex items-center justify-between border-b border-gray-200 p-2 dark:border-gray-700">
-                    <div className="flex items-center gap-2 px-2 text-sm font-medium text-slate-800 dark:text-slate-200">
-                      Code
-                    </div>
-                    <div className="px-2">
-                      <button
-                        type="button"
-                        onClick={() => handleCopy(code || jsxFromJson || '')}
-                        className="inline-flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-800 transition hover:bg-gray-50 focus:outline-none focus-ring-main-gradient dark:border-gray-700 dark:bg-gray-800 dark:text-slate-100 dark:hover:bg-gray-700"
-                        aria-label={`Copy ${item.name} code`}
-                      >
-                        Copy
-                      </button>
-                    </div>
-                  </div>
-                  <pre className="custom-scrollbar max-h-[420px] overflow-auto bg-gray-900 p-4 text-xs leading-relaxed text-gray-100">
-                    <code>{(code || jsxFromJson || '') || '<div />'}</code>
-                  </pre>
-                </div>
+                <CodeBlock
+                  code={(code || jsxFromJson || '')}
+                  language="jsx"
+                  title="Code"
+                />
               )}
             </section>
           );
