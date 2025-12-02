@@ -227,7 +227,7 @@ function Sidebar({ onItemClick }) {
     <nav aria-label="Sidebar navigation" className="flex h-full min-h-0 flex-col">
       {/* Sticky Search (slim). Avoids consuming too much space */}
       <div className="sticky top-0 z-10 bg-main-gradient/95 backdrop-blur supports-[backdrop-filter]:bg-main-gradient/85">
-        <div className="px-2 pt-2 pb-1.5">
+        <div className="px-2 pt-1.5 pb-1">
           <label htmlFor="sidebar-filter" className="sr-only">Filter categories</label>
           <div className="relative">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2 text-white/80">
@@ -243,7 +243,7 @@ function Sidebar({ onItemClick }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Filter components…"
-              className="w-full rounded-md border border-white/15 bg-white/10 pl-7 pr-2 py-2 text-base leading-6 text-white placeholder:text-white/70 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent"
+              className="w-full rounded-md border border-white/15 bg-white/10 pl-7 pr-2 py-1.5 text-sm leading-5 text-white placeholder:text-white/70 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent"
             />
           </div>
         </div>
@@ -251,7 +251,7 @@ function Sidebar({ onItemClick }) {
 
       {/* Scrollable content area auto-fills remaining height */}
       <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar px-2 pb-2">
-        <div className="space-y-1.5 text-white">
+        <div className="space-y-1 text-white">
           {filteredGroups.map((group) => {
             const userOpen = !!open[group.slug];
             const isOpen = isFiltering ? true : userOpen;
@@ -264,14 +264,14 @@ function Sidebar({ onItemClick }) {
                   aria-expanded={isOpen}
                   aria-controls={`section-${group.slug}`}
                   onClick={() => toggleGroup(group.slug)}
-                  className="flex w-full items-center justify-between rounded-md px-2 py-2 text-left text-base font-semibold text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent hover:bg-[rgb(37_99_235_/0.10)]"
+                  className="flex w-full items-center justify-between rounded-md px-2 py-2.5 text-left text-sm leading-5 font-semibold text-white transition sidebar-ring hover:bg-[rgb(37_99_235_/0.10)]"
                 >
                   <span className="inline-flex items-center gap-2">
                     {GroupIcon ? <GroupIcon className="h-4 w-4 text-inherit" aria-hidden="true" /> : null}
                     <span className="text-white">{group.group}</span>
                   </span>
                   <svg
-                    className={`h-3.5 w-3.5 text-white transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                    className={`h-3.5 w-3.5 text-white/90 transition-transform ${isOpen ? 'rotate-180' : ''}`}
                     viewBox="0 0 24 24"
                     fill="none"
                     aria-hidden="true"
@@ -286,7 +286,7 @@ function Sidebar({ onItemClick }) {
                   className={`${isOpen ? 'block' : 'hidden'}`}
                 >
                   {/* Items list: compact density; prevent large gaps when collapsed by not reserving space */}
-                  <ul className="py-1">
+                  <ul className="py-1 space-y-0.5">
                     {group.items?.map((it) => {
                       const nav = buildNav(group.slug, it);
                       const key = `${nav.pathname}${nav.hash || ''}`;
@@ -307,7 +307,7 @@ function Sidebar({ onItemClick }) {
                               e.preventDefault();
                               go(group.slug, it)(e);
                             }}
-                            className={`group flex items-center justify-between gap-2 rounded-md px-2 py-2 text-base leading-6 transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent ${
+                            className={`group flex items-center justify-between gap-1.5 rounded-md px-2 py-1.5 text-sm leading-5 transition-colors duration-150 sidebar-ring ${
                               active
                                 ? 'sidebar-active-item text-white font-semibold'
                                 : 'text-slate-50 hover:bg-[rgb(37_99_235_/0.10)]'
@@ -320,7 +320,7 @@ function Sidebar({ onItemClick }) {
                               {/* Leaf items: text only (no icon) */}
                               <span className={`truncate ${active ? 'text-white' : 'text-slate-50'}`}>{it.label}</span>
                             </span>
-                            <div className="ml-1 flex items-center gap-2">
+                            <div className="ml-1 flex items-center gap-1.5">
                               {renderBadge(it.badge)}
                               <svg
                                 className={`h-3 w-3 ${active ? 'text-white' : 'text-slate-50'} group-hover:text-white`}
@@ -336,7 +336,7 @@ function Sidebar({ onItemClick }) {
                       );
                     })}
                     {group.items?.length === 0 && (
-                      <li className="px-2 py-1.5 text-xs text-white/80">No matches</li>
+                      <li className="px-2 py-1 text-xs leading-5 text-white/80">No matches</li>
                     )}
                   </ul>
                 </div>
@@ -344,17 +344,17 @@ function Sidebar({ onItemClick }) {
             );
           })}
           {filteredGroups.length === 0 && (
-            <div className="px-2 py-2 text-xs text-white/80">No categories match your filter.</div>
+            <div className="px-2 py-1.5 text-xs leading-5 text-white/80">No categories match your filter.</div>
           )}
         </div>
       </div>
 
       {/* Optional mobile Show more expander when content exceeds view height */}
       {isMobile && !mobileExpanded && (
-        <div className="sticky bottom-0 z-10 bg-main-gradient/95 px-2 py-2">
+        <div className="sticky bottom-0 z-10 bg-main-gradient/95 px-2 py-1.5">
           <button
             type="button"
-            className="w-full rounded-md border border-white/20 bg-white/10 px-3 py-1.5 text-sm text-white hover:bg-[rgb(37_99_235_/0.10)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent"
+            className="w-full rounded-md border border-white/20 bg-white/10 px-3 py-1.5 text-sm leading-5 text-white hover:bg-[rgb(37_99_235_/0.10)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent"
             onClick={() => setMobileExpanded(true)}
           >
             Show more
