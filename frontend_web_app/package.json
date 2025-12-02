@@ -10,8 +10,9 @@
     "react-scripts": "^5.0.1"
   },
   "scripts": {
+    "validate:data": "node scripts/validate-components-json.js",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run validate:data && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
