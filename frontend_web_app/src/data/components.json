@@ -1608,5 +1608,25 @@
     ],
     "previewHeight": 60,
     "darkModeSupported": true
+  },
+  {
+    "id": "modal-basic",
+    "name": "Modal (Accessible)",
+    "slug": "modal-accessible",
+    "category": "overlays",
+    "tags": ["modal", "dialog", "overlay", "focus-trap"],
+    "difficulty": "advanced",
+    "jsxCode": "<Modal />",
+    "props": {},
+    "previewProps": {},
+    "short": "Dialog with overlay and focus trapping.",
+    "description": "Accessible modal with overlay dismissal, Escape to close, and keyboard focus trap.",
+    "notes": "For production, prefer a robust dialog like @headlessui/react Dialog or Radix Dialog for a11y edge cases.",
+    "libraries": [
+      { "name": "@headlessui/react (recommended)", "install": "npm i @headlessui/react" },
+      { "name": "@radix-ui/react-dialog (optional)", "install": "npm i @radix-ui/react-dialog" }
+    ],
+    "previewHeight": 220,
+    "darkModeSupported": true
   }
 ]

@@ -48,7 +48,7 @@ import { StrongPassword, TogglePassword } from './samples/PasswordInputs.jsx';
 import ToggleCount from './samples/ToggleCount.jsx';
 import CopyMarkup from './samples/CopyMarkup.jsx';
 import PinInput from './samples/PinInput.jsx';
-import { Dropdown, ContextMenu, Offcanvas, Popover, Tooltip } from './samples/Overlays.jsx';
+import { Dropdown, ContextMenu, Offcanvas, Popover, Tooltip, Modal } from './samples/Overlays.jsx';
 
 /* Layout & Content samples */
 import Container from './samples/Container.jsx';
@@ -165,6 +165,11 @@ const registry = {
     component: BasicModal,
     defaultProps: { title: 'Confirm action', open: true },
     previewProps: { title: 'Confirm action', open: true },
+  },
+  'modal-accessible': {
+    component: Modal,
+    defaultProps: {},
+    previewProps: {}
   },
   'pagination-basic': {
     component: Pagination,

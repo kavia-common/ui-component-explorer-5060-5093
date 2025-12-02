@@ -1,137 +1,107 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 /**
- * Overlays & Menus: Dropdown, ContextMenu, Offcanvas (Drawer), Popover, Tooltip
- * Tailwind-first, accessible interactions where applicable.
+ * Overlays collection: Dropdown, ContextMenu, Offcanvas (Drawer), Popover, Tooltip, Modal
+ * Tailwind-first, keyboard accessible interactions.
  */
 
-// PUBLIC_INTERFACE
+/* Utility hook to close on outside click */
+function useOutsideClick(ref, onOutside) {
+  useEffect(() => {
+    function handleClick(e) {
+      if (!ref.current) return;
+      if (!ref.current.contains(e.target)) onOutside?.();
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [ref, onOutside]);
+}
+
+/* Dropdown */
 export function Dropdown() {
   const [open, setOpen] = useState(false);
-  const btnRef = useRef(null);
-  const menuRef = useRef(null);
-
-  // Close on outside click
-  useEffect(() => {
-    function onDocClick(e) {
-      if (!open) return;
-      if (
-        btnRef.current &&
-        !btnRef.current.contains(e.target) &&
-        menuRef.current &&
-        !menuRef.current.contains(e.target)
-      ) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', onDocClick);
-    return () => document.removeEventListener('mousedown', onDocClick);
-  }, [open]);
-
-  // Close on Escape
-  useEffect(() => {
-    function onEsc(e) {
-      if (e.key === 'Escape') setOpen(false);
-    }
-    document.addEventListener('keydown', onEsc);
-    return () => document.removeEventListener('keydown', onEsc);
-  }, []);
-
+  const ref = useRef(null);
+  useOutsideClick(ref, () => setOpen(false));
   return (
-    <div className="relative inline-block text-left">
+    <div className="relative inline-block text-left" ref={ref}>
       <button
-        ref={btnRef}
         type="button"
-        className="inline-flex items-center gap-1 rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-        aria-haspopup="menu"
-        aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-haspopup="menu"
+        className="inline-flex items-center rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         Actions
-        <svg className="h-4 w-4 opacity-70" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" />
+        <svg className="ml-2 h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path d="M5.23 7.21a.75.75 0 011.06.02L10 11.185l3.71-3.954a.75.75 0 111.08 1.04l-4.24 4.52a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" />
         </svg>
       </button>
-
       {open && (
         <div
-          ref={menuRef}
           role="menu"
           aria-label="Actions"
-          className="absolute right-0 z-20 mt-2 w-44 origin-top-right rounded-md border border-slate-200 bg-white p-1 shadow-lg ring-1 ring-black/5 dark:border-slate-700 dark:bg-slate-800"
+          className="absolute right-0 z-10 mt-2 w-44 origin-top-right rounded-md border border-gray-200 bg-white shadow-lg focus:outline-none dark:border-gray-700 dark:bg-gray-800"
         >
-          {['Edit', 'Duplicate', 'Archive'].map((item) => (
-            <button
-              key={item}
-              role="menuitem"
-              className="block w-full rounded px-3 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700/50"
-              onClick={() => setOpen(false)}
-            >
-              {item}
-            </button>
-          ))}
+          <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
+            {['Edit', 'Duplicate', 'Archive'].map((item) => (
+              <li key={item}>
+                <button
+                  role="menuitem"
+                  className="block w-full px-3 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-700"
+                  onClick={() => setOpen(false)}
+                >
+                  {item}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
   );
 }
 
-// PUBLIC_INTERFACE
+/* Context Menu (right-click) */
 export function ContextMenu() {
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    function onGlobal() {
-      if (open) setOpen(false);
+    function onContext(e) {
+      e.preventDefault();
+      setPos({ x: e.clientX, y: e.clientY });
+      setOpen(true);
     }
-    document.addEventListener('click', onGlobal);
-    return () => document.removeEventListener('click', onGlobal);
-  }, [open]);
-
-  useEffect(() => {
-    function onEsc(e) {
-      if (e.key === 'Escape') setOpen(false);
+    function onClick() {
+      setOpen(false);
     }
-    document.addEventListener('keydown', onEsc);
-    return () => document.removeEventListener('keydown', onEsc);
+    document.addEventListener('contextmenu', onContext);
+    document.addEventListener('click', onClick);
+    return () => {
+      document.removeEventListener('contextmenu', onContext);
+      document.removeEventListener('click', onClick);
+    };
   }, []);
 
   return (
     <div className="relative">
-      <div
-        className="rounded-md border border-dashed border-slate-300 p-8 text-center text-sm text-slate-600 dark:border-slate-700 dark:text-slate-300"
-        onContextMenu={(e) => {
-          e.preventDefault();
-          setPos({ x: e.clientX, y: e.clientY });
-          setOpen(true);
-        }}
-        role="button"
-        tabIndex={0}
-        aria-label="Context menu target. Right-click or use Shift+F10."
-        onKeyDown={(e) => {
-          if ((e.shiftKey && e.key === 'F10') || e.key === 'ContextMenu') {
-            const rect = e.currentTarget.getBoundingClientRect();
-            setPos({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
-            setOpen(true);
-          }
-        }}
-      >
-        Right-click here to open a custom context menu
+      <div className="rounded-md border border-dashed border-gray-300 p-6 text-sm text-gray-600 dark:border-gray-700 dark:text-gray-300">
+        Right-click anywhere to open the menu.
       </div>
-
       {open && (
         <div
-          className="fixed z-30 w-48 rounded-md border border-slate-200 bg-white p-1 shadow-lg ring-1 ring-black/5 dark:border-slate-700 dark:bg-slate-800"
+          className="fixed z-20 w-44 rounded-md border border-gray-200 bg-white p-1 shadow-lg dark:border-gray-700 dark:bg-gray-800"
           style={{ top: pos.y, left: pos.x }}
+          role="menu"
         >
-          {['Open', 'Rename', 'Delete'].map((item) => (
+          {['Open', 'Rename', 'Delete'].map((i) => (
             <button
-              key={item}
-              className="block w-full rounded px-3 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-700/50"
+              key={i}
+              className="block w-full rounded px-2 py-1 text-left text-sm text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-700"
+              role="menuitem"
               onClick={() => setOpen(false)}
             >
-              {item}
+              {i}
             </button>
           ))}
         </div>
@@ -140,7 +110,7 @@ export function ContextMenu() {
   );
 }
 
-// PUBLIC_INTERFACE
+/* Offcanvas (Drawer) */
 export function Offcanvas() {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
@@ -154,138 +124,208 @@ export function Offcanvas() {
   }, []);
 
   return (
-    <div className="relative">
+    <div>
       <button
         onClick={() => setOpen(true)}
-        className="rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         Open Drawer
       </button>
-
       {/* Overlay */}
       {open && (
         <div
-          onClick={close}
           aria-hidden="true"
-          className="fixed inset-0 z-30 bg-black/40 transition-opacity"
+          className="fixed inset-0 z-30 bg-black/30 backdrop-blur-sm transition-opacity"
+          onClick={close}
         />
       )}
-
       {/* Panel */}
       <aside
-        aria-label="Drawer Panel"
-        aria-hidden={!open}
-        className={`fixed inset-y-0 right-0 z-40 w-80 transform bg-white shadow-xl transition-transform dark:bg-slate-800 ${
+        className={`fixed right-0 top-0 z-40 h-full w-80 transform bg-white shadow-xl transition-transform dark:bg-gray-900 ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Drawer panel"
       >
-        <div className="flex items-center justify-between border-b border-slate-200 p-4 dark:border-slate-700">
-          <h3 className="text-sm font-medium text-slate-900 dark:text-slate-100">Panel</h3>
+        <div className="flex items-center justify-between border-b p-4 dark:border-gray-800">
+          <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Offcanvas</h2>
           <button
             onClick={close}
-            className="rounded p-1 text-slate-600 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-300 dark:hover:bg-slate-700/60"
-            aria-label="Close Drawer"
+            aria-label="Close drawer"
+            className="rounded p-2 text-slate-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-300 dark:hover:bg-gray-800"
           >
             ✕
           </button>
         </div>
         <div className="p-4 text-sm text-slate-700 dark:text-slate-200">
-          Use this area for settings, filters, or secondary content.
+          This drawer slides from the right and closes on overlay click or Escape.
         </div>
       </aside>
     </div>
   );
 }
 
-// PUBLIC_INTERFACE
+/* Popover */
 export function Popover() {
   const [open, setOpen] = useState(false);
-  const triggerRef = useRef(null);
-  const popRef = useRef(null);
-
-  useEffect(() => {
-    function onDoc(e) {
-      if (!open) return;
-      if (
-        triggerRef.current &&
-        !triggerRef.current.contains(e.target) &&
-        popRef.current &&
-        !popRef.current.contains(e.target)
-      ) {
-        setOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', onDoc);
-    return () => document.removeEventListener('mousedown', onDoc);
-  }, [open]);
-
-  useEffect(() => {
-    function onEsc(e) {
-      if (e.key === 'Escape') setOpen(false);
-    }
-    document.addEventListener('keydown', onEsc);
-    return () => document.removeEventListener('keydown', onEsc);
-  }, []);
-
+  const ref = useRef(null);
+  useOutsideClick(ref, () => setOpen(false));
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block" ref={ref}>
       <button
-        ref={triggerRef}
         onClick={() => setOpen((v) => !v)}
-        aria-haspopup="dialog"
         aria-expanded={open}
-        className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+        aria-haspopup="dialog"
+        className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-slate-800 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900 dark:text-slate-100 dark:hover:bg-gray-800"
       >
         Toggle Popover
       </button>
       {open && (
         <div
-          ref={popRef}
           role="dialog"
           aria-label="Popover"
-          className="absolute left-1/2 z-20 mt-2 w-64 -translate-x-1/2 rounded-md border border-slate-200 bg-white p-3 text-sm shadow-lg ring-1 ring-black/5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+          className="absolute left-0 z-20 mt-2 w-64 rounded-md border border-gray-200 bg-white p-3 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:text-slate-100"
         >
-          Helpful information appears in this small card.
+          This is a lightweight popover anchored to the trigger.
         </div>
       )}
     </div>
   );
 }
 
-// PUBLIC_INTERFACE
+/* Tooltip */
 export function Tooltip() {
   const [show, setShow] = useState(false);
-  const id = 'tooltip-1';
   return (
-    <div className="relative inline-block">
+    <div className="inline-block">
       <button
-        aria-describedby={show ? id : undefined}
         onFocus={() => setShow(true)}
         onBlur={() => setShow(false)}
         onMouseEnter={() => setShow(true)}
         onMouseLeave={() => setShow(false)}
-        className="rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-800 shadow-sm hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
+        aria-describedby="tip-1"
+        className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-slate-800 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-900 dark:text-slate-100 dark:hover:bg-gray-800"
       >
         Hover or focus me
       </button>
       {show && (
         <div
+          id="tip-1"
           role="tooltip"
-          id={id}
-          className="absolute left-1/2 z-20 mt-2 -translate-x-1/2 whitespace-nowrap rounded bg-slate-900 px-2 py-1 text-xs text-white shadow-lg"
+          className="mt-2 inline-block rounded bg-slate-900 px-2 py-1 text-xs text-white shadow"
         >
-          Tooltip content
-          <div className="absolute -top-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-slate-900" />
+          Helpful hint appears here.
         </div>
       )}
     </div>
   );
 }
 
-export default {
-  Dropdown,
-  ContextMenu,
-  Offcanvas,
-  Popover,
-  Tooltip,
-};
+/* Modal with basic focus trap */
+export function Modal() {
+  const [open, setOpen] = useState(true);
+  const panelRef = useRef(null);
+  const firstFocusable = useRef(null);
+  const lastFocusable = useRef(null);
+
+  useEffect(() => {
+    function onKey(e) {
+      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Tab' && open) {
+        const focusables = panelRef.current?.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusables || focusables.length === 0) return;
+        firstFocusable.current = focusables[0];
+        lastFocusable.current = focusables[focusables.length - 1];
+
+        if (e.shiftKey && document.activeElement === firstFocusable.current) {
+          e.preventDefault();
+          lastFocusable.current.focus();
+        } else if (!e.shiftKey && document.activeElement === lastFocusable.current) {
+          e.preventDefault();
+          firstFocusable.current.focus();
+        }
+      }
+    }
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+
+  useEffect(() => {
+    if (open) {
+      // Defer focus to first focusable
+      setTimeout(() => {
+        const btn = panelRef.current?.querySelector('button, [href], input, select, textarea, [tabindex]');
+        btn?.focus();
+      }, 0);
+    }
+  }, [open]);
+
+  if (!open) {
+    return (
+      <button
+        onClick={() => setOpen(true)}
+        className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Open Modal
+      </button>
+    );
+  }
+
+  return (
+    <>
+      <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm" aria-hidden="true" onClick={() => setOpen(false)} />
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+          ref={panelRef}
+          className="w-full max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow-xl outline-none dark:border-gray-800 dark:bg-gray-900"
+        >
+          <div className="mb-3 flex items-start justify-between">
+            <h2 id="modal-title" className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+              Confirm action
+            </h2>
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Close modal"
+              className="rounded p-2 text-slate-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-300 dark:hover:bg-gray-800"
+            >
+              ✕
+            </button>
+          </div>
+          <p className="mb-4 text-sm text-slate-700 dark:text-slate-200">
+            This example traps focus within the modal and closes on Escape or overlay click.
+          </p>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => setOpen(false)}
+              className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-slate-800 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-slate-100 dark:hover:bg-gray-700"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => setOpen(false)}
+              className="rounded-md bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default function Overlays() {
+  return (
+    <div className="flex flex-wrap items-center gap-4">
+      <Dropdown />
+      <Popover />
+      <Tooltip />
+    </div>
+  );
+}
