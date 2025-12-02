@@ -143,9 +143,9 @@ function Sidebar({ onItemClick }) {
               id={`section-${group.slug}`}
               role="region"
               aria-label={group.group}
-              className={`overflow-hidden border-t border-gray-200 transition-[max-height] dark:border-gray-800 ${isOpen ? 'max-h-[640px]' : 'max-h-0'}`}
+              className={`border-t border-gray-200 dark:border-gray-800 ${isOpen ? 'block' : 'hidden'}`}
             >
-              <ul className="bg-white p-1 dark:bg-gray-900">
+              <ul className="bg-white p-1 max-h-80 overflow-y-auto dark:bg-gray-900">
                 {group.items?.map((it) => {
                   const url = new URL(it.to, window.location.origin);
                   const key = `${url.pathname}${url.hash || ''}`;

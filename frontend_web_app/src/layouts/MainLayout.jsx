@@ -138,7 +138,7 @@ function MainLayout() {
           aria-label="Navigation"
           className={`absolute left-0 top-0 h-full w-72 transform border-r border-gray-200 bg-surface p-4 shadow-xl transition-transform dark:border-gray-800 dark:bg-gray-900 ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+          } overflow-y-auto`}
         >
           <div className="mb-3 flex items-center justify-between">
             <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">Menu</span>
@@ -166,7 +166,7 @@ function MainLayout() {
       {/* Desktop Layout: Sidebar + Main */}
       <div className="mx-auto hidden max-w-7xl grid-cols-[260px_minmax(0,1fr)] md:grid">
         {/* Sidebar */}
-        <aside className="border-r border-gray-200 bg-surface px-4 py-4 dark:border-gray-800 dark:bg-gray-900" role="complementary" aria-label="Sidebar navigation">
+        <aside className="border-r border-gray-200 bg-surface px-4 py-4 dark:border-gray-800 dark:bg-gray-900 max-h-[calc(100vh-64px)] overflow-y-auto" role="complementary" aria-label="Sidebar navigation">
           <Sidebar onItemClick={() => setSidebarOpen(false)} />
           <div className="mt-6 rounded-lg border border-blue-100 bg-blue-50 p-3 text-sm text-blue-800 dark:border-blue-900/40 dark:bg-blue-900/20 dark:text-blue-200">
             Tip: Use the search bar to quickly find components.
