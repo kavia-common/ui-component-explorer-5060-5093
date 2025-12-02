@@ -4,9 +4,10 @@
     "slug": "layout-content",
     "items": [
       { "label": "Cards", "to": "/category/cards" },
-      { "label": "Modals", "to": "/category/cards#modals" },
+      { "label": "Modals", "to": "/category/cards#modals", "badge": "New" },
       { "label": "Alerts", "to": "/category/cards#alerts" },
-      { "label": "Media", "to": "/category/cards#media" }
+      { "label": "Media", "to": "/category/cards#media" },
+      { "label": "Dividers and <hr>", "to": "/category/cards#dividers" }
     ]
   },
   {
@@ -14,7 +15,7 @@
     "slug": "base-components",
     "items": [
       { "label": "Buttons", "to": "/category/buttons" },
-      { "label": "Badges", "to": "/category/buttons#badges" }
+      { "label": "Badges", "to": "/category/buttons#badges", "badge": "🔥" }
     ]
   },
   {

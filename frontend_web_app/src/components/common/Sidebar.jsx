@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import sidebarItems from '../../data/sidebarItems.json';
+import rawSidebarItems from '../../data/sidebarItems.json';
 import { buildQueryString, parseQueryParams } from '../../utils/filter';
+import Badge from './Badge';
 
 /**
  * PUBLIC_INTERFACE
@@ -9,6 +10,7 @@ import { buildQueryString, parseQueryParams } from '../../utils/filter';
  * - Groups can be toggled open/closed and persist open-state per session.
  * - Items navigate to category routes (/category/:slug) or category anchors (#sub) within the page.
  * - Highlights active item and auto-applies existing search/query string parameters.
+ * - Strict mode: ensures only items provided in src/data/sidebarItems.json render.
  *
  * Props:
  * - onItemClick?: () => void (used by mobile drawer to close on navigate)
@@ -16,6 +18,37 @@ import { buildQueryString, parseQueryParams } from '../../utils/filter';
 function Sidebar({ onItemClick }) {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Quick validation and hardening of sidebar config to prevent accidental additions
+  const sidebarItems = useMemo(() => {
+    const sanitizeText = (v) => (typeof v === 'string' ? v : '');
+    const isValidUrl = (v) => typeof v === 'string' && v.startsWith('/');
+
+    const groups = Array.isArray(rawSidebarItems) ? rawSidebarItems : [];
+    const cleaned = groups
+      .map((g) => {
+        const group = sanitizeText(g.group);
+        const slug = sanitizeText(g.slug);
+        const items = Array.isArray(g.items) ? g.items : [];
+        const cleanItems = items
+          .map((it) => {
+            const label = sanitizeText(it.label);
+            const to = sanitizeText(it.to);
+            const badge = it.badge && (it.badge === 'New' || it.badge === '🔥') ? it.badge : undefined;
+
+            if (!label || !isValidUrl(to)) return null;
+            return { label, to, badge };
+          })
+          .filter(Boolean);
+
+        if (!group || !slug || cleanItems.length === 0) return null;
+        return { group, slug, items: cleanItems };
+      })
+      .filter(Boolean);
+
+    // If any unexpected extra fields exist, they are ignored by reconstruction above.
+    return cleaned;
+  }, []);
 
   // Remember open groups in session for UX continuity
   const [open, setOpen] = useState(() => {
@@ -49,7 +82,6 @@ function Sidebar({ onItemClick }) {
 
   // Handle item navigation including hash anchors while preserving query string
   const go = (to) => (e) => {
-    // Build target keeping any anchors but also keep query params
     const url = new URL(to, window.location.origin);
     const pathOnly = url.pathname;
     const nextHash = url.hash || '';
@@ -70,7 +102,19 @@ function Sidebar({ onItemClick }) {
     });
     setOpen((prev) => ({ ...prev, ...next }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeKey]);
+  }, [activeKey, sidebarItems]);
+
+  // Helper: render badge for specific allowed values
+  const renderBadge = (badge) => {
+    if (badge === 'New') {
+      return <Badge color="blue">New</Badge>;
+    }
+    if (badge === '🔥') {
+      // use amber style for hot
+      return <Badge color="amber">🔥</Badge>;
+    }
+    return null;
+  };
 
   return (
     <nav aria-label="Sidebar navigation" className="space-y-3">
@@ -114,22 +158,26 @@ function Sidebar({ onItemClick }) {
                           e.preventDefault();
                           go(it.to)(e);
                         }}
-                        className={`flex items-center justify-between rounded-md px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-primary ${
+                        className={`flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-primary ${
                           active
                             ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-200'
                             : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800'
                         }`}
                         aria-current={active ? 'page' : undefined}
                       >
-                        <span>{it.label}</span>
-                        <svg
-                          className={`h-3.5 w-3.5 ${active ? 'opacity-100' : 'opacity-60'}`}
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          aria-hidden="true"
-                        >
-                          <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                        {/* Render label as plain text, never interpreted as HTML */}
+                        <span className="truncate">{it.label}</span>
+                        <div className="ml-2 flex items-center gap-2">
+                          {renderBadge(it.badge)}
+                          <svg
+                            className={`h-3.5 w-3.5 ${active ? 'opacity-100' : 'opacity-60'}`}
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            aria-hidden="true"
+                          >
+                            <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </div>
                       </Link>
                     </li>
                   );
