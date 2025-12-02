@@ -22,31 +22,32 @@ function Sidebar({ onItemClick }) {
   // Quick validation and hardening of sidebar config to prevent accidental additions
   const sidebarItems = useMemo(() => {
     const sanitizeText = (v) => (typeof v === 'string' ? v : '');
-    const isValidUrl = (v) => typeof v === 'string' && v.startsWith('/');
-
+    const sanitizeSlug = (v) => (typeof v === 'string' ? v : '');
     const groups = Array.isArray(rawSidebarItems) ? rawSidebarItems : [];
     const cleaned = groups
       .map((g) => {
         const group = sanitizeText(g.group);
-        const slug = sanitizeText(g.slug);
+        const slug = sanitizeSlug(g.slug);
+        const blurb = sanitizeText(g.blurb);
         const items = Array.isArray(g.items) ? g.items : [];
         const cleanItems = items
           .map((it) => {
             const label = sanitizeText(it.label);
-            const to = sanitizeText(it.to);
+            const to = sanitizeText(it.to); // legacy field retained (may include #hash)
+            const itemSlug = sanitizeSlug(it.slug);
             const badge = it.badge && (it.badge === 'New' || it.badge === '🔥') ? it.badge : undefined;
+            const blurbIt = sanitizeText(it.blurb);
 
-            if (!label || !isValidUrl(to)) return null;
-            return { label, to, badge };
+            if (!label || !itemSlug) return null;
+            return { label, to, slug: itemSlug, badge, blurb: blurbIt };
           })
           .filter(Boolean);
 
         if (!group || !slug || cleanItems.length === 0) return null;
-        return { group, slug, items: cleanItems };
+        return { group, slug, blurb, items: cleanItems };
       })
       .filter(Boolean);
 
-    // If any unexpected extra fields exist, they are ignored by reconstruction above.
     return cleaned;
   }, []);
 
@@ -80,12 +81,25 @@ function Sidebar({ onItemClick }) {
   const currentQuery = useMemo(() => parseQueryParams(search), [search]);
   const preservedQS = useMemo(() => buildQueryString(currentQuery), [currentQuery]);
 
+  // Build navigation path from item slug -> /category/:slug with optional hash from legacy 'to'
+  const buildNav = (groupSlug, item) => {
+    const base = `/category/${encodeURIComponent(item.slug)}`;
+    let itemHash = '';
+    if (item.to) {
+      try {
+        const url = new URL(item.to, window.location.origin);
+        itemHash = url.hash || '';
+      } catch {
+        // ignore invalid URLs; rely purely on slug route
+      }
+    }
+    return { pathname: base, hash: itemHash };
+  };
+
   // Handle item navigation including hash anchors while preserving query string
-  const go = (to) => (e) => {
-    const url = new URL(to, window.location.origin);
-    const pathOnly = url.pathname;
-    const nextHash = url.hash || '';
-    navigate({ pathname: pathOnly, search: preservedQS, hash: nextHash }, { replace: false });
+  const go = (groupSlug, item) => (e) => {
+    const nav = buildNav(groupSlug, item);
+    navigate({ pathname: nav.pathname, search: preservedQS, hash: nav.hash }, { replace: false });
     onItemClick?.();
   };
 
@@ -94,9 +108,9 @@ function Sidebar({ onItemClick }) {
     const next = {};
     sidebarItems.forEach((g) => {
       const isInGroup = g.items?.some((it) => {
-        const u = new URL(it.to, window.location.origin);
-        const key = `${u.pathname}${u.hash || ''}`;
-        return key === activeKey || (u.pathname === pathname && !!hash && u.hash === hash);
+        const nav = buildNav(g.slug, it);
+        const key = `${nav.pathname}${nav.hash || ''}`;
+        return key === activeKey || (nav.pathname === pathname && !!hash && nav.hash === hash);
       });
       next[g.slug] = isInGroup || open[g.slug] || false;
     });
@@ -147,16 +161,16 @@ function Sidebar({ onItemClick }) {
             >
               <ul className="bg-white p-1 max-h-80 overflow-y-auto dark:bg-gray-900">
                 {group.items?.map((it) => {
-                  const url = new URL(it.to, window.location.origin);
-                  const key = `${url.pathname}${url.hash || ''}`;
+                  const nav = buildNav(group.slug, it);
+                  const key = `${nav.pathname}${nav.hash || ''}`;
                   const active = key === activeKey;
                   return (
                     <li key={`${group.slug}-${it.label}`}>
                       <Link
-                        to={{ pathname: url.pathname, search: preservedQS, hash: url.hash }}
+                        to={{ pathname: nav.pathname, search: preservedQS, hash: nav.hash }}
                         onClick={(e) => {
                           e.preventDefault();
-                          go(it.to)(e);
+                          go(group.slug, it)(e);
                         }}
                         className={`flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-primary ${
                           active

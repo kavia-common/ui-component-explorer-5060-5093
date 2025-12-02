@@ -9,10 +9,13 @@ import Breadcrumbs from '../components/common/Breadcrumbs';
 import { parseQueryParams } from '../utils/filter';
 import { searchComponents } from '../utils/search';
 import { filterComponents } from '../utils/filter';
+import { getItemMetaBySlug, getGroupForItem } from '../utils/sidebar';
 
 /**
  * PUBLIC_INTERFACE
  * Category page shows components for a given category slug.
+ * Now supports sidebar item slugs for placeholders:
+ * - If no components exist for this slug, show a placeholder page using sidebar metadata (label, blurb).
  */
 function Category() {
   const { slug } = useParams();
@@ -20,6 +23,16 @@ function Category() {
 
   const baseItems = getComponentsByCategory(slug);
   const category = getCategories().find((c) => c.slug === slug);
+
+  // Sidebar mapping for label/blurbs when slug is from sidebar items
+  const itemMeta = useMemo(() => getItemMetaBySlug(slug), [slug]);
+  const groupMeta = useMemo(() => getGroupForItem(slug), [slug]);
+
+  const titleText = itemMeta?.label || category?.name || slug;
+  const descText =
+    itemMeta?.blurb ||
+    category?.description ||
+    `Browse components in the ${titleText} section.`;
 
   const allTags = useMemo(() => {
     const s = new Set();
@@ -44,40 +57,50 @@ function Category() {
     }
   }, [location.hash]);
 
+  const isPlaceholder = baseItems.length === 0;
+
   return (
     <div className="space-y-6">
       <Meta
-        title={`${category?.name || slug} category`}
-        description={category?.description || `Browse components in the ${slug} category.`}
+        title={`${titleText} ${isPlaceholder ? 'section' : 'category'}`}
+        description={descText}
         canonical={typeof window !== 'undefined' ? `${window.location.origin}/category/${slug}` : undefined}
       />
       <div className="space-y-2">
         <Breadcrumbs
           items={[
             { label: 'Home', to: '/' },
-            { label: 'Categories', to: '/' },
-            { label: category?.name || slug },
+            groupMeta?.group ? { label: groupMeta.group, to: '/' } : { label: 'Categories', to: '/' },
+            { label: titleText },
           ]}
         />
-        <h1 className="text-2xl font-semibold capitalize text-gray-900 dark:text-white">
-          {category?.name || slug}
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+          {titleText}
         </h1>
         <p className="text-gray-600 dark:text-gray-300">
-          {category?.description || `Browse components in the ${slug} category.`}
+          {descText}
         </p>
       </div>
 
-      <Filters allTags={allTags} />
-
-      <ComponentGrid
-        items={filtered}
-        empty={
-          <EmptyState
-            title="No components match your filters"
-            description="Try clearing the search, changing difficulty, or deselecting some tags."
+      {isPlaceholder ? (
+        <EmptyState
+          title="Coming soon"
+          description="This section doesn’t have components yet. Check back later or explore other categories."
+        />
+      ) : (
+        <>
+          <Filters allTags={allTags} />
+          <ComponentGrid
+            items={filtered}
+            empty={
+              <EmptyState
+                title="No components match your filters"
+                description="Try clearing the search, changing difficulty, or deselecting some tags."
+              />
+            }
           />
-        }
-      />
+        </>
+      )}
     </div>
   );
 }
