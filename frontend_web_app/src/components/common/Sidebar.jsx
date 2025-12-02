@@ -200,11 +200,11 @@ function Sidebar({ onItemClick }) {
                           e.preventDefault();
                           go(group.slug, it)(e);
                         }}
-                        className={`group flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition sidebar-focus-ring ${
+                        className={`group flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition-all duration-150 transform-gpu hover:scale-[1.02] hover:shadow-md sidebar-focus-ring ${
                           active
                             ? 'text-white font-semibold underline'
                             : 'text-slate-50 hover:underline'
-                        } ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                        } ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'} hover-soft-lift`}
                         aria-current={active ? 'page' : undefined}
                         aria-disabled={isDisabled || undefined}
                         tabIndex={isDisabled ? -1 : 0}

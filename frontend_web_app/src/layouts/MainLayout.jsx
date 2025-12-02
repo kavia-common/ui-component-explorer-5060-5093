@@ -84,37 +84,42 @@ function MainLayout() {
   return (
     <div className="min-h-screen text-text bg-app-gradient">
       {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-gray-200 bg-surface/80 backdrop-blur-md dark:border-gray-800 dark:bg-gray-900/70" role="banner">
+      <header className="sticky top-0 z-40 border-b border-transparent bg-main-gradient text-white" role="banner">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
             <button
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary focus-visible:ring-2 md:hidden dark:text-gray-200 dark:hover:bg-gray-800"
+              className="inline-flex items-center justify-center rounded-md p-2 text-white hover:brightness-110 focus-ring-main-gradient md:hidden"
               aria-label="Toggle sidebar"
               aria-expanded={sidebarOpen}
               aria-controls="mobile-drawer"
               onClick={toggleSidebar}
             >
-              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+              <svg className="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none">
                 <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </button>
             <Link to="/" className="flex items-center gap-2 focus-ring-main-gradient rounded-md">
-              <div className="h-8 w-8 rounded-lg bg-main-gradient shadow-sm ring-1 ring-black/5" />
-              <span className="text-lg font-semibold bg-clip-text text-transparent text-main-gradient">
+              <div className="h-8 w-8 rounded-lg bg-white/10 shadow-sm ring-1 ring-white/20" />
+              <span className="text-lg font-semibold text-white">
                 UI Component Explorer
               </span>
             </Link>
           </div>
 
           <div className="hidden flex-1 items-center justify-center px-6 md:flex">
-            <SearchBar placeholder="Search components…" />
+            <div className="w-full max-w-xl">
+              <SearchBar placeholder="Search components…" />
+            </div>
           </div>
 
           <div className="flex items-center gap-2">
             <div className="md:hidden">
               <SearchBar compact placeholder="Search…" />
             </div>
-            <ThemeToggle />
+            {/* Ensure toggle is visible on gradient */}
+            <div className="rounded-md ring-1 ring-white/20">
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </header>

@@ -101,6 +101,21 @@ a.text-main-gradient,
   background-color: rgba(255,255,255,0.08);
 }
 
+/* Subtle hover lift utility: GPU-accelerated, minimal scale and shadow for performance */
+.hover-soft-lift {
+  transition: transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+  transform: translateZ(0); /* enable GPU */
+  will-change: transform;
+}
+.hover-soft-lift:hover {
+  transform: translateZ(0) scale(1.02);
+  box-shadow: 0 6px 14px -8px rgba(0,0,0,0.35);
+}
+.hover-soft-lift:focus-visible {
+  /* maintain lift on keyboard focus for parity with hover while preserving clear focus ring */
+  transform: translateZ(0) scale(1.015);
+}
+
 /* Subtle gradient border utility (for badges/pills) */
 .border-main-gradient {
   position: relative;
