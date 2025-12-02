@@ -61,8 +61,17 @@
     "group": "Basic Forms",
     "slug": "basic-forms",
     "items": [
-      { "label": "Text Input", "to": "/category/forms#text" },
-      { "label": "Email Input", "to": "/category/forms#email" }
+      { "label": "Input", "to": "/category/forms#input" },
+      { "label": "Input Group", "to": "/category/forms#input-group" },
+      { "label": "Textarea", "to": "/category/forms#textarea" },
+      { "label": "File Input", "to": "/category/forms#file-input" },
+      { "label": "Checkbox", "to": "/category/forms#checkbox" },
+      { "label": "Radio", "to": "/category/forms#radio" },
+      { "label": "Switch", "to": "/category/forms#switch" },
+      { "label": "Select", "to": "/category/forms#select" },
+      { "label": "Range Slider", "to": "/category/forms#range-slider" },
+      { "label": "Color Picker", "to": "/category/forms#color-picker" },
+      { "label": "TimePicker", "to": "/category/forms#timepicker" }
     ]
   },
   {
