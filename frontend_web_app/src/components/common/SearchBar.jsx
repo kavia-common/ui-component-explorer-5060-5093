@@ -1,13 +1,37 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { parseQueryParams, buildQueryString } from '../../utils/filter';
 
 /**
  * PUBLIC_INTERFACE
- * SearchBar is a presentational search input.
+ * SearchBar is a search input that syncs with ?q= URL param (debounced).
  * Props:
  * - placeholder?: string
  * - compact?: boolean (renders a smaller control)
  */
 function SearchBar({ placeholder = 'Search…', compact = false }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const initialQ = useMemo(() => parseQueryParams(location.search).q || '', [location.search]);
+  const [value, setValue] = useState(initialQ);
+
+  // keep internal state in sync when URL changes externally
+  useEffect(() => {
+    setValue(initialQ);
+  }, [initialQ]);
+
+  // debounce updates to URL
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      const current = parseQueryParams(location.search);
+      if ((current.q || '') !== (value || '')) {
+        const next = buildQueryString({ ...current, q: value });
+        navigate({ pathname: location.pathname, search: next }, { replace: true });
+      }
+    }, 250);
+    return () => clearTimeout(handler);
+  }, [value, location.pathname, location.search, navigate]);
+
   return (
     <div className={`w-full ${compact ? 'max-w-[180px]' : 'max-w-xl'}`}>
       <label className="sr-only" htmlFor="global-search">Search</label>
@@ -22,6 +46,8 @@ function SearchBar({ placeholder = 'Search…', compact = false }) {
           id="global-search"
           type="search"
           placeholder={placeholder}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
           className={`w-full rounded-lg border border-gray-200 bg-white pl-10 placeholder:text-gray-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-900/30 ${compact ? 'py-1.5 text-sm' : 'py-2.5'}`}
         />
       </div>

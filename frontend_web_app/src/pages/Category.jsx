@@ -1,10 +1,13 @@
-import React, { useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useMemo } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 import { getComponentsByCategory, getCategories } from '../utils/data';
 import Filters from '../components/explorer/Filters';
 import ComponentGrid from '../components/explorer/ComponentGrid';
 import EmptyState from '../components/common/EmptyState';
 import Breadcrumbs from '../components/common/Breadcrumbs';
+import { parseQueryParams } from '../utils/filter';
+import { searchComponents } from '../utils/search';
+import { filterComponents } from '../utils/filter';
 
 /**
  * PUBLIC_INTERFACE
@@ -12,6 +15,7 @@ import Breadcrumbs from '../components/common/Breadcrumbs';
  */
 function Category() {
   const { slug } = useParams();
+  const location = useLocation();
 
   const baseItems = getComponentsByCategory(slug);
   const category = getCategories().find((c) => c.slug === slug);
@@ -22,21 +26,12 @@ function Category() {
     return Array.from(s);
   }, [baseItems]);
 
-  const [filter, setFilter] = useState({ q: '', tags: [] });
+  const query = useMemo(() => parseQueryParams(location.search), [location.search]);
 
   const filtered = useMemo(() => {
-    const q = (filter.q || '').toLowerCase();
-    const tags = filter.tags || [];
-    return baseItems.filter((it) => {
-      const nameOk = !q || it.name.toLowerCase().includes(q);
-      const tagOk =
-        !q ||
-        (it.tags || []).some((t) => t.toLowerCase().includes(q));
-      const tagsAllOk =
-        !tags.length || tags.every((t) => (it.tags || []).includes(t));
-      return (nameOk || tagOk) && tagsAllOk;
-    });
-  }, [baseItems, filter]);
+    const searched = searchComponents(baseItems, query.q || '');
+    return filterComponents(searched, { tags: query.tags, difficulty: query.difficulty });
+  }, [baseItems, query]);
 
   return (
     <div className="space-y-6">
@@ -56,7 +51,7 @@ function Category() {
         </p>
       </div>
 
-      <Filters allTags={allTags} onChange={setFilter} />
+      <Filters allTags={allTags} />
 
       <ComponentGrid
         items={filtered}
