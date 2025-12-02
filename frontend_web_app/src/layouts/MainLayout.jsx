@@ -175,14 +175,9 @@ function MainLayout() {
           role="complementary"
           aria-label="Sidebar navigation"
         >
-          <div className="flex-1 overflow-hidden">
+          <div className="flex-1 min-h-0 overflow-hidden">
             <div className="h-full flex flex-col">
-              {/* inner padding wrapper */}
-              <div className="px-3 pt-3 pb-2">
-                {/* Branding row compact to avoid duplicate controls occupying space */}
-                <div className="sr-only">Sidebar</div>
-              </div>
-              {/* Sidebar content handles its own sticky search and scroll */}
+              {/* Sidebar provides sticky header and internal scroll; outer containers ensure no dead space */}
               <div className="flex-1 min-h-0">
                 <Sidebar onItemClick={() => setSidebarOpen(false)} />
               </div>

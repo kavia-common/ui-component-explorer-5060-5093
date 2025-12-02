@@ -2,7 +2,14 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import rawSidebarItems from '../../data/sidebarItems.json';
 import { buildQueryString, parseQueryParams } from '../../utils/filter';
-import { getSidebarExpandedMap, setSidebarExpandedMap, isBrowser } from '../../utils/storage';
+import {
+  getSidebarExpandedMap,
+  setSidebarExpandedMap,
+  getRouteScopedSidebarMap,
+  setRouteScopedSidebarMap,
+  getSidebarAccordionSetting,
+  isBrowser,
+} from '../../utils/storage';
 import Badge from './Badge';
 import { getIconComponent } from '../../utils/icons';
 
@@ -59,16 +66,20 @@ function Sidebar({ onItemClick }) {
   const [query, setQuery] = useState('');
   const normalizedQuery = useMemo(() => query.trim().toLowerCase(), [query]);
 
-  // Collapsed state map, persisted
+  // Collapsed state map, persisted (global + route-scoped)
   const [open, setOpen] = useState({});
+  const [accordion, setAccordion] = useState(true);
 
   useEffect(() => {
     if (!isBrowser()) return;
-    const stored = getSidebarExpandedMap();
-    if (stored && typeof stored === 'object') {
-      setOpen((prev) => ({ ...prev, ...stored }));
+    setAccordion(getSidebarAccordionSetting());
+    const routeScoped = getRouteScopedSidebarMap(location.pathname);
+    const globalStored = getSidebarExpandedMap();
+    const initialMap = Object.keys(routeScoped).length ? routeScoped : globalStored;
+    if (initialMap && typeof initialMap === 'object') {
+      setOpen((prev) => ({ ...prev, ...initialMap }));
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Ensure default false for all groups (unless persisted)
   useEffect(() => {
@@ -84,12 +95,20 @@ function Sidebar({ onItemClick }) {
 
   useEffect(() => {
     setSidebarExpandedMap(open);
-  }, [open]);
+    setRouteScopedSidebarMap(location.pathname, open);
+  }, [open, location.pathname]);
 
   const toggleGroup = (slug) => {
     setOpen((prev) => {
-      const updated = { ...prev, [slug]: !prev[slug] };
+      let updated;
+      const willOpen = !prev[slug];
+      if (accordion && willOpen) {
+        updated = Object.fromEntries(Object.keys(prev).map((k) => [k, k === slug]));
+      } else {
+        updated = { ...prev, [slug]: willOpen };
+      }
       setSidebarExpandedMap(updated);
+      setRouteScopedSidebarMap(location.pathname, updated);
       return updated;
     });
   };
