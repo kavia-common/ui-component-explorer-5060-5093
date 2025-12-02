@@ -2,12 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import rawSidebarItems from '../../data/sidebarItems.json';
 import { buildQueryString, parseQueryParams } from '../../utils/filter';
+import { getSidebarExpandedMap, setSidebarExpandedMap, isBrowser } from '../../utils/storage';
 import Badge from './Badge';
 
 /**
  * PUBLIC_INTERFACE
  * Sidebar - Renders a collapsible, accessible navigation from a data config.
- * - Groups can be toggled open/closed and persist open-state per session.
+ * - Groups can be toggled open/closed and persist open-state across sessions (localStorage).
  * - Items navigate to category routes (/category/:slug) or category anchors (#sub) within the page.
  * - Highlights active item and auto-applies existing search/query string parameters.
  * - Strict mode: ensures only items provided in src/data/sidebarItems.json render.
@@ -51,26 +52,44 @@ function Sidebar({ onItemClick }) {
     return cleaned;
   }, []);
 
-  // Remember open groups in session for UX continuity
-  const [open, setOpen] = useState(() => {
-    try {
-      const raw = sessionStorage.getItem('sidebar-open-groups');
-      return raw ? JSON.parse(raw) : {};
-    } catch {
-      return {};
-    }
-  });
+  // Persisted expanded state (versioned) shared by desktop and mobile.
+  // Default collapsed to avoid layout jank, then hydrate from storage on mount and when items hydrate.
+  const [open, setOpen] = useState({});
 
+  // Hydrate from storage once on mount
   useEffect(() => {
-    try {
-      sessionStorage.setItem('sidebar-open-groups', JSON.stringify(open));
-    } catch {
-      // ignore
+    if (!isBrowser()) return;
+    const stored = getSidebarExpandedMap();
+    if (stored && typeof stored === 'object') {
+      setOpen((prev) => ({ ...prev, ...stored }));
     }
+  }, []);
+
+  // When the JSON config (sidebarItems) is ready, ensure open map includes keys for groups present.
+  useEffect(() => {
+    if (!Array.isArray(sidebarItems)) return;
+    // Merge stored again in case load order differs and to ensure keys exist for current items.
+    const stored = getSidebarExpandedMap();
+    const next = { ...(stored || {}) };
+    sidebarItems.forEach((g) => {
+      if (typeof next[g.slug] === 'undefined') next[g.slug] = false;
+    });
+    setOpen((prev) => ({ ...next, ...prev }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sidebarItems?.length]);
+
+  // Persist to storage whenever open map changes
+  useEffect(() => {
+    setSidebarExpandedMap(open);
   }, [open]);
 
   const toggleGroup = (slug) => {
-    setOpen((prev) => ({ ...prev, [slug]: !prev[slug] }));
+    setOpen((prev) => {
+      const updated = { ...prev, [slug]: !prev[slug] };
+      // write-through to storage to avoid missed persistence on quick nav
+      setSidebarExpandedMap(updated);
+      return updated;
+    });
   };
 
   // Active detection: check path and hash
@@ -103,7 +122,7 @@ function Sidebar({ onItemClick }) {
     onItemClick?.();
   };
 
-  // Auto-open group if it contains the active route
+  // Auto-open group if it contains the active route; merge with existing open map.
   useEffect(() => {
     const next = {};
     sidebarItems.forEach((g) => {
@@ -112,9 +131,14 @@ function Sidebar({ onItemClick }) {
         const key = `${nav.pathname}${nav.hash || ''}`;
         return key === activeKey || (nav.pathname === pathname && !!hash && nav.hash === hash);
       });
-      next[g.slug] = isInGroup || open[g.slug] || false;
+      // If already explicitly set in open, keep it; otherwise open if active route is in group.
+      next[g.slug] = typeof open[g.slug] === 'boolean' ? open[g.slug] : Boolean(isInGroup);
     });
-    setOpen((prev) => ({ ...prev, ...next }));
+    setOpen((prev) => {
+      const merged = { ...prev, ...next };
+      setSidebarExpandedMap(merged);
+      return merged;
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeKey, sidebarItems]);
 
