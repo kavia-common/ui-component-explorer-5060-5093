@@ -1,0 +1,46 @@
+[
+  {
+    "id": "btn-primary",
+    "name": "Primary Button",
+    "slug": "primary-button",
+    "category": "buttons",
+    "tags": ["button", "cta", "action"],
+    "description": "A primary call-to-action button with solid style.",
+    "featured": true,
+    "previewHeight": 80,
+    "code": "<button className=\"px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition\">Primary</button>"
+  },
+  {
+    "id": "card-basic",
+    "name": "Basic Card",
+    "slug": "basic-card",
+    "category": "cards",
+    "tags": ["card", "container", "layout"],
+    "description": "A simple card container with header and body.",
+    "featured": true,
+    "previewHeight": 140,
+    "code": "<div className=\"rounded-lg border p-4 bg-white dark:bg-gray-800\"><div className=\"mb-2 text-sm font-semibold\">Card Header</div><p className=\"text-gray-600 dark:text-gray-300\">Card body content...</p></div>"
+  },
+  {
+    "id": "nav-topbar",
+    "name": "Top Navigation",
+    "slug": "top-navigation",
+    "category": "navigation",
+    "tags": ["navigation", "header", "navbar"],
+    "description": "A responsive top navigation bar with brand and actions.",
+    "featured": false,
+    "previewHeight": 100,
+    "code": "<header className=\"flex items-center justify-between border-b p-3 bg-white dark:bg-gray-900\"><div className=\"font-semibold\">Brand</div><nav className=\"flex items-center gap-4 text-sm\"><a className=\"hover:text-blue-600\" href=\"#\">Docs</a><a className=\"hover:text-blue-600\" href=\"#\">Blog</a></nav></header>"
+  },
+  {
+    "id": "input-text",
+    "name": "Text Input",
+    "slug": "text-input",
+    "category": "forms",
+    "tags": ["input", "form", "field"],
+    "description": "A standard text input with focus styles.",
+    "featured": false,
+    "previewHeight": 80,
+    "code": "<input type=\"text\" placeholder=\"Type here\" className=\"w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100\" />"
+  }
+]

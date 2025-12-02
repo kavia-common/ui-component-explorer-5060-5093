@@ -1,22 +1,26 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { getComponentsByCategory, getCategories } from '../utils/data';
 
 /**
  * PUBLIC_INTERFACE
- * Category page shows placeholder content for a given category slug.
+ * Category page shows components for a given category slug.
  */
 function Category() {
   const { slug } = useParams();
-  const items = Array.from({ length: 6 }).map((_, i) => ({
-    id: `${slug}-item-${i + 1}`,
-    name: `${slug} component ${i + 1}`
-  }));
+
+  const items = getComponentsByCategory(slug);
+  const category = getCategories().find((c) => c.slug === slug);
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold capitalize text-gray-900 dark:text-white">{slug}</h1>
-        <p className="text-gray-600 dark:text-gray-300">Browse components in the {slug} category.</p>
+        <h1 className="text-2xl font-semibold capitalize text-gray-900 dark:text-white">
+          {category?.name || slug}
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300">
+          {category?.description || `Browse components in the ${slug} category.`}
+        </p>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -35,6 +39,12 @@ function Category() {
             </div>
           </Link>
         ))}
+
+        {items.length === 0 && (
+          <div className="rounded-md border border-dashed border-gray-300 p-6 text-sm text-gray-600 dark:border-gray-700 dark:text-gray-300">
+            No components found for this category.
+          </div>
+        )}
       </div>
     </div>
   );

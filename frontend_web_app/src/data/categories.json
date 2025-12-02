@@ -1,0 +1,6 @@
+[
+  { "name": "Buttons", "slug": "buttons", "description": "Clickable actions and CTAs." },
+  { "name": "Cards", "slug": "cards", "description": "Container components for grouping content." },
+  { "name": "Navigation", "slug": "navigation", "description": "Headers, navbars, sidebars, and menus." },
+  { "name": "Forms", "slug": "forms", "description": "Inputs, selects, textareas, and form layouts." }
+]

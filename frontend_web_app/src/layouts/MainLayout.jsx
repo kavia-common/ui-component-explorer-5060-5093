@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import ThemeToggle from '../components/common/ThemeToggle';
 import SearchBar from '../components/common/SearchBar';
+import { getCategories } from '../utils/data';
 
 /**
  * PUBLIC_INTERFACE
@@ -32,12 +33,8 @@ function MainLayout() {
 
   const toggleSidebar = () => setSidebarOpen((s) => !s);
 
-  const categories = [
-    { name: 'Navigation', slug: 'navigation' },
-    { name: 'Forms', slug: 'forms' },
-    { name: 'Buttons', slug: 'buttons' },
-    { name: 'Cards', slug: 'cards' }
-  ];
+  // Read categories from data helpers
+  const categories = getCategories();
 
   return (
     <div className="min-h-screen bg-background text-text">
@@ -77,9 +74,7 @@ function MainLayout() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 md:grid-cols-[260px_minmax(0,1fr)]">
         {/* Sidebar */}
         <aside
-          className={`${
-            sidebarOpen ? 'block' : 'hidden'
-          } md:block border-r border-gray-200 bg-surface px-4 py-4 dark:border-gray-800 dark:bg-gray-900`}
+          className={`${sidebarOpen ? 'block' : 'hidden'} md:block border-r border-gray-200 bg-surface px-4 py-4 dark:border-gray-800 dark:bg-gray-900`}
         >
           <nav className="space-y-1">
             <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">

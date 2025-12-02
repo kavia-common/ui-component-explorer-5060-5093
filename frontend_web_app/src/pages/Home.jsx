@@ -1,16 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { getFeaturedComponents } from '../utils/data';
 
 /**
  * PUBLIC_INTERFACE
  * Home page displays a simple hero and sample categories/components grid placeholder.
  */
 function Home() {
-  const sample = [
-    { id: 'btn-primary', name: 'Primary Button' },
-    { id: 'card-basic', name: 'Basic Card' },
-    { id: 'nav-topbar', name: 'Top Navigation' }
-  ];
+  const featured = getFeaturedComponents(6);
 
   return (
     <div className="space-y-6">
@@ -24,7 +21,7 @@ function Home() {
       <section>
         <h2 className="mb-3 text-lg font-semibold text-gray-900 dark:text-white">Featured</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {sample.map((c) => (
+          {featured.map((c) => (
             <Link
               key={c.id}
               to={`/component/${encodeURIComponent(c.id)}`}
