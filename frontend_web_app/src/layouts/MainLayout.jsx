@@ -169,7 +169,7 @@ function MainLayout() {
           aria-label="Sidebar navigation"
         >
           <div className="flex-1 min-h-0 overflow-hidden">
-            <div className="h-full flex flex-col">
+            <div className="h-full flex flex-col min-h-0">
               {/* Sidebar provides sticky header and internal scroll; outer containers ensure no dead space */}
               <div className="flex-1 min-h-0">
                 <Sidebar onItemClick={() => setSidebarOpen(false)} />

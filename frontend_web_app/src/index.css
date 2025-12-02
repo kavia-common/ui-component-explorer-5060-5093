@@ -253,3 +253,8 @@ a.text-main-gradient,
   -webkit-background-clip: text;
   background-clip: text;
 }
+
+/* Ensure flex min-height cooperation for nested scroll areas inside the sidebar */
+.min-h-0 {
+  min-height: 0 !important;
+}

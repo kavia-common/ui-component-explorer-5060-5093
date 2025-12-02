@@ -249,14 +249,14 @@ function Sidebar({ onItemClick }) {
 
       {/* Scrollable content area auto-fills remaining height */}
       <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar px-2 pb-2">
-        <div className="space-y-1 text-white">
+        <div className="space-y-1 text-white min-h-0">
           {filteredGroups.map((group) => {
             const userOpen = !!open[group.slug];
             const isOpen = isFiltering ? true : userOpen;
 
             const GroupIcon = group?.icon ? getIconComponent(group.icon) : null;
             return (
-              <div key={group.slug} className="rounded-md">
+              <div key={group.slug} className="rounded-md min-h-0">
                 <button
                   type="button"
                   aria-expanded={isOpen}
@@ -281,57 +281,60 @@ function Sidebar({ onItemClick }) {
                   id={`section-${group.slug}`}
                   role="region"
                   aria-label={group.group}
-                  className={`${isOpen ? 'block' : 'hidden'}`}
+                  className={`${isOpen ? 'block' : 'hidden'} min-h-0`}
                 >
-                  <ul className="py-1 space-y-0.5">
-                    {group.items?.map((it) => {
-                      const nav = buildNav(group.slug, it);
-                      const key = `${nav.pathname}${nav.hash || ''}`;
-                      const active = key === activeKey;
-                      const isDisabled = it.disabled === true;
-                      return (
-                        <li key={`${group.slug}-${it.label}`}>
-                          <Link
-                            to={{ pathname: nav.pathname, search: preservedQS, hash: nav.hash }}
-                            onClick={(e) => {
-                              if (isDisabled) {
+                  {/* Items container: constrained height with internal scroll to avoid pushing layout */}
+                  <div className="min-h-0 max-h-[clamp(8rem,50vh,28rem)] overflow-y-auto custom-scrollbar">
+                    <ul className="py-1 space-y-0.5">
+                      {group.items?.map((it) => {
+                        const nav = buildNav(group.slug, it);
+                        const key = `${nav.pathname}${nav.hash || ''}`;
+                        const active = key === activeKey;
+                        const isDisabled = it.disabled === true;
+                        return (
+                          <li key={`${group.slug}-${it.label}`}>
+                            <Link
+                              to={{ pathname: nav.pathname, search: preservedQS, hash: nav.hash }}
+                              onClick={(e) => {
+                                if (isDisabled) {
+                                  e.preventDefault();
+                                  return;
+                                }
                                 e.preventDefault();
-                                return;
-                              }
-                              e.preventDefault();
-                              go(group.slug, it)(e);
-                            }}
-                            className={`group flex items-center justify-between gap-1.5 rounded-md px-2 py-1.5 text-sm leading-5 transition-colors duration-150 sidebar-ring ${
-                              active
-                                ? 'sidebar-active-item text-white font-semibold'
-                                : 'text-slate-50 hover:bg-[rgb(37_99_235_/0.10)]'
-                            } ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
-                            aria-current={active ? 'page' : undefined}
-                            aria-disabled={isDisabled || undefined}
-                            tabIndex={isDisabled ? -1 : 0}
-                          >
-                            <span className="flex min-w-0 items-center">
-                              <span className={`truncate ${active ? 'text-white' : 'text-slate-50'}`}>{it.label}</span>
-                            </span>
-                            <div className="ml-1 flex items-center gap-1.5">
-                              {renderBadge(it.badge)}
-                              <svg
-                                className={`h-3 w-3 ${active ? 'text-white' : 'text-slate-50'} group-hover:text-white`}
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                aria-hidden="true"
-                              >
-                                <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                              </svg>
-                            </div>
-                          </Link>
-                        </li>
-                      );
-                    })}
-                    {group.items?.length === 0 && (
-                      <li className="px-2 py-1 text-xs leading-5 text-white/80">No matches</li>
-                    )}
-                  </ul>
+                                go(group.slug, it)(e);
+                              }}
+                              className={`group flex items-center justify-between gap-1.5 rounded-md px-2 py-1.5 text-sm leading-5 transition-colors duration-150 sidebar-ring ${
+                                active
+                                  ? 'sidebar-active-item text-white font-semibold'
+                                  : 'text-slate-50 hover:bg-[rgb(37_99_235_/0.10)]'
+                              } ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                              aria-current={active ? 'page' : undefined}
+                              aria-disabled={isDisabled || undefined}
+                              tabIndex={isDisabled ? -1 : 0}
+                            >
+                              <span className="flex min-w-0 items-center">
+                                <span className={`truncate ${active ? 'text-white' : 'text-slate-50'}`}>{it.label}</span>
+                              </span>
+                              <div className="ml-1 flex items-center gap-1.5">
+                                {renderBadge(it.badge)}
+                                <svg
+                                  className={`h-3 w-3 ${active ? 'text-white' : 'text-slate-50'} group-hover:text-white`}
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  aria-hidden="true"
+                                >
+                                  <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                              </div>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                      {group.items?.length === 0 && (
+                        <li className="px-2 py-1 text-xs leading-5 text-white/80">No matches</li>
+                      )}
+                    </ul>
+                  </div>
                 </div>
               </div>
             );
