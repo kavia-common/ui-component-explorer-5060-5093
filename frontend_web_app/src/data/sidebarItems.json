@@ -69,7 +69,22 @@
     "group": "Advanced Forms",
     "slug": "advanced-forms",
     "items": [
-      { "label": "Contact Form", "to": "/category/forms#contact-form" }
+      { "label": "Advanced Select", "to": "/category/forms#advanced-select" },
+      { "label": "ComboBox", "to": "/category/forms#combobox" },
+      { "label": "SearchBox", "to": "/category/forms#searchbox" },
+      { "label": "Input Number", "to": "/category/forms#input-number" },
+      { "label": "Strong Password", "to": "/category/forms#strong-password" },
+      { "label": "Toggle Password", "to": "/category/forms#toggle-password" },
+      { "label": "Toggle Count", "to": "/category/forms#toggle-count" },
+      { "label": "Copy Markup", "to": "/category/forms#copy-markup" },
+      { "label": "PIN Input", "to": "/category/forms#pin-input" },
+      { "label": "Overlays", "to": "/category/forms#overlays" },
+      { "label": "Dropdown", "to": "/category/navigation#dropdown" },
+      { "label": "Context Menu", "to": "/category/navigation#context-menu" },
+      { "label": "Modal", "to": "/category/cards#modal" },
+      { "label": "Offcanvas (Drawer)", "to": "/category/navigation#offcanvas" },
+      { "label": "Popover", "to": "/category/navigation#popover" },
+      { "label": "Tooltip", "to": "/category/navigation#tooltip" }
     ]
   },
   {
