@@ -1638,5 +1638,102 @@
     ],
     "previewHeight": 220,
     "darkModeSupported": true
+  },
+  {
+    "id": "table-basic",
+    "name": "Basic Table",
+    "slug": "tables",
+    "category": "tables",
+    "tags": ["table", "responsive", "pagination", "data", "accessible"],
+    "difficulty": "basic",
+    "component": "TableBasic",
+    "jsxCode": "import React from 'react';\nimport TableBasic from '@/components/registry/samples/TableBasic.jsx';\n\nexport default function Example() {\n  const columns = [\n    { key: 'name', header: 'Name' },\n    { key: 'role', header: 'Role' },\n    { key: 'email', header: 'Email' }\n  ];\n  const data = [\n    { name: 'Alice Johnson', role: 'Designer', email: 'alice@example.com' },\n    { name: 'Ben Wright', role: 'Engineer', email: 'ben@example.com' },\n    { name: 'Cara Lee', role: 'PM', email: 'cara@example.com' }\n  ];\n  return <TableBasic columns={columns} data={data} caption=\"Team directory\" />;\n}\n",
+    "props": {
+      "columns": "Array<{ key: string; header: string; className?: string }>",
+      "data": "Array<Record<string, any>>",
+      "pageSizeOptions": "number[]",
+      "initialPageSize": "number",
+      "caption": "string"
+    },
+    "previewProps": {
+      "columns": [
+        { "key": "name", "header": "Name" },
+        { "key": "role", "header": "Role" },
+        { "key": "email", "header": "Email" }
+      ],
+      "data": [
+        { "name": "Alice Johnson", "role": "Designer", "email": "alice@example.com" },
+        { "name": "Ben Wright", "role": "Engineer", "email": "ben@example.com" },
+        { "name": "Cara Lee", "role": "PM", "email": "cara@example.com" },
+        { "name": "Diego Stone", "role": "QA", "email": "diego@example.com" },
+        { "name": "Eve Sun", "role": "Engineer", "email": "eve@example.com" },
+        { "name": "Fay Zhang", "role": "Designer", "email": "fay@example.com" },
+        { "name": "Gus Hill", "role": "Engineer", "email": "gus@example.com" },
+        { "name": "Hiro Tan", "role": "PM", "email": "hiro@example.com" },
+        { "name": "Ivy Chen", "role": "QA", "email": "ivy@example.com" },
+        { "name": "Jake Doe", "role": "Engineer", "email": "jake@example.com" },
+        { "name": "Kara Kay", "role": "Designer", "email": "kara@example.com" }
+      ],
+      "caption": "Team directory"
+    },
+    "description": "A simple, accessible, responsive table with basic pagination controls.",
+    "short": "Responsive table with pagination.",
+    "notes": "Accessibility: Use semantic elements: table, thead, tbody, th with scope=col, td. Provide a caption for context. Ensure keyboard focus is visible on interactive elements (pagination buttons). Responsive: wrap table in a div with overflow-x-auto for small screens. Use aria-labels on controls. Maintain sufficient color contrast in dark mode.",
+    "libraries": [
+      {
+        "name": "@tanstack/react-table",
+        "description": "Headless table utilities for sorting, filtering, pagination, and more.",
+        "install": "npm install @tanstack/react-table"
+      }
+    ]
+  },
+  {
+    "id": "table-sortable",
+    "name": "Sortable Table",
+    "slug": "tables",
+    "category": "tables",
+    "tags": ["table", "sortable", "responsive", "pagination", "accessible"],
+    "difficulty": "intermediate",
+    "component": "TableSortable",
+    "jsxCode": "import React from 'react';\nimport TableSortable from '@/components/registry/samples/TableSortable.jsx';\n\nexport default function Example() {\n  const columns = [\n    { key: 'name', header: 'Name', sortable: true },\n    { key: 'role', header: 'Role', sortable: true },\n    { key: 'email', header: 'Email' }\n  ];\n  const data = [\n    { name: 'Alice Johnson', role: 'Designer', email: 'alice@example.com' },\n    { name: 'Ben Wright', role: 'Engineer', email: 'ben@example.com' },\n    { name: 'Cara Lee', role: 'PM', email: 'cara@example.com' }\n  ];\n  return (\n    <TableSortable\n      columns={columns}\n      data={data}\n      initialSort={{ key: 'name', direction: 'asc' }}\n      caption=\"Team directory sortable\"\n    />\n  );\n}\n",
+    "props": {
+      "columns": "Array<{ key: string; header: string; sortable?: boolean; className?: string }>",
+      "data": "Array<Record<string, any>>",
+      "initialSort": "{ key: string; direction: 'asc' | 'desc' }",
+      "initialPageSize": "number",
+      "caption": "string"
+    },
+    "previewProps": {
+      "columns": [
+        { "key": "name", "header": "Name", "sortable": true },
+        { "key": "role", "header": "Role", "sortable": true },
+        { "key": "email", "header": "Email" }
+      ],
+      "data": [
+        { "name": "Alice Johnson", "role": "Designer", "email": "alice@example.com" },
+        { "name": "Ben Wright", "role": "Engineer", "email": "ben@example.com" },
+        { "name": "Cara Lee", "role": "PM", "email": "cara@example.com" },
+        { "name": "Diego Stone", "role": "QA", "email": "diego@example.com" },
+        { "name": "Eve Sun", "role": "Engineer", "email": "eve@example.com" },
+        { "name": "Fay Zhang", "role": "Designer", "email": "fay@example.com" },
+        { "name": "Gus Hill", "role": "Engineer", "email": "gus@example.com" },
+        { "name": "Hiro Tan", "role": "PM", "email": "hiro@example.com" },
+        { "name": "Ivy Chen", "role": "QA", "email": "ivy@example.com" },
+        { "name": "Jake Doe", "role": "Engineer", "email": "jake@example.com" },
+        { "name": "Kara Kay", "role": "Designer", "email": "kara@example.com" }
+      ],
+      "initialSort": { "key": "name", "direction": "asc" },
+      "caption": "Team directory sortable"
+    },
+    "description": "A sortable, accessible, responsive table with client-side sorting and basic pagination.",
+    "short": "Sortable columns + pagination.",
+    "notes": "Accessibility: Sorted column headers should be focusable controls and indicate state via aria-sort on <th>. Use clear focus rings (focus:ring). Provide a visually hidden caption or visible heading to describe table content. Keyboard: headers are buttons to toggle sorting; Enter/Space works by default for button elements. Responsive: wrap in overflow-x-auto.",
+    "libraries": [
+      {
+        "name": "@tanstack/react-table",
+        "description": "Headless table utilities to build complex data grids; use it for production-grade sorting, filtering, grouping, virtualization.",
+        "install": "npm install @tanstack/react-table"
+      }
+    ]
   }
 ]

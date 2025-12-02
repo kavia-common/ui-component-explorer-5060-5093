@@ -92,6 +92,10 @@ import BreadcrumbNav from './samples/BreadcrumbNav.jsx';
 import PaginationNav from './samples/PaginationNav.jsx';
 import Stepper from './samples/Stepper.jsx';
 
+/* Tables */
+import TableBasic from './samples/TableBasic.jsx';
+import TableSortable from './samples/TableSortable.jsx';
+
 /**
  * PUBLIC_INTERFACE
  * registry - object keyed by component id (matching src/data/components.json "id")
@@ -537,6 +541,65 @@ const registry = {
     component: Stepper,
     defaultProps: { steps: ['Account','Profile','Confirm'], current: 1 },
     previewProps: { steps: ['Account','Profile','Confirm'], current: 1 }
+  },
+
+  /* Tables (new mappings) */
+  'table-basic': {
+    component: TableBasic,
+    defaultProps: {
+      columns: [
+        { key: 'name', header: 'Name' },
+        { key: 'role', header: 'Role' },
+        { key: 'email', header: 'Email' }
+      ],
+      data: []
+    },
+    previewProps: {
+      columns: [
+        { key: 'name', header: 'Name' },
+        { key: 'role', header: 'Role' },
+        { key: 'email', header: 'Email' }
+      ],
+      data: [
+        { name: 'Alice Johnson', role: 'Designer', email: 'alice@example.com' },
+        { name: 'Ben Wright', role: 'Engineer', email: 'ben@example.com' },
+        { name: 'Cara Lee', role: 'PM', email: 'cara@example.com' },
+        { name: 'Diego Stone', role: 'QA', email: 'diego@example.com' },
+        { name: 'Eve Sun', role: 'Engineer', email: 'eve@example.com' },
+        { name: 'Fay Zhang', role: 'Designer', email: 'fay@example.com' }
+      ],
+      caption: 'Team directory'
+    }
+  },
+  'table-sortable': {
+    component: TableSortable,
+    defaultProps: {
+      columns: [
+        { key: 'name', header: 'Name', sortable: true },
+        { key: 'role', header: 'Role', sortable: true },
+        { key: 'email', header: 'Email' }
+      ],
+      data: [],
+      initialSort: { key: 'name', direction: 'asc' },
+      caption: 'Team directory sortable'
+    },
+    previewProps: {
+      columns: [
+        { key: 'name', header: 'Name', sortable: true },
+        { key: 'role', header: 'Role', sortable: true },
+        { key: 'email', header: 'Email' }
+      ],
+      data: [
+        { name: 'Alice Johnson', role: 'Designer', email: 'alice@example.com' },
+        { name: 'Ben Wright', role: 'Engineer', email: 'ben@example.com' },
+        { name: 'Cara Lee', role: 'PM', email: 'cara@example.com' },
+        { name: 'Diego Stone', role: 'QA', email: 'diego@example.com' },
+        { name: 'Eve Sun', role: 'Engineer', email: 'eve@example.com' },
+        { name: 'Fay Zhang', role: 'Designer', email: 'fay@example.com' }
+      ],
+      initialSort: { key: 'name', direction: 'asc' },
+      caption: 'Team directory sortable'
+    }
   },
 
   /* Placeholders maintained for roadmap (kept for compatibility) */
