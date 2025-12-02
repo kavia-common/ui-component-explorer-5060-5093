@@ -94,7 +94,7 @@ function Sidebar({ onItemClick }) {
   const currentQuery = useMemo(() => parseQueryParams(search), [search]);
   const preservedQS = useMemo(() => buildQueryString(currentQuery), [currentQuery]);
 
-  const buildNav = (groupSlug, item) => {
+  const buildNav = (_groupSlug, item) => {
     const base = `/category/${encodeURIComponent(item.slug)}`;
     let itemHash = '';
     if (item.to) {
@@ -142,8 +142,9 @@ function Sidebar({ onItemClick }) {
     return null;
   };
 
+  // Layout: tightened spacing and consistent states for gradient background
   return (
-    <nav aria-label="Sidebar navigation" className="space-y-3 bg-main-gradient rounded-xl p-2 text-white">
+    <nav aria-label="Sidebar navigation" className="space-y-2 bg-main-gradient rounded-xl p-2 text-white">
       {sidebarItems.map((group) => {
         const isOpen = !!open[group.slug];
         const GroupIcon = group?.icon ? getIconComponent(group.icon) : null;
@@ -155,7 +156,7 @@ function Sidebar({ onItemClick }) {
               aria-expanded={isOpen}
               aria-controls={`section-${group.slug}`}
               onClick={() => toggleGroup(group.slug)}
-              className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm font-semibold text-white transition hover:underline sidebar-focus-ring"
+              className="flex w-full items-center justify-between rounded-md px-2.5 py-2 text-left text-sm font-semibold text-white transition hover:underline sidebar-focus-ring"
             >
               <span className="inline-flex items-center gap-2">
                 {GroupIcon ? (
@@ -179,13 +180,13 @@ function Sidebar({ onItemClick }) {
               aria-label={group.group}
               className={`${isOpen ? 'block' : 'hidden'}`}
             >
-              <ul className="max-h-80 overflow-y-auto">
+              <ul className="max-h-80 overflow-y-auto py-0.5">
                 {group.items?.map((it) => {
                   const nav = buildNav(group.slug, it);
                   const key = `${nav.pathname}${nav.hash || ''}`;
                   const active = key === activeKey;
 
-                  // Support disabled/non-clickable items (no 'to' and no slug would have been filtered; so use optional disabled flag via blurb "Coming soon")
+                  // Support disabled/non-clickable items (optional flag)
                   const isDisabled = it.disabled === true;
 
                   return (
@@ -200,19 +201,20 @@ function Sidebar({ onItemClick }) {
                           e.preventDefault();
                           go(group.slug, it)(e);
                         }}
-                        className={`group flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition-all duration-150 transform-gpu hover:scale-[1.02] hover:shadow-md sidebar-focus-ring ${
+                        className={`group flex items-center justify-between gap-2 rounded-md px-2.5 py-1.5 text-[13px] transition-all duration-150 sidebar-focus-ring ${
                           active
                             ? 'text-white font-semibold underline'
                             : 'text-slate-50 hover:underline'
-                        } ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'} hover-soft-lift`}
+                        } ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
                         aria-current={active ? 'page' : undefined}
                         aria-disabled={isDisabled || undefined}
                         tabIndex={isDisabled ? -1 : 0}
                       >
                         <span className="flex min-w-0 items-center">
+                          {/* Leaf items: text only (no icon) */}
                           <span className={`truncate ${active ? 'text-white' : 'text-slate-50'}`}>{it.label}</span>
                         </span>
-                        <div className="ml-2 flex items-center gap-2">
+                        <div className="ml-1.5 flex items-center gap-1.5">
                           {renderBadge(it.badge)}
                           <svg
                             className={`h-3.5 w-3.5 ${active ? 'text-white' : 'text-slate-50'} group-hover:text-white`}

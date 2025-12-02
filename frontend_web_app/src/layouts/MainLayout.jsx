@@ -161,9 +161,6 @@ function MainLayout() {
             </button>
           </div>
           <Sidebar onItemClick={() => setSidebarOpen(false)} />
-          <div className="mt-6 rounded-lg p-3 text-sm text-white/90 ring-1 ring-white/20">
-            Tip: Use the search bar to quickly find components.
-          </div>
           {/* Focus sentinels for trap */}
           <button className="sr-only" onFocus={() => lastFocusableRef.current?.focus()} />
           <button className="sr-only" onFocus={() => firstFocusableRef.current?.focus()} />
@@ -175,9 +172,6 @@ function MainLayout() {
         {/* Sidebar */}
         <aside className="bg-main-gradient px-4 py-4 max-h-[calc(100vh-64px)] overflow-y-auto text-white" role="complementary" aria-label="Sidebar navigation">
           <Sidebar onItemClick={() => setSidebarOpen(false)} />
-          <div className="mt-6 rounded-lg p-3 text-sm text-white/90 ring-1 ring-white/20">
-            Tip: Use the search bar to quickly find components.
-          </div>
         </aside>
 
         {/* Main content */}
