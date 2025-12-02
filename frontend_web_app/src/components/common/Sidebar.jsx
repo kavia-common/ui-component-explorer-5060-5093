@@ -155,16 +155,17 @@ function Sidebar({ onItemClick }) {
               aria-expanded={isOpen}
               aria-controls={`section-${group.slug}`}
               onClick={() => toggleGroup(group.slug)}
-              className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm font-semibold text-slate-50 transition hover:underline focus:outline-none focus-ring-main-gradient"
+              className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm font-semibold text-white transition hover:underline sidebar-focus-ring"
             >
               <span className="inline-flex items-center gap-2">
                 {GroupIcon ? (
-                  <GroupIcon className="h-4 w-4 text-slate-50" aria-hidden="true" />
+                  <GroupIcon className="h-4 w-4 text-inherit" aria-hidden="true" />
                 ) : null}
-                {group.group}
+                {/* Group header text kept high contrast */}
+                <span className="text-white">{group.group}</span>
               </span>
               <svg
-                className={`h-4 w-4 text-slate-50 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                className={`h-4 w-4 text-white transition-transform ${isOpen ? 'rotate-180' : ''}`}
                 viewBox="0 0 24 24"
                 fill="none"
                 aria-hidden="true"
@@ -183,28 +184,38 @@ function Sidebar({ onItemClick }) {
                   const nav = buildNav(group.slug, it);
                   const key = `${nav.pathname}${nav.hash || ''}`;
                   const active = key === activeKey;
+
+                  // Support disabled/non-clickable items (no 'to' and no slug would have been filtered; so use optional disabled flag via blurb "Coming soon")
+                  const isDisabled = it.disabled === true;
+
                   return (
                     <li key={`${group.slug}-${it.label}`}>
                       <Link
                         to={{ pathname: nav.pathname, search: preservedQS, hash: nav.hash }}
                         onClick={(e) => {
+                          if (isDisabled) {
+                            e.preventDefault();
+                            return;
+                          }
                           e.preventDefault();
                           go(group.slug, it)(e);
                         }}
-                        className={`flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition focus:outline-none focus-ring-main-gradient ${
+                        className={`group flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition sidebar-focus-ring ${
                           active
-                            ? 'text-white underline'
+                            ? 'text-white font-semibold underline'
                             : 'text-slate-50 hover:underline'
-                        }`}
+                        } ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
                         aria-current={active ? 'page' : undefined}
+                        aria-disabled={isDisabled || undefined}
+                        tabIndex={isDisabled ? -1 : 0}
                       >
                         <span className="flex min-w-0 items-center">
-                          <span className="truncate">{it.label}</span>
+                          <span className={`truncate ${active ? 'text-white' : 'text-slate-50'}`}>{it.label}</span>
                         </span>
                         <div className="ml-2 flex items-center gap-2">
                           {renderBadge(it.badge)}
                           <svg
-                            className="h-3.5 w-3.5 text-slate-50"
+                            className={`h-3.5 w-3.5 ${active ? 'text-white' : 'text-slate-50'} group-hover:text-white`}
                             viewBox="0 0 24 24"
                             fill="none"
                             aria-hidden="true"

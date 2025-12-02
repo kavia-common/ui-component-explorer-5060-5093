@@ -78,6 +78,29 @@ a.text-main-gradient,
   pointer-events: none;
 }
 
+/* High-contrast focus ring specifically for Sidebar over gradient backgrounds */
+.sidebar-focus-ring {
+  position: relative;
+  outline: none !important;
+}
+.sidebar-focus-ring:focus,
+.sidebar-focus-ring:focus-visible {
+  /* Explicit solid 2px white ring to meet contrast on the gradient */
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px rgba(0,0,0,0.0);
+  border-radius: 0.375rem; /* match rounded-md */
+}
+@media (prefers-contrast: more) {
+  .sidebar-focus-ring:focus,
+  .sidebar-focus-ring:focus-visible {
+    box-shadow: 0 0 0 3px #ffffff;
+  }
+}
+
+/* Optional hover overlay helper for sidebar items on gradient without reducing text contrast */
+.sidebar-hover-overlay:hover {
+  background-color: rgba(255,255,255,0.08);
+}
+
 /* Subtle gradient border utility (for badges/pills) */
 .border-main-gradient {
   position: relative;

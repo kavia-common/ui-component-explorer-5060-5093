@@ -146,7 +146,7 @@ function MainLayout() {
             <span className="text-sm font-semibold text-white">Menu</span>
             <button
               type="button"
-              className="rounded-md p-2 text-white hover:underline focus:outline-none focus-ring-main-gradient"
+              className="rounded-md p-2 text-white hover:underline sidebar-focus-ring"
               onClick={() => setSidebarOpen(false)}
             >
               <span className="sr-only">Close menu</span>
