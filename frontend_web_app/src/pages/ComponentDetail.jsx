@@ -9,6 +9,7 @@ import Button from '../components/common/Button';
 import Icon from '../components/common/Icon';
 import { copyCodeSnippet } from '../utils/copy';
 import { getPreviewProps } from '../utils/preview';
+import Meta from '../components/common/Meta';
 
 /**
  * PUBLIC_INTERFACE
@@ -42,6 +43,31 @@ function ComponentDetail() {
 
   return (
     <div className="space-y-6">
+      <Meta
+        title={component?.name || id}
+        description={component?.description || 'Preview and copy code for this component.'}
+        canonical={
+          typeof window !== 'undefined' ? `${window.location.origin}/component/${encodeURIComponent(id)}` : undefined
+        }
+        type="article"
+        jsonLd={{
+          '@context': 'https://schema.org',
+          '@type': 'SoftwareSourceCode',
+          name: component?.name || id,
+          description: component?.description || 'Preview and copy code for this component.',
+          codeRepository: typeof window !== 'undefined' ? window.location.origin : undefined,
+          codeSampleType: 'text',
+          programmingLanguage: 'JavaScript',
+          runtimePlatform: 'React',
+          author: {
+            '@type': 'Organization',
+            name: 'UI Component Explorer',
+            url: typeof window !== 'undefined' ? window.location.origin : undefined
+          },
+          // Note: example only, inline code is stored in local JSON for preview/copy
+          sampleType: 'snippet',
+        }}
+      />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="space-y-2">
           <Breadcrumbs

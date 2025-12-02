@@ -4,6 +4,7 @@ import { getComponentsByCategory, getCategories } from '../utils/data';
 import Filters from '../components/explorer/Filters';
 import ComponentGrid from '../components/explorer/ComponentGrid';
 import EmptyState from '../components/common/EmptyState';
+import Meta from '../components/common/Meta';
 import Breadcrumbs from '../components/common/Breadcrumbs';
 import { parseQueryParams } from '../utils/filter';
 import { searchComponents } from '../utils/search';
@@ -35,6 +36,11 @@ function Category() {
 
   return (
     <div className="space-y-6">
+      <Meta
+        title={`${category?.name || slug} category`}
+        description={category?.description || `Browse components in the ${slug} category.`}
+        canonical={typeof window !== 'undefined' ? `${window.location.origin}/category/${slug}` : undefined}
+      />
       <div className="space-y-2">
         <Breadcrumbs
           items={[

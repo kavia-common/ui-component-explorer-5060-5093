@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getFeaturedComponents, getAllComponents } from '../utils/data';
 import ComponentGrid from '../components/explorer/ComponentGrid';
+import Meta from '../components/common/Meta';
 import { parseQueryParams } from '../utils/filter';
 import { searchComponents } from '../utils/search';
 import { filterComponents } from '../utils/filter';
@@ -27,6 +28,11 @@ function Home() {
 
   return (
     <div className="space-y-6">
+      <Meta
+        title="Home"
+        description="Discover, preview, and copy React + Tailwind UI components. Search by category or tags with live previews."
+        canonical={typeof window !== 'undefined' ? window.location.origin + '/' : undefined}
+      />
       <section className="rounded-lg bg-gradient-to-r from-blue-500/10 to-gray-50 p-6 dark:from-blue-500/10 dark:to-gray-900">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Discover ready-to-use UI components</h1>
         <p className="mt-1 text-gray-600 dark:text-gray-300">

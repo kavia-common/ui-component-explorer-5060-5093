@@ -66,6 +66,17 @@ function MainLayout() {
   }, [sidebarOpen]);
 
   const toggleSidebar = () => setSidebarOpen((s) => !s);
+  // Close on Ctrl+M (example keyboard shortcut) to toggle menu on mobile for accessibility
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.ctrlKey && (e.key === 'm' || e.key === 'M')) {
+        e.preventDefault();
+        setSidebarOpen((s) => !s);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   // Read categories from data helpers
   const categories = getCategories();
@@ -73,11 +84,11 @@ function MainLayout() {
   return (
     <div className="min-h-screen bg-background text-text">
       {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-gray-200 bg-surface/80 backdrop-blur-md dark:border-gray-800 dark:bg-gray-900/70">
+      <header className="sticky top-0 z-40 border-b border-gray-200 bg-surface/80 backdrop-blur-md dark:border-gray-800 dark:bg-gray-900/70" role="banner">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
             <button
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary md:hidden dark:text-gray-200 dark:hover:bg-gray-800"
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary focus-visible:ring-2 md:hidden dark:text-gray-200 dark:hover:bg-gray-800"
               aria-label="Toggle sidebar"
               aria-expanded={sidebarOpen}
               aria-controls="mobile-drawer"
@@ -155,7 +166,7 @@ function MainLayout() {
       {/* Desktop Layout: Sidebar + Main */}
       <div className="mx-auto hidden max-w-7xl grid-cols-[260px_minmax(0,1fr)] md:grid">
         {/* Sidebar */}
-        <aside className="border-r border-gray-200 bg-surface px-4 py-4 dark:border-gray-800 dark:bg-gray-900">
+        <aside className="border-r border-gray-200 bg-surface px-4 py-4 dark:border-gray-800 dark:bg-gray-900" role="complementary" aria-label="Sidebar navigation">
           <CategoryList categories={categories} onItemClick={() => setSidebarOpen(false)} />
           <div className="mt-6 rounded-lg border border-blue-100 bg-blue-50 p-3 text-sm text-blue-800 dark:border-blue-900/40 dark:bg-blue-900/20 dark:text-blue-200">
             Tip: Use the search bar to quickly find components.
@@ -163,7 +174,7 @@ function MainLayout() {
         </aside>
 
         {/* Main content */}
-        <main className="min-h-[70vh] bg-ocean-gradient p-4 md:p-6">
+        <main className="min-h-[70vh] bg-ocean-gradient p-4 md:p-6" role="main">
           <div className="rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <Outlet />
           </div>
@@ -180,7 +191,7 @@ function MainLayout() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 bg-surface py-6 dark:border-gray-800 dark:bg-gray-900">
+      <footer className="border-t border-gray-200 bg-surface py-6 dark:border-gray-800 dark:bg-gray-900" role="contentinfo">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 text-sm text-gray-600 dark:text-gray-300">
           <span>© {new Date().getFullYear()} UI Component Explorer</span>
           <a
