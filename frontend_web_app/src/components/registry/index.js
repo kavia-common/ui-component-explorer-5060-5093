@@ -40,6 +40,15 @@ import Select from './samples/Select.jsx';
 import RangeSlider from './samples/RangeSlider.jsx';
 import ColorPickerTailwind from './samples/ColorPickerTailwind.jsx';
 import TimePicker from './samples/TimePicker.jsx';
+import AdvancedSelect from './samples/AdvancedSelect.jsx';
+import ComboBox from './samples/ComboBox.jsx';
+import SearchBox from './samples/SearchBox.jsx';
+import InputNumber from './samples/InputNumber.jsx';
+import { StrongPassword, TogglePassword } from './samples/PasswordInputs.jsx';
+import ToggleCount from './samples/ToggleCount.jsx';
+import CopyMarkup from './samples/CopyMarkup.jsx';
+import PinInput from './samples/PinInput.jsx';
+import { Dropdown, ContextMenu, Offcanvas, Popover, Tooltip } from './samples/Overlays.jsx';
 
 /* Layout & Content samples */
 import Container from './samples/Container.jsx';
@@ -233,6 +242,80 @@ const registry = {
     component: TimePicker,
     defaultProps: { label: 'Select time', defaultValue: '09:30' },
     previewProps: { label: 'Select time' }
+  },
+
+  /* Advanced Forms */
+  'form-advanced-select': {
+    component: AdvancedSelect,
+    defaultProps: { label: 'Project', options: [{value:'alpha',label:'Alpha'},{value:'beta',label:'Beta'},{value:'gamma',label:'Gamma'}] },
+    previewProps: { label: 'Project' }
+  },
+  'form-combobox': {
+    component: ComboBox,
+    defaultProps: { label: 'Fruit', options: ['Apple','Banana','Grape','Orange'] },
+    previewProps: { label: 'Fruit' }
+  },
+  'form-searchbox': {
+    component: SearchBox,
+    defaultProps: { placeholder: 'Search components...' },
+    previewProps: { placeholder: 'Search components...' }
+  },
+  'form-number': {
+    component: InputNumber,
+    defaultProps: { label: 'Quantity', min: 0, max: 10, step: 1, defaultValue: 2 },
+    previewProps: { label: 'Quantity', defaultValue: 2 }
+  },
+  'form-strong-password': {
+    component: StrongPassword,
+    defaultProps: { label: 'Password' },
+    previewProps: { label: 'Password' }
+  },
+  'form-toggle-password': {
+    component: TogglePassword,
+    defaultProps: { label: 'Password' },
+    previewProps: { label: 'Password' }
+  },
+  'form-toggle-count': {
+    component: ToggleCount,
+    defaultProps: { initial: 0 },
+    previewProps: { initial: 0 }
+  },
+  'form-copy-markup': {
+    component: CopyMarkup,
+    defaultProps: { code: '<button class="px-4 py-2 rounded-md bg-blue-600 text-white">Click me</button>' },
+    previewProps: { code: '<button class="px-4 py-2 rounded-md bg-blue-600 text-white">Click me</button>' }
+  },
+  'form-pin-input': {
+    component: PinInput,
+    defaultProps: { length: 4 },
+    previewProps: { length: 4 }
+  },
+
+  /* Overlays & Menus */
+  'overlay-dropdown': {
+    component: Dropdown,
+    defaultProps: {},
+    previewProps: {}
+  },
+  'overlay-context-menu': {
+    component: ContextMenu,
+    defaultProps: {},
+    previewProps: {}
+  },
+  'overlay-offcanvas': {
+    component: Offcanvas,
+    defaultProps: {},
+    previewProps: {}
+  },
+  'overlay-popover': {
+    component: Popover,
+    defaultProps: {},
+    previewProps: {}
+  },
+  'overlay-tooltip': {
+    component: Tooltip,
+    defaultProps: {},
+    previewProps: {}
   },
 
   /* Layout & Content (functional) */
