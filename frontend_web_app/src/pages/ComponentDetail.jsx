@@ -1,6 +1,12 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { getComponentById } from '../utils/data';
+import Breadcrumbs from '../components/common/Breadcrumbs';
+import PreviewCanvas from '../components/explorer/PreviewCanvas';
+import CodeTabs from '../components/explorer/CodeTabs';
+import PropControls from '../components/explorer/PropControls';
+import Button from '../components/common/Button';
+import Icon from '../components/common/Icon';
 
 /**
  * PUBLIC_INTERFACE
@@ -13,44 +19,45 @@ function ComponentDetail() {
   const copyCode = async () => {
     try {
       await navigator.clipboard.writeText(component?.code || '');
-    } catch (e) {
-      // no-op fallback for environments without clipboard
+    } catch {
+      // ignore
     }
   };
 
+  // Placeholder prop controls (non-functional preview for now)
+  const controls = [
+    { label: 'Label', type: 'text', value: 'Primary' },
+    { label: 'Variant', type: 'select', value: 'primary', options: ['primary', 'secondary'] },
+  ];
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="space-y-2">
+          <Breadcrumbs
+            items={[
+              { label: 'Home', to: '/' },
+              { label: 'Components', to: '/' },
+              { label: component?.name || id },
+            ]}
+          />
           <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">{component?.name || id}</h1>
           <p className="text-gray-600 dark:text-gray-300">
             {component?.description || 'Preview and copy code for this component.'}
           </p>
         </div>
-        <button
-          onClick={copyCode}
-          className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-800"
-        >
-          Copy Code
-        </button>
-      </div>
-
-      <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-800">
-        <div className="mb-3 text-sm font-medium text-gray-700 dark:text-gray-300">Live Preview</div>
-        <div
-          className="flex items-center justify-center rounded-md border border-dashed border-gray-300 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/40"
-          style={{ minHeight: component?.previewHeight ? `${component.previewHeight}px` : '120px' }}
-        >
-          {/* Placeholder box for future dynamic rendering/iframe-based preview */}
-          <span className="text-xs text-gray-500 dark:text-gray-400">Preview area (static for now)</span>
+        <div className="flex shrink-0 items-center gap-2">
+          <Button onClick={copyCode}>
+            <Icon name="copy" /> Copy Code
+          </Button>
         </div>
       </div>
 
-      <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-800">
-        <div className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Code</div>
-        <pre className="overflow-auto rounded-md bg-gray-900 p-4 text-xs text-gray-100">
-{component?.code || `<div />`}
-        </pre>
+      <PreviewCanvas height={component?.previewHeight || 140} />
+
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_320px]">
+        <CodeTabs code={component?.code || ''} />
+        <PropControls controls={controls} onChange={() => {}} />
       </div>
     </div>
   );

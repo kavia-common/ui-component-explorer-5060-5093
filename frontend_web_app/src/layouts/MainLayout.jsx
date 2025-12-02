@@ -3,6 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import ThemeToggle from '../components/common/ThemeToggle';
 import SearchBar from '../components/common/SearchBar';
 import { getCategories } from '../utils/data';
+import CategoryList from '../components/explorer/CategoryList';
 
 /**
  * PUBLIC_INTERFACE
@@ -76,23 +77,7 @@ function MainLayout() {
         <aside
           className={`${sidebarOpen ? 'block' : 'hidden'} md:block border-r border-gray-200 bg-surface px-4 py-4 dark:border-gray-800 dark:bg-gray-900`}
         >
-          <nav className="space-y-1">
-            <div className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-              Categories
-            </div>
-            {categories.map((c) => (
-              <Link
-                key={c.slug}
-                to={`/category/${c.slug}`}
-                className="flex items-center justify-between rounded-md px-3 py-2 text-sm text-gray-700 transition hover:bg-blue-50 hover:text-blue-700 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
-              >
-                <span>{c.name}</span>
-                <svg className="h-4 w-4 opacity-60" viewBox="0 0 24 24" fill="none">
-                  <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </Link>
-            ))}
-          </nav>
+          <CategoryList categories={categories} onItemClick={() => setSidebarOpen(false)} />
           <div className="mt-6 rounded-lg border border-blue-100 bg-blue-50 p-3 text-sm text-blue-800 dark:border-blue-900/40 dark:bg-blue-900/20 dark:text-blue-200">
             Tip: Use the search bar to quickly find components.
           </div>
