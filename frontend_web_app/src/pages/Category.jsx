@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { getComponentsByCategory, getCategories } from '../utils/data';
 import Filters from '../components/explorer/Filters';
@@ -33,6 +33,16 @@ function Category() {
     const searched = searchComponents(baseItems, query.q || '');
     return filterComponents(searched, { tags: query.tags, difficulty: query.difficulty });
   }, [baseItems, query]);
+
+  // When hash changes, scroll to that anchor if present (for anchor-based filters/sections)
+  useEffect(() => {
+    if (!location.hash) return;
+    const id = location.hash.replace('#', '');
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [location.hash]);
 
   return (
     <div className="space-y-6">

@@ -1,0 +1,52 @@
+[
+  {
+    "group": "Layout & Content",
+    "slug": "layout-content",
+    "items": [
+      { "label": "Cards", "to": "/category/cards" },
+      { "label": "Modals", "to": "/category/cards#modals" },
+      { "label": "Alerts", "to": "/category/cards#alerts" },
+      { "label": "Media", "to": "/category/cards#media" }
+    ]
+  },
+  {
+    "group": "Base Components",
+    "slug": "base-components",
+    "items": [
+      { "label": "Buttons", "to": "/category/buttons" },
+      { "label": "Badges", "to": "/category/buttons#badges" }
+    ]
+  },
+  {
+    "group": "Navigations",
+    "slug": "navigations",
+    "items": [
+      { "label": "Top Navigation", "to": "/category/navigation#top" },
+      { "label": "Navbar", "to": "/category/navigation#navbar" },
+      { "label": "Breadcrumbs", "to": "/category/navigation#breadcrumbs" },
+      { "label": "Pagination", "to": "/category/navigation#pagination" }
+    ]
+  },
+  {
+    "group": "Basic Forms",
+    "slug": "basic-forms",
+    "items": [
+      { "label": "Text Input", "to": "/category/forms#text" },
+      { "label": "Email Input", "to": "/category/forms#email" }
+    ]
+  },
+  {
+    "group": "Advanced Forms",
+    "slug": "advanced-forms",
+    "items": [
+      { "label": "Contact Form", "to": "/category/forms#contact-form" }
+    ]
+  },
+  {
+    "group": "Tables",
+    "slug": "tables",
+    "items": [
+      { "label": "Data Tables", "to": "/category/tables" }
+    ]
+  }
+]

@@ -3,7 +3,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import ThemeToggle from '../components/common/ThemeToggle';
 import SearchBar from '../components/common/SearchBar';
 import { getCategories } from '../utils/data';
-import CategoryList from '../components/explorer/CategoryList';
+import Sidebar from '../components/common/Sidebar';
 import { useTheme } from '../context/ThemeContext';
 
 /**
@@ -153,7 +153,7 @@ function MainLayout() {
               </svg>
             </button>
           </div>
-          <CategoryList categories={categories} onItemClick={() => setSidebarOpen(false)} />
+          <Sidebar onItemClick={() => setSidebarOpen(false)} />
           <div className="mt-6 rounded-lg border border-blue-100 bg-blue-50 p-3 text-sm text-blue-800 dark:border-blue-900/40 dark:bg-blue-900/20 dark:text-blue-200">
             Tip: Use the search bar to quickly find components.
           </div>
@@ -167,7 +167,7 @@ function MainLayout() {
       <div className="mx-auto hidden max-w-7xl grid-cols-[260px_minmax(0,1fr)] md:grid">
         {/* Sidebar */}
         <aside className="border-r border-gray-200 bg-surface px-4 py-4 dark:border-gray-800 dark:bg-gray-900" role="complementary" aria-label="Sidebar navigation">
-          <CategoryList categories={categories} onItemClick={() => setSidebarOpen(false)} />
+          <Sidebar onItemClick={() => setSidebarOpen(false)} />
           <div className="mt-6 rounded-lg border border-blue-100 bg-blue-50 p-3 text-sm text-blue-800 dark:border-blue-900/40 dark:bg-blue-900/20 dark:text-blue-200">
             Tip: Use the search bar to quickly find components.
           </div>
