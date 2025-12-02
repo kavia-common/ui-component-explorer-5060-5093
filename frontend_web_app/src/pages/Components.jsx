@@ -156,7 +156,7 @@ function ComponentsPage() {
                 <PreviewCanvas
                   className="bg-white dark:bg-gray-900"
                   title="Live Preview"
-                  header={<Toggle id={item.id} mode={mode} />}
+                  mode={mode}
                 >
                   {previewNode}
                 </PreviewCanvas>

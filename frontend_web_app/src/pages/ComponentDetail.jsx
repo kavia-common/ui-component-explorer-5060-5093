@@ -128,7 +128,7 @@ function ComponentDetail() {
           height={component?.previewHeight || 140}
           componentId={id}
           overrideProps={previewOverrides}
-          header={<Toggle />}
+          mode={mode}
         />
       ) : null}
 

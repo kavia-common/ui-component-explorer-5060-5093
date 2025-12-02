@@ -5,13 +5,12 @@ import { copyCodeSnippet } from '../../utils/copy';
 
 /**
  * PUBLIC_INTERFACE
- * CodeTabs - Tabs for viewing code (and future variants).
+ * CodeTabs - Code view with copy control only (no mode toggles).
  * Props:
  * - code: string
  *
- * Note: This component is deprecated for toggle rendering. Do not use it to render Preview/Code
- * toggles. Parent pages (ComponentDetail, Components) render the toggle and pass header actions
- * into PreviewCanvas. CodeTabs remains for rendering code blocks with copy only.
+ * Important: Do not render Preview/Code toggles here. Parent pages control mode and provide any
+ * header actions to their own headers. This component focuses solely on rendering code and copy.
  */
 function CodeTabs({ code = '' }) {
   const [copied, setCopied] = useState(false);
