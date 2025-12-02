@@ -40,6 +40,7 @@ import Images from './samples/Images.jsx';
 import Links from './samples/Links.jsx';
 import Dividers from './samples/Dividers.jsx';
 import CustomScrollbar from './samples/CustomScrollbar.jsx';
+import KbdSample from './samples/Kbd.jsx';
 
 /**
  * PUBLIC_INTERFACE
@@ -206,6 +207,11 @@ const registry = {
   },
   'content-dividers': {
     component: Dividers,
+    defaultProps: {},
+    previewProps: {},
+  },
+  'content-kbd': {
+    component: KbdSample,
     defaultProps: {},
     previewProps: {},
   },

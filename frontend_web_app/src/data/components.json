@@ -472,7 +472,7 @@
     "previewProps": {},
     "short": "Headings, paragraphs, code, and kbd.",
     "description": "Common text styles including headings, paragraphs, code and keyboard indicators.",
-    "notes": "Prefer semantic elements (h1–h6, p) and maintain single H1 per page.",
+    "notes": "Prefer semantic elements (h1–h6, p) and maintain single H1 per page. Use <kbd> elements for keyboard hints or pair with the KBD sample.",
     "libraries": []
   },
   {
@@ -533,6 +533,21 @@
     "short": "Scrollable area with styled scrollbar.",
     "description": "A scrollable container using a reusable custom-scrollbar utility class.",
     "notes": "Cross-browser support: uses both standard and WebKit properties; includes dark mode.",
+    "libraries": []
+  },
+  {
+    "id": "content-kbd",
+    "name": "KBD",
+    "slug": "kbd",
+    "category": "content",
+    "tags": ["kbd", "keyboard", "hint"],
+    "difficulty": "beginner",
+    "jsxCode": "<KbdSample />",
+    "props": {},
+    "previewProps": {},
+    "short": "Keyboard hint badges for shortcuts.",
+    "description": "Small, rounded kbd elements to display keyboard shortcuts and combinations.",
+    "notes": "Use the semantic <kbd> HTML element. Group combos with + separators and provide accessible labels.",
     "libraries": []
   }
 ]
