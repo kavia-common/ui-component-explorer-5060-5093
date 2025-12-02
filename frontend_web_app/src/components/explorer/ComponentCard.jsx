@@ -23,7 +23,7 @@ function ComponentCard({ item }) {
         className="mb-3 flex items-center justify-center rounded-md border border-dashed border-gray-300 bg-gradient-to-b from-blue-500/10 to-gray-50 transition dark:border-gray-700 dark:from-blue-500/10 dark:to-gray-900"
         style={{ height }}
       >
-        <span className="text-xs text-gray-500 dark:text-gray-400">Preview</span>
+        <span className="text-xs text-slate-600 dark:text-slate-300">Preview</span>
       </div>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">

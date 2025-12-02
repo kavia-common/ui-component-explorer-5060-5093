@@ -2,22 +2,21 @@ import React, { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Meta from '../components/common/Meta';
 import Breadcrumbs from '../components/common/Breadcrumbs';
-import CodeTabs from '../components/explorer/CodeTabs';
 import PreviewCanvas from '../components/explorer/PreviewCanvas';
 import registry from '../components/registry';
 import { getAllComponents } from '../utils/data';
 import { copyCodeSnippet } from '../utils/copy';
+import { oceanTheme } from '../utils/tokens';
 
 /**
  * PUBLIC_INTERFACE
  * ComponentsPage - Renders a page for a given sidebar item slug, listing relevant component examples.
  * - URL: /category/:slug
- * - For each component: title, description, live preview, and Copy Code functionality.
+ * - For each component: title, description, live preview or code view, and copy inside code view.
  * - Reads component metadata from local JSON (components.json) and uses the registry for live render when possible.
  */
 function ComponentsPage() {
   const { slug } = useParams();
-  const [copyState, setCopyState] = useState({}); // id -> copied boolean
 
   // Map sidebar slug to matching components. We match by slug or category or tag occurrences.
   const items = useMemo(() => {
@@ -54,19 +53,54 @@ function ComponentsPage() {
     return nice.charAt(0).toUpperCase() + nice.slice(1);
   }, [slug]);
 
-  const handleCopy = async (id, code) => {
-    const ok = await copyCodeSnippet(code);
-    if (ok) {
-      setCopyState((s) => ({ ...s, [id]: true }));
-      setTimeout(() => setCopyState((s) => ({ ...s, [id]: false })), 1200);
-    }
+  // Local per-item mode state
+  const [modes, setModes] = useState({}); // id -> 'preview' | 'code'
+
+  const setMode = (id, next) =>
+    setModes((m) => ({ ...m, [id]: next }));
+
+  const handleCopy = async (code) => {
+    await copyCodeSnippet(code);
   };
+
+  const Toggle = ({ id, mode }) => (
+    <div
+      role="group"
+      aria-label="View mode"
+      className="inline-flex rounded-md border border-gray-200 bg-white p-0.5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+    >
+      <button
+        type="button"
+        onClick={() => setMode(id, 'preview')}
+        aria-pressed={mode === 'preview'}
+        className={`px-3 py-1.5 text-xs font-medium rounded-[6px] focus:outline-none ${oceanTheme.classes.primaryRing} ${
+          mode === 'preview'
+            ? 'bg-blue-600 text-white'
+            : 'text-slate-800 hover:bg-gray-100 dark:text-slate-100 dark:hover:bg-gray-700'
+        }`}
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        onClick={() => setMode(id, 'code')}
+        aria-pressed={mode === 'code'}
+        className={`px-3 py-1.5 text-xs font-medium rounded-[6px] focus:outline-none ${oceanTheme.classes.primaryRing} ${
+          mode === 'code'
+            ? 'bg-blue-600 text-white'
+            : 'text-slate-800 hover:bg-gray-100 dark:text-slate-100 dark:hover:bg-gray-700'
+        }`}
+      >
+        Code
+      </button>
+    </div>
+  );
 
   return (
     <div className="space-y-6">
       <Meta
         title={`${pageTitle} Components`}
-        description={`Browse ready-to-use ${pageTitle} components. Live preview and copy JSX/Tailwind snippets.`}
+        description={`Browse ready-to-use ${pageTitle} components. Live preview and code snippets.`}
       />
       <Breadcrumbs items={[{ label: 'Components', to: '/' }, { label: pageTitle }]} />
 
@@ -88,6 +122,8 @@ function ComponentsPage() {
             ? item.code
             : jsxFromJson;
 
+          const mode = modes[item.id] || 'preview';
+
           // Build preview node
           const previewNode = PreviewComp ? (
             <PreviewComp {...(reg?.previewProps || item?.previewProps || {})} />
@@ -98,7 +134,7 @@ function ComponentsPage() {
               role="img"
               aria-label={`${item.name} preview placeholder`}
             >
-              Live preview not available. Use the code snippet below.
+              Live preview not available. Switch to Code to view snippet.
             </div>
           );
 
@@ -113,22 +149,35 @@ function ComponentsPage() {
                     </p>
                   ) : null}
                 </div>
-                <button
-                  type="button"
-                  onClick={() => handleCopy(item.id, code || jsxFromJson || '')}
-                  className="rounded-md border px-3 py-1.5 text-xs font-medium text-slate-800 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-100 dark:hover:bg-slate-800"
-                  aria-label={`Copy ${item.name} code`}
-                  title={copyState[item.id] ? 'Copied' : 'Copy code'}
-                >
-                  {copyState[item.id] ? 'Copied' : 'Copy'}
-                </button>
+                <Toggle id={item.id} mode={mode} />
               </div>
 
-              <PreviewCanvas className="bg-white dark:bg-gray-900">
-                {previewNode}
-              </PreviewCanvas>
-
-              <CodeTabs code={code || jsxFromJson || ''} />
+              {mode === 'preview' ? (
+                <PreviewCanvas className="bg-white dark:bg-gray-900" header={<Toggle id={item.id} mode={mode} />}>
+                  {previewNode}
+                </PreviewCanvas>
+              ) : (
+                <div className="rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-800">
+                  <div className="flex items-center justify-between border-b border-gray-200 p-2 dark:border-gray-700">
+                    <div className="flex items-center gap-2 px-2 text-sm font-medium text-slate-800 dark:text-slate-200">
+                      Code
+                    </div>
+                    <div className="px-2">
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(code || jsxFromJson || '')}
+                        className="inline-flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-800 transition hover:bg-gray-50 focus:outline-none focus-ring-main-gradient dark:border-gray-700 dark:bg-gray-800 dark:text-slate-100 dark:hover:bg-gray-700"
+                        aria-label={`Copy ${item.name} code`}
+                      >
+                        Copy
+                      </button>
+                    </div>
+                  </div>
+                  <pre className="custom-scrollbar max-h-[420px] overflow-auto bg-gray-900 p-4 text-xs leading-relaxed text-gray-100">
+                    <code>{(code || jsxFromJson || '') || '<div />'}</code>
+                  </pre>
+                </div>
+              )}
             </section>
           );
         })}

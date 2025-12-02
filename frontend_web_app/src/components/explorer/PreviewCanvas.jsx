@@ -1,5 +1,6 @@
 import React from 'react';
 import { getPreviewComponent, getPreviewProps } from '../../utils/preview';
+import { oceanTheme } from '../../utils/tokens';
 
 /**
  * PUBLIC_INTERFACE
@@ -10,11 +11,12 @@ import { getPreviewComponent, getPreviewProps } from '../../utils/preview';
  * - overrideProps?: object (merge over registry preview/default props)
  * - note?: string (footnote or helper)
  * - children?: ReactNode (if provided, takes precedence over registry)
+ * - header?: ReactNode (optional header actions, e.g., toggle buttons)
  */
-function PreviewCanvas({ height = 140, componentId, overrideProps, note, children }) {
+function PreviewCanvas({ height = 140, componentId, overrideProps, note, children, header }) {
   const Container = ({ children: c }) => (
     <div
-      className="flex items-center justify-center rounded-md border border-dashed border-gray-300 bg-gradient-to-b from-blue-500/10 to-gray-50 p-4 dark:border-gray-700 dark:from-blue-500/10 dark:to-gray-900"
+      className={`flex items-center justify-center rounded-md border border-dashed border-gray-300 ${oceanTheme.classes.gradientSubtle} p-4 dark:border-gray-700`}
       style={{ minHeight: `${height}px` }}
     >
       <div className="w-full">
@@ -32,7 +34,10 @@ function PreviewCanvas({ height = 140, componentId, overrideProps, note, childre
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-800">
-      <div className="mb-2 text-sm font-medium text-slate-800 dark:text-slate-200">Live Preview</div>
+      <div className="mb-2 flex items-center justify-between">
+        <div className="text-sm font-medium text-slate-800 dark:text-slate-200">Live Preview</div>
+        {header ? <div className="flex items-center gap-2">{header}</div> : null}
+      </div>
       <Container>
         {content || (
           <span className="text-xs text-slate-600 dark:text-slate-300">Preview area</span>
