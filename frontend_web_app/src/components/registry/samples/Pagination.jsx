@@ -20,7 +20,7 @@ function Pagination({ page = 1, totalPages = 5 }) {
           <button
             key={p}
             type="button"
-            className={`rounded px-2 py-1 text-sm transition focus:outline-none focus:ring-2 ${active ? 'bg-main-gradient text-white shadow focus:ring-blue-300 dark:focus:ring-blue-800' : 'text-gray-700 hover:bg-gray-100 focus:ring-blue-300 dark:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-blue-800'}`}
+            className={`rounded px-2 py-1 text-sm transition focus:outline-none focus:ring-2 focus-ring-main-gradient ${active ? 'bg-main-gradient text-white shadow' : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'}`}
           >
             {p}
           </button>

@@ -55,12 +55,12 @@ function Filters({ allTags = [] }) {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search by name, tags, category…"
-            className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-blue-500 dark:focus:ring-blue-900/30"
+            className="w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus-ring-main-gradient dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder:text-gray-500"
           />
           <select
             value={difficulty}
             onChange={(e) => setDifficulty(e.target.value)}
-            className="w-[160px] rounded-md border border-gray-200 bg-white px-2 py-2 text-sm focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:focus:border-blue-500 dark:focus:ring-blue-900/30"
+            className="w-[160px] rounded-md border border-gray-200 bg-white px-2 py-2 text-sm focus:outline-none focus-ring-main-gradient dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
           >
             <option value="">All difficulties</option>
             <option value="beginner">Beginner</option>
@@ -80,7 +80,7 @@ function Filters({ allTags = [] }) {
                 className="focus:outline-none"
                 type="button"
               >
-                <Badge color={active ? 'blue' : 'gray'}>{t}</Badge>
+                <Badge color={active ? 'gradientOutline' : 'gray'}>{t}</Badge>
               </button>
             );
           })}

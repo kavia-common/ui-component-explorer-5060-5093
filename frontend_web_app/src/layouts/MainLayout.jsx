@@ -100,7 +100,7 @@ function MainLayout() {
                 <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </button>
-            <Link to="/" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2 focus-ring-main-gradient rounded-md">
               <div className="h-8 w-8 rounded-lg bg-main-gradient shadow-sm ring-1 ring-black/5" />
               <span className="text-lg font-semibold bg-clip-text text-transparent text-main-gradient">
                 UI Component Explorer
@@ -199,7 +199,7 @@ function MainLayout() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 text-sm text-gray-600 dark:text-gray-300">
           <span>© {new Date().getFullYear()} UI Component Explorer</span>
           <a
-            className="text-blue-600 hover:underline dark:text-blue-400 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="text-blue-600 hover:underline dark:text-blue-400 focus-ring-main-gradient rounded-[3px]"
             href="https://reactjs.org"
             target="_blank"
             rel="noreferrer"

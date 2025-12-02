@@ -40,6 +40,72 @@ code {
   color: transparent;
 }
 
+/* Gradient text link helper with strong default contrast underline */
+a.text-main-gradient,
+.text-main-gradient-link {
+  background: linear-gradient(45deg, #af2497 10%, #902d9a 20%, #1840a0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+}
+
+/* Focus ring using gradient outline; uses mask trick for visible ring independent of bg */
+.focus-ring-main-gradient {
+  position: relative;
+  outline: none !important;
+}
+.focus-ring-main-gradient:focus,
+.focus-ring-main-gradient:focus-visible {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0), 0 0 0 3px rgba(255,255,255,0); /* reset */
+}
+.focus-ring-main-gradient:focus::after,
+.focus-ring-main-gradient:focus-visible::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(45deg, #af2497 10%, #902d9a 20%, #1840a0 100%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Subtle gradient border utility (for badges/pills) */
+.border-main-gradient {
+  position: relative;
+}
+.border-main-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(45deg, #af2497 10%, #902d9a 20%, #1840a0 100%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Very subtle gradient fill for small surfaces */
+.bg-main-gradient-subtle {
+  background: linear-gradient(90deg, rgba(175,36,151,0.08) 0%, rgba(144,45,154,0.08) 35%, rgba(24,64,160,0.08) 100%);
+}
+
+/* Active state accent for nav/links using faint gradient background */
+.active-main-gradient {
+  background: linear-gradient(90deg, rgba(37,99,235,0.10) 0%, rgba(245,158,11,0.08) 100%);
+}
+
 /* Dark mode contrast fallbacks */
 @media (prefers-color-scheme: dark) {
   .bg-app-gradient {
@@ -50,12 +116,21 @@ code {
     /* keep gradient but deepen stops slightly for contrast atop dark surfaces */
     background: linear-gradient(45deg, #8e1f82 10%, #7a2686 20%, #153280 100%);
   }
-  .text-main-gradient {
-    /* retain gradient text; contrast is adequate on light surfaces in dark theme container cards */
+  .text-main-gradient,
+  a.text-main-gradient,
+  .text-main-gradient-link {
+    /* keep readable chroma on dark */
     background: linear-gradient(45deg, #c93aa9 10%, #a739a9 20%, #2b5fd1 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    text-decoration-color: rgba(203,213,225,0.9); /* slate-300 */
+  }
+  .bg-main-gradient-subtle {
+    background: linear-gradient(90deg, rgba(201,58,169,0.12) 0%, rgba(167,57,169,0.12) 35%, rgba(43,95,209,0.12) 100%);
+  }
+  .active-main-gradient {
+    background: linear-gradient(90deg, rgba(59,130,246,0.16) 0%, rgba(245,158,11,0.14) 100%);
   }
 }
 

@@ -48,7 +48,7 @@ function SearchBar({ placeholder = 'Search…', compact = false }) {
           placeholder={placeholder}
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className={`w-full rounded-lg border border-gray-200 bg-white pl-10 placeholder:text-gray-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-900/30 ${compact ? 'py-1.5 text-sm' : 'py-2.5'}`}
+          className={`w-full rounded-lg border border-gray-200 bg-white pl-10 placeholder:text-gray-400 focus:outline-none focus-ring-main-gradient dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-400 ${compact ? 'py-1.5 text-sm' : 'py-2.5'}`}
         />
       </div>
     </div>

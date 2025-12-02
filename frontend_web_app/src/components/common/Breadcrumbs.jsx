@@ -15,7 +15,10 @@ function Breadcrumbs({ items = [] }) {
         {items.map((item, idx) => (
           <li key={idx} className="flex items-center">
             {item.to ? (
-              <Link to={item.to} className="hover:text-blue-600 dark:hover:text-blue-400">
+              <Link
+                to={item.to}
+                className="text-main-gradient-link focus-ring-main-gradient rounded-[3px] hover:opacity-90"
+              >
                 {item.label}
               </Link>
             ) : (

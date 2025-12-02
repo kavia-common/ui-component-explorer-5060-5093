@@ -148,11 +148,11 @@ function Sidebar({ onItemClick }) {
   // Helper: render badge for specific allowed values
   const renderBadge = (badge) => {
     if (badge === 'New') {
-      return <Badge color="blue">New</Badge>;
+      return <Badge color="gradientOutline">New</Badge>;
     }
     if (badge === '🔥') {
-      // use amber style for hot
-      return <Badge color="amber">🔥</Badge>;
+      // use subtle gradient fill to hint prominence
+      return <Badge color="gradientSubtle">🔥</Badge>;
     }
     return null;
   };
@@ -205,9 +205,9 @@ function Sidebar({ onItemClick }) {
                           e.preventDefault();
                           go(group.slug, it)(e);
                         }}
-                        className={`flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition focus:outline-none focus:ring-2 focus:ring-primary ${
+                        className={`flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition focus:outline-none focus-ring-main-gradient ${
                           active
-                            ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-200'
+                            ? 'active-main-gradient text-blue-800 dark:text-blue-200'
                             : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800'
                         }`}
                         aria-current={active ? 'page' : undefined}

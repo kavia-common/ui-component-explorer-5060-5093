@@ -17,7 +17,12 @@ function SimpleNavbar({ brand = 'Ocean', links = [{ label: 'Home' }, { label: 'C
         </div>
         <nav className="flex items-center gap-4 text-sm text-gray-700 dark:text-gray-200">
           {links.map((l, i) => (
-            <a key={i} href="#" onClick={(e) => e.preventDefault()} className="transition hover:text-blue-600 dark:hover:text-blue-400">
+            <a
+              key={i}
+              href="#"
+              onClick={(e) => e.preventDefault()}
+              className="text-main-gradient-link focus-ring-main-gradient rounded-[3px] transition"
+            >
               {l.label}
             </a>
           ))}

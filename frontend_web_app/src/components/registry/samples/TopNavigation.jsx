@@ -16,7 +16,12 @@ function TopNavigation({ brand = 'Brand', links = [] }) {
       </div>
       <nav className="flex items-center gap-4 text-sm text-gray-700 dark:text-gray-200">
         {links.map((l, idx) => (
-          <a key={idx} className="hover:text-blue-600 dark:hover:text-blue-400" href={l.href || '#'} onClick={(e) => e.preventDefault()}>
+          <a
+            key={idx}
+            className="text-main-gradient-link focus-ring-main-gradient rounded-[3px]"
+            href={l.href || '#'}
+            onClick={(e) => e.preventDefault()}
+          >
             {l.label}
           </a>
         ))}
