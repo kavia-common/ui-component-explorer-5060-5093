@@ -168,10 +168,26 @@ function MainLayout() {
       </div>
 
       {/* Desktop Layout: Sidebar + Main */}
-      <div className="mx-auto hidden max-w-7xl grid-cols-[260px_minmax(0,1fr)] md:grid">
-        {/* Sidebar */}
-        <aside className="bg-main-gradient px-4 py-4 max-h-[calc(100vh-64px)] overflow-y-auto text-white" role="complementary" aria-label="Sidebar navigation">
-          <Sidebar onItemClick={() => setSidebarOpen(false)} />
+      <div className="mx-auto hidden max-w-7xl grid-cols-[270px_minmax(0,1fr)] md:grid">
+        {/* Sidebar: full-height column with sticky, slim search and scrollable list */}
+        <aside
+          className="bg-main-gradient text-white flex flex-col min-h-[calc(100vh-64px)]"
+          role="complementary"
+          aria-label="Sidebar navigation"
+        >
+          <div className="flex-1 overflow-hidden">
+            <div className="h-full flex flex-col">
+              {/* inner padding wrapper */}
+              <div className="px-3 pt-3 pb-2">
+                {/* Branding row compact to avoid duplicate controls occupying space */}
+                <div className="sr-only">Sidebar</div>
+              </div>
+              {/* Sidebar content handles its own sticky search and scroll */}
+              <div className="flex-1 min-h-0">
+                <Sidebar onItemClick={() => setSidebarOpen(false)} />
+              </div>
+            </div>
+          </div>
         </aside>
 
         {/* Main content */}

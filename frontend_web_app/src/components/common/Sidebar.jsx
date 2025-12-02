@@ -8,11 +8,11 @@ import { getIconComponent } from '../../utils/icons';
 
 /**
  * PUBLIC_INTERFACE
- * Sidebar - Renders a collapsible, accessible navigation from a data config.
- * - Group headers display an icon; leaf items render label only (no icon).
- * - Handles missing icons gracefully and avoids spacing gaps.
- * - Groups can be toggled and persist across sessions.
- * - Includes integrated search filter for categories/items.
+ * Sidebar - Renders a collapsible, accessible navigation from a data config with compact, adaptive layout.
+ * - Group headers show an icon; leaf items render text only (no icon) to save horizontal space.
+ * - Sticky, slim search input; full-height auto-fill scroll area with custom scrollbar.
+ * - Optional mobile "Show more" expander (non-intrusive; only appears below small height viewports).
+ * - Groups persist open/closed state; filtering auto-expands groups temporarily.
  *
  * Props:
  * - onItemClick?: () => void (used by mobile drawer to close on navigate)
@@ -22,28 +22,26 @@ function Sidebar({ onItemClick }) {
   const navigate = useNavigate();
   const filterInputRef = useRef(null);
 
-  // Quick validation and hardening of sidebar config
+  // Sanitize and harden sidebar config
   const sidebarItems = useMemo(() => {
-    const sanitizeText = (v) => (typeof v === 'string' ? v : '');
-    const sanitizeSlug = (v) => (typeof v === 'string' ? v : '');
+    const sText = (v) => (typeof v === 'string' ? v : '');
+    const sSlug = (v) => (typeof v === 'string' ? v : '');
     const groups = Array.isArray(rawSidebarItems) ? rawSidebarItems : [];
     const cleaned = groups
       .map((g) => {
-        const group = sanitizeText(g.group);
-        const slug = sanitizeSlug(g.slug);
-        const blurb = sanitizeText(g.blurb);
-        const icon = sanitizeText(g.icon);
+        const group = sText(g.group);
+        const slug = sSlug(g.slug);
+        const blurb = sText(g.blurb);
+        const icon = sText(g.icon);
         const items = Array.isArray(g.items) ? g.items : [];
         const cleanItems = items
           .map((it) => {
-            const label = sanitizeText(it.label);
-            const to = sanitizeText(it.to);
-            const itemSlug = sanitizeSlug(it.slug);
+            const label = sText(it.label);
+            const to = sText(it.to);
+            const itemSlug = sSlug(it.slug);
             const badge = it.badge && (it.badge === 'New' || it.badge === '🔥') ? it.badge : undefined;
-            const blurbIt = sanitizeText(it.blurb);
-            // keep icon field in data but ignore in rendering for leaf items
-            const iconIt = sanitizeText(it.icon);
-
+            const blurbIt = sText(it.blurb);
+            const iconIt = sText(it.icon);
             if (!label || !itemSlug) return null;
             return { label, to, slug: itemSlug, badge, blurb: blurbIt, icon: iconIt };
           })
@@ -57,7 +55,7 @@ function Sidebar({ onItemClick }) {
     return cleaned;
   }, []);
 
-  // Local search state (does not modify URL)
+  // Local filter state (does not modify URL)
   const [query, setQuery] = useState('');
   const normalizedQuery = useMemo(() => query.trim().toLowerCase(), [query]);
 
@@ -110,7 +108,7 @@ function Sidebar({ onItemClick }) {
         const url = new URL(item.to, window.location.origin);
         itemHash = url.hash || '';
       } catch {
-        // ignore
+        // ignore bad url in data
       }
     }
     return { pathname: base, hash: itemHash };
@@ -189,127 +187,161 @@ function Sidebar({ onItemClick }) {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
+  // Mobile "Show more" visibility logic (progressive enhancement)
+  const [mobileExpanded, setMobileExpanded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const m = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsMobile(m.matches);
+    update();
+    if (m.addEventListener) m.addEventListener('change', update);
+    else m.addListener(update);
+    return () => {
+      if (m.removeEventListener) m.removeEventListener('change', update);
+      else m.removeListener(update);
+    };
+  }, []);
+
   // Ocean Professional styled sidebar with integrated search
   return (
-    <nav aria-label="Sidebar navigation" className="space-y-3">
-      {/* Search/filter input */}
-      <div className="px-1">
-        <label htmlFor="sidebar-filter" className="sr-only">Filter categories</label>
-        <div className="relative">
-          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-white/80">
-            <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-              <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            </svg>
+    <nav aria-label="Sidebar navigation" className="flex h-full min-h-0 flex-col">
+      {/* Sticky Search (slim). Avoids consuming too much space */}
+      <div className="sticky top-0 z-10 bg-main-gradient/95 backdrop-blur supports-[backdrop-filter]:bg-main-gradient/85">
+        <div className="px-2 pt-2 pb-1.5">
+          <label htmlFor="sidebar-filter" className="sr-only">Filter categories</label>
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2 text-white/80">
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+                <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </div>
+            <input
+              ref={filterInputRef}
+              id="sidebar-filter"
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Filter components…"
+              className="w-full rounded-md border border-white/15 bg-white/10 pl-7 pr-2 py-1.5 text-sm leading-5 text-white placeholder:text-white/70 outline-none sidebar-focus-ring"
+            />
           </div>
-          <input
-            ref={filterInputRef}
-            id="sidebar-filter"
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Filter components…"
-            className="w-full rounded-md border border-white/20 bg-white/10 px-8 py-1.5 text-sm text-white placeholder:text-white/70 outline-none sidebar-focus-ring"
-          />
         </div>
       </div>
 
-      {/* Groups */}
-      <div className="space-y-2 bg-main-gradient rounded-xl p-2 text-white">
-        {filteredGroups.map((group) => {
-          const userOpen = !!open[group.slug];
-          const isOpen = isFiltering ? true : userOpen;
-          const GroupIcon = group?.icon ? getIconComponent(group.icon) : null;
+      {/* Scrollable content area auto-fills remaining height */}
+      <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar px-2 pb-2">
+        <div className="space-y-1.5 text-white">
+          {filteredGroups.map((group) => {
+            const userOpen = !!open[group.slug];
+            const isOpen = isFiltering ? true : userOpen;
+            const GroupIcon = group?.icon ? getIconComponent(group.icon) : null;
 
-          return (
-            <div key={group.slug} className="rounded-md">
-              <button
-                type="button"
-                aria-expanded={isOpen}
-                aria-controls={`section-${group.slug}`}
-                onClick={() => toggleGroup(group.slug)}
-                className="flex w-full items-center justify-between rounded-md px-2.5 py-2 text-left text-sm font-semibold text-white transition sidebar-focus-ring sidebar-hover-overlay"
-              >
-                <span className="inline-flex items-center gap-2">
-                  {GroupIcon ? <GroupIcon className="h-4 w-4 text-inherit" aria-hidden="true" /> : null}
-                  <span className="text-white">{group.group}</span>
-                </span>
-                <svg
-                  className={`h-4 w-4 text-white transition-transform ${isOpen ? 'rotate-180' : ''}`}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  aria-hidden="true"
+            return (
+              <div key={group.slug} className="rounded-md">
+                <button
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls={`section-${group.slug}`}
+                  onClick={() => toggleGroup(group.slug)}
+                  className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-[13px] font-semibold text-white transition sidebar-focus-ring sidebar-hover-overlay"
                 >
-                  <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-              <div
-                id={`section-${group.slug}`}
-                role="region"
-                aria-label={group.group}
-                className={`${isOpen ? 'block' : 'hidden'}`}
-              >
-                <ul className="custom-scrollbar max-h-80 overflow-y-auto py-0.5">
-                  {group.items?.map((it) => {
-                    const nav = buildNav(group.slug, it);
-                    const key = `${nav.pathname}${nav.hash || ''}`;
-                    const active = key === activeKey;
+                  <span className="inline-flex items-center gap-2">
+                    {GroupIcon ? <GroupIcon className="h-4 w-4 text-inherit" aria-hidden="true" /> : null}
+                    <span className="text-white">{group.group}</span>
+                  </span>
+                  <svg
+                    className={`h-3.5 w-3.5 text-white transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+                <div
+                  id={`section-${group.slug}`}
+                  role="region"
+                  aria-label={group.group}
+                  className={`${isOpen ? 'block' : 'hidden'}`}
+                >
+                  {/* Items list: compact density; prevent large gaps when collapsed by not reserving space */}
+                  <ul className="py-0.5">
+                    {group.items?.map((it) => {
+                      const nav = buildNav(group.slug, it);
+                      const key = `${nav.pathname}${nav.hash || ''}`;
+                      const active = key === activeKey;
 
-                    // Support disabled/non-clickable items (optional flag)
-                    const isDisabled = it.disabled === true;
+                      // Support disabled/non-clickable items (optional flag)
+                      const isDisabled = it.disabled === true;
 
-                    return (
-                      <li key={`${group.slug}-${it.label}`}>
-                        <Link
-                          to={{ pathname: nav.pathname, search: preservedQS, hash: nav.hash }}
-                          onClick={(e) => {
-                            if (isDisabled) {
+                      return (
+                        <li key={`${group.slug}-${it.label}`}>
+                          <Link
+                            to={{ pathname: nav.pathname, search: preservedQS, hash: nav.hash }}
+                            onClick={(e) => {
+                              if (isDisabled) {
+                                e.preventDefault();
+                                return;
+                              }
                               e.preventDefault();
-                              return;
-                            }
-                            e.preventDefault();
-                            go(group.slug, it)(e);
-                          }}
-                          className={`group flex items-center justify-between gap-2 rounded-md px-2.5 py-1.5 text-[13px] transition-all duration-150 sidebar-focus-ring ${
-                            active
-                              ? 'active-main-gradient text-white font-semibold'
-                              : 'text-slate-50 hover:underline'
-                          } ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
-                          aria-current={active ? 'page' : undefined}
-                          aria-disabled={isDisabled || undefined}
-                          tabIndex={isDisabled ? -1 : 0}
-                        >
-                          <span className="flex min-w-0 items-center">
-                            {/* Leaf items: text only (no icon) */}
-                            <span className={`truncate ${active ? 'text-white' : 'text-slate-50'}`}>{it.label}</span>
-                          </span>
-                          <div className="ml-1.5 flex items-center gap-1.5">
-                            {renderBadge(it.badge)}
-                            <svg
-                              className={`h-3.5 w-3.5 ${active ? 'text-white' : 'text-slate-50'} group-hover:text-white`}
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              aria-hidden="true"
-                            >
-                              <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          </div>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                  {group.items?.length === 0 && (
-                    <li className="px-2.5 py-2 text-xs text-white/80">No matches</li>
-                  )}
-                </ul>
+                              go(group.slug, it)(e);
+                            }}
+                            className={`group flex items-center justify-between gap-2 rounded-md px-2 py-1.5 text-[13px] leading-5 transition-all duration-150 sidebar-focus-ring ${
+                              active
+                                ? 'active-main-gradient text-white font-semibold'
+                                : 'text-slate-50 hover:underline'
+                            } ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                            aria-current={active ? 'page' : undefined}
+                            aria-disabled={isDisabled || undefined}
+                            tabIndex={isDisabled ? -1 : 0}
+                          >
+                            <span className="flex min-w-0 items-center">
+                              {/* Leaf items: text only (no icon) */}
+                              <span className={`truncate ${active ? 'text-white' : 'text-slate-50'}`}>{it.label}</span>
+                            </span>
+                            <div className="ml-1 flex items-center gap-1.5">
+                              {renderBadge(it.badge)}
+                              <svg
+                                className={`h-3 w-3 ${active ? 'text-white' : 'text-slate-50'} group-hover:text-white`}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                aria-hidden="true"
+                              >
+                                <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            </div>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                    {group.items?.length === 0 && (
+                      <li className="px-2 py-1.5 text-xs text-white/80">No matches</li>
+                    )}
+                  </ul>
+                </div>
               </div>
-            </div>
-          );
-        })}
-        {filteredGroups.length === 0 && (
-          <div className="px-2.5 py-2 text-xs text-white/80">No categories match your filter.</div>
-        )}
+            );
+          })}
+          {filteredGroups.length === 0 && (
+            <div className="px-2 py-2 text-xs text-white/80">No categories match your filter.</div>
+          )}
+        </div>
       </div>
+
+      {/* Optional mobile Show more expander when content exceeds view height */}
+      {isMobile && !mobileExpanded && (
+        <div className="sticky bottom-0 z-10 bg-main-gradient/95 px-2 py-2">
+          <button
+            type="button"
+            className="w-full rounded-md border border-white/20 bg-white/10 px-3 py-1.5 text-sm text-white hover:underline sidebar-focus-ring"
+            onClick={() => setMobileExpanded(true)}
+          >
+            Show more
+          </button>
+        </div>
+      )}
     </nav>
   );
 }

@@ -8,8 +8,8 @@
   scrollbar-color: #9ca3af #e5e7eb; /* thumb, track */
 }
 .custom-scrollbar::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: #9ca3af;
