@@ -1,4 +1,5 @@
 //
+//
 // PUBLIC_INTERFACE
 /**
  * Component Registry - Maps component IDs to React components for live preview.
@@ -28,6 +29,17 @@ import BreadcrumbSample from './samples/BreadcrumbSample';
 import DatePickerBasic from './samples/DatePickerBasic';
 import ColorPickerBasic from './samples/ColorPickerBasic';
 import GenericPlaceholder from './samples/GenericPlaceholder';
+
+/* New Layout & Content samples */
+import Container from './samples/Container.jsx';
+import Columns from './samples/Columns.jsx';
+import Grid, { GridItem } from './samples/Grid.jsx';
+import LayoutSplitter from './samples/LayoutSplitter.jsx';
+import Typography from './samples/Typography.jsx';
+import Images from './samples/Images.jsx';
+import Links from './samples/Links.jsx';
+import Dividers from './samples/Dividers.jsx';
+import CustomScrollbar from './samples/CustomScrollbar.jsx';
 
 /**
  * PUBLIC_INTERFACE
@@ -124,7 +136,86 @@ const registry = {
     previewProps: { color: '#2563EB' }
   },
 
-  // Sidebar item placeholders (Layout & Content)
+  /* Layout & Content (functional) */
+  'layout-container': {
+    component: Container,
+    defaultProps: { size: 'md', children: 'Responsive container area' },
+    previewProps: { size: 'lg', children: 'Responsive container area' },
+  },
+  'layout-columns': {
+    component: Columns,
+    defaultProps: {
+      cols: { base: 1, md: 2, lg: 3 },
+      gap: '6',
+      children: (
+        <>
+          <div className="h-16 rounded bg-gray-100 dark:bg-gray-800" />
+          <div className="h-16 rounded bg-gray-100 dark:bg-gray-800" />
+          <div className="h-16 rounded bg-gray-100 dark:bg-gray-800" />
+        </>
+      )
+    },
+    previewProps: undefined,
+  },
+  'layout-grid': {
+    component: Grid,
+    defaultProps: {
+      cols: 12,
+      gap: 4,
+      children: (
+        <>
+          <div className="col-span-3 h-16 rounded bg-gray-100 dark:bg-gray-800" />
+          <div className="col-span-6 h-16 rounded bg-gray-100 dark:bg-gray-800" />
+          <div className="col-span-3 h-16 rounded bg-gray-100 dark:bg-gray-800" />
+        </>
+      )
+    },
+    previewProps: undefined,
+  },
+  'layout-splitter': {
+    component: LayoutSplitter,
+    defaultProps: {
+      left: (
+        <div className="space-y-2">
+          <div className="h-16 rounded bg-gray-100 dark:bg-gray-800" />
+          <div className="h-16 rounded bg-gray-100 dark:bg-gray-800" />
+        </div>
+      ),
+      right: <div className="h-32 rounded bg-gray-100 dark:bg-gray-800" />,
+      initial: 40,
+      minLeft: 20,
+      minRight: 20,
+      height: '320px'
+    },
+    previewProps: undefined,
+  },
+  'content-typography': {
+    component: Typography,
+    defaultProps: {},
+    previewProps: {},
+  },
+  'content-images': {
+    component: Images,
+    defaultProps: {},
+    previewProps: {},
+  },
+  'content-links': {
+    component: Links,
+    defaultProps: {},
+    previewProps: {},
+  },
+  'content-dividers': {
+    component: Dividers,
+    defaultProps: {},
+    previewProps: {},
+  },
+  'content-scrollbar': {
+    component: CustomScrollbar,
+    defaultProps: {},
+    previewProps: {},
+  },
+
+  // Keep placeholders for unimplemented items
   'placeholder-container': { component: GenericPlaceholder, previewProps: { title: 'Container', blurb: 'Responsive container widths for wrapping content.' } },
   'placeholder-columns': { component: GenericPlaceholder, previewProps: { title: 'Columns', blurb: 'Simple column layouts and utilities.' } },
   'placeholder-grid': { component: GenericPlaceholder, previewProps: { title: 'Grid', blurb: 'CSS grid presets for common layouts.' } },
@@ -136,7 +227,7 @@ const registry = {
   'placeholder-kbd': { component: GenericPlaceholder, previewProps: { title: 'KBD', blurb: 'Keyboard hint badges for shortcuts.' } },
   'placeholder-custom-scrollbar': { component: GenericPlaceholder, previewProps: { title: 'Custom Scrollbar', blurb: 'Scrollbar theming examples.' } },
 
-  // Base Components
+  // Other placeholders unchanged...
   'placeholder-accordion': { component: GenericPlaceholder, previewProps: { title: 'Accordion', blurb: 'Disclosure lists with expand/collapse.' } },
   'placeholder-alerts': { component: GenericPlaceholder, previewProps: { title: 'Alerts', blurb: 'Inline notices for statuses and messages.' } },
   'placeholder-avatar': { component: GenericPlaceholder, previewProps: { title: 'Avatar', blurb: 'User avatars and sizes.' } },
@@ -164,7 +255,6 @@ const registry = {
   'placeholder-timeline': { component: GenericPlaceholder, previewProps: { title: 'Timeline', blurb: 'Sequential timeline views.' } },
   'placeholder-tree-view': { component: GenericPlaceholder, previewProps: { title: 'Tree View', blurb: 'Hierarchical expandable lists.' } },
 
-  // Navigations
   'placeholder-navbar': { component: GenericPlaceholder, previewProps: { title: 'Navbar', blurb: 'Top navigation bars with brand and links.' } },
   'placeholder-mega-menu': { component: GenericPlaceholder, previewProps: { title: 'Mega Menu', blurb: 'Large menu panels with sections.' } },
   'placeholder-navs': { component: GenericPlaceholder, previewProps: { title: 'Navs', blurb: 'Simple nav lists and pills.' } },
@@ -175,7 +265,6 @@ const registry = {
   'placeholder-pagination': { component: GenericPlaceholder, previewProps: { title: 'Pagination', blurb: 'Page navigation controls.' } },
   'placeholder-stepper': { component: GenericPlaceholder, previewProps: { title: 'Stepper', blurb: 'Multi-step progress navigation.' } },
 
-  // Basic Forms
   'placeholder-input': { component: GenericPlaceholder, previewProps: { title: 'Input', blurb: 'Text input fields.' } },
   'placeholder-input-group': { component: GenericPlaceholder, previewProps: { title: 'Input Group', blurb: 'Inputs with addons and icons.' } },
   'placeholder-textarea': { component: GenericPlaceholder, previewProps: { title: 'Textarea', blurb: 'Multi-line text fields.' } },
@@ -188,7 +277,6 @@ const registry = {
   'placeholder-color-picker': { component: GenericPlaceholder, previewProps: { title: 'Color Picker', blurb: 'Color selection inputs.' } },
   'placeholder-timepicker': { component: GenericPlaceholder, previewProps: { title: 'TimePicker', blurb: 'Time selection controls.' } },
 
-  // Advanced Forms
   'placeholder-advanced-select': { component: GenericPlaceholder, previewProps: { title: 'Advanced Select', blurb: 'Searchable, async, and multi selects.' } },
   'placeholder-combobox': { component: GenericPlaceholder, previewProps: { title: 'ComboBox', blurb: 'Typeahead combobox field.' } },
   'placeholder-searchbox': { component: GenericPlaceholder, previewProps: { title: 'SearchBox', blurb: 'Search input with suggestions.' } },
@@ -206,8 +294,8 @@ const registry = {
   'placeholder-popover': { component: GenericPlaceholder, previewProps: { title: 'Popover', blurb: 'Small overlay panels.' } },
   'placeholder-tooltip': { component: GenericPlaceholder, previewProps: { title: 'Tooltip', blurb: 'Text hints on hover/focus.' } },
 
-  // Tables
   'placeholder-data-tables': { component: GenericPlaceholder, previewProps: { title: 'Data Tables', blurb: 'Sortable and pageable data grids.' } },
 };
 
 export default registry;
+export { GridItem };

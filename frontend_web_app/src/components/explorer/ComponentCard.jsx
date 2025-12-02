@@ -7,7 +7,7 @@ import Icon from '../common/Icon';
  * PUBLIC_INTERFACE
  * ComponentCard - Card showing a small preview area, title, and tags.
  * Props:
- * - item: { id, name, tags?: string[], previewHeight?: number }
+ * - item: { id, name, tags?: string[], previewHeight?: number, short?: string }
  */
 function ComponentCard({ item }) {
   const height = item?.previewHeight ? Math.max(64, item.previewHeight) : 96;
@@ -23,11 +23,15 @@ function ComponentCard({ item }) {
         <span className="text-xs text-gray-500 dark:text-gray-400">Preview</span>
       </div>
       <div className="flex items-start justify-between gap-3">
-        <div>
+        <div className="min-w-0">
           <div className="font-medium text-slate-800 group-hover:text-blue-700 dark:text-slate-200 dark:group-hover:text-blue-300">
             {item.name}
           </div>
-          {item.description ? (
+          {item.short ? (
+            <div className="mt-0.5 line-clamp-2 text-xs text-slate-600 dark:text-slate-300">
+              {item.short}
+            </div>
+          ) : item.description ? (
             <div className="mt-0.5 line-clamp-2 text-xs text-slate-600 dark:text-slate-300">
               {item.description}
             </div>
