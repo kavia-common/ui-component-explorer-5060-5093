@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import ThemeToggle from '../components/common/ThemeToggle';
-import SearchBar from '../components/common/SearchBar';
 import { getCategories } from '../utils/data';
 import Sidebar from '../components/common/Sidebar';
 import { useTheme } from '../context/ThemeContext';
@@ -106,16 +105,10 @@ function MainLayout() {
             </Link>
           </div>
 
-          <div className="hidden flex-1 items-center justify-center px-6 md:flex">
-            <div className="w-full max-w-xl">
-              <SearchBar placeholder="Search components…" />
-            </div>
-          </div>
+          {/* Center spacer to preserve alignment without search */}
+          <div className="hidden flex-1 items-center justify-center px-6 md:flex" />
 
           <div className="flex items-center gap-2">
-            <div className="md:hidden">
-              <SearchBar compact placeholder="Search…" />
-            </div>
             {/* Ensure toggle is visible on gradient */}
             <div className="rounded-md ring-1 ring-white/20">
               <ThemeToggle />

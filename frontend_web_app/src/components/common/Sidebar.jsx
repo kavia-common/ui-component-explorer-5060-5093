@@ -243,7 +243,7 @@ function Sidebar({ onItemClick }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Filter components…"
-              className="w-full rounded-md border border-white/15 bg-white/10 pl-7 pr-2 py-1.5 text-sm leading-5 text-white placeholder:text-white/70 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent"
+              className="w-full rounded-md border border-white/15 bg-white/10 pl-7 pr-2 py-2 text-base leading-6 text-white placeholder:text-white/70 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent"
             />
           </div>
         </div>
@@ -264,7 +264,7 @@ function Sidebar({ onItemClick }) {
                   aria-expanded={isOpen}
                   aria-controls={`section-${group.slug}`}
                   onClick={() => toggleGroup(group.slug)}
-                  className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-[13px] font-semibold text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent hover:bg-[rgb(37_99_235_/0.10)]"
+                  className="flex w-full items-center justify-between rounded-md px-2 py-2 text-left text-base font-semibold text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent hover:bg-[rgb(37_99_235_/0.10)]"
                 >
                   <span className="inline-flex items-center gap-2">
                     {GroupIcon ? <GroupIcon className="h-4 w-4 text-inherit" aria-hidden="true" /> : null}
@@ -286,7 +286,7 @@ function Sidebar({ onItemClick }) {
                   className={`${isOpen ? 'block' : 'hidden'}`}
                 >
                   {/* Items list: compact density; prevent large gaps when collapsed by not reserving space */}
-                  <ul className="py-0.5">
+                  <ul className="py-1">
                     {group.items?.map((it) => {
                       const nav = buildNav(group.slug, it);
                       const key = `${nav.pathname}${nav.hash || ''}`;
@@ -307,7 +307,7 @@ function Sidebar({ onItemClick }) {
                               e.preventDefault();
                               go(group.slug, it)(e);
                             }}
-                            className={`group flex items-center justify-between gap-2 rounded-md px-2 py-1.5 text-[13px] leading-5 transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent ${
+                            className={`group flex items-center justify-between gap-2 rounded-md px-2 py-2 text-base leading-6 transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent ${
                               active
                                 ? 'sidebar-active-item text-white font-semibold'
                                 : 'text-slate-50 hover:bg-[rgb(37_99_235_/0.10)]'
@@ -320,7 +320,7 @@ function Sidebar({ onItemClick }) {
                               {/* Leaf items: text only (no icon) */}
                               <span className={`truncate ${active ? 'text-white' : 'text-slate-50'}`}>{it.label}</span>
                             </span>
-                            <div className="ml-1 flex items-center gap-1.5">
+                            <div className="ml-1 flex items-center gap-2">
                               {renderBadge(it.badge)}
                               <svg
                                 className={`h-3 w-3 ${active ? 'text-white' : 'text-slate-50'} group-hover:text-white`}
