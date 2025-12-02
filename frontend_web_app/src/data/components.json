@@ -1364,18 +1364,19 @@
     "category": "forms",
     "tags": ["select", "search", "keyboard"],
     "difficulty": "intermediate",
-    "jsxCode": "<AdvancedSelect label=\"Project\" options={[{value:'alpha',label:'Alpha'},{value:'beta',label:'Beta'},{value:'gamma',label:'Gamma'}]} />",
+    "jsxCode": "<AdvancedSelect label=\\\"Project\\\" options={[{value:'alpha',label:'Alpha'},{value:'beta',label:'Beta'},{value:'gamma',label:'Gamma'}]} />",
     "props": { "label": "string", "options": "array<{value,label}>" },
-    "previewProps": { "label": "Project" },
+    "previewProps": { "label": "Project", "options": [{ "value": "alpha", "label": "Alpha" }, { "value": "beta", "label": "Beta" }, { "value": "gamma", "label": "Gamma" }] },
     "short": "Searchable select with keyboard navigation.",
     "description": "Tailwind-only searchable select with listbox pattern, type-ahead filter, and keyboard navigation.",
-    "notes": "Uses a listbox pattern (aria-haspopup, aria-expanded, role=listbox, aria-selected) and supports keyboard type-ahead. Ensure focus is managed and the trigger button has an accessible name.",
+    "notes": "Uses a listbox pattern (aria-haspopup, aria-expanded, role=listbox, aria-selected) and supports keyboard type-ahead. Ensure focus is managed and the trigger button has an accessible name. Include aria-activedescendant for active option where applicable.",
     "libraries": [
       { "name": "@headlessui/react (recommended for production)", "install": "npm i @headlessui/react" },
       { "name": "@floating-ui/react (optional for placement)", "install": "npm i @floating-ui/react" }
     ],
     "previewHeight": 160,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div class=\\\"w-72\\\"><button class=\\\"w-full justify-between inline-flex items-center rounded-md border px-3 py-2 text-left bg-white dark:bg-gray-900\\\" aria-haspopup=\\\"listbox\\\" aria-expanded=\\\"false\\\">Select a project<svg class=\\\"ml-2 h-4 w-4 opacity-60\\\"/></button><ul class=\\\"mt-1 rounded-md border bg-white dark:bg-gray-900 p-1 shadow-md\\\" role=\\\"listbox\\\"><li role=\\\"option\\\" aria-selected=\\\"false\\\" class=\\\"px-2 py-1.5 rounded hover:bg-blue-50 dark:hover:bg-gray-800\\\">Alpha</li><li role=\\\"option\\\" aria-selected=\\\"false\\\" class=\\\"px-2 py-1.5 rounded hover:bg-blue-50 dark:hover:bg-gray-800\\\">Beta</li><li role=\\\"option\\\" aria-selected=\\\"false\\\" class=\\\"px-2 py-1.5 rounded hover:bg-blue-50 dark:hover:bg-gray-800\\\">Gamma</li></ul></div>"
   },
   {
     "id": "form-combobox",
@@ -1384,17 +1385,18 @@
     "category": "forms",
     "tags": ["combobox", "autocomplete", "search"],
     "difficulty": "intermediate",
-    "jsxCode": "<ComboBox label=\"Fruit\" options={['Apple','Banana','Grape','Orange']} placeholder=\"Search fruits\" />",
+    "jsxCode": "<ComboBox label=\\\"Fruit\\\" options={['Apple','Banana','Grape','Orange']} placeholder=\\\"Search fruits\\\" />",
     "props": { "label": "string", "options": "string[]", "placeholder": "string" },
-    "previewProps": { "label": "Fruit" },
+    "previewProps": { "label": "Fruit", "options": ["Apple","Banana","Grape","Orange"], "placeholder": "Search fruits" },
     "short": "Free text input with suggestions.",
     "description": "Autocomplete input that allows free typing or choosing from suggestions.",
-    "notes": "Follows ARIA combobox pattern: input with aria-autocomplete, role=listbox for results, and aria-activedescendant for highlighting. Use Headless UI Combobox for full a11y coverage.",
+    "notes": "ARIA combobox: input role=\\\"combobox\\\" with aria-expanded and aria-controls for the listbox. Results list uses role=listbox and each item role=option. Manage aria-activedescendant for highlighted item.",
     "libraries": [
       { "name": "@headlessui/react (recommended)", "install": "npm i @headlessui/react" }
     ],
     "previewHeight": 140,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<label class=\\\"block text-sm font-medium\\\">Fruit</label><div class=\\\"relative mt-1\\\"><input role=\\\"combobox\\\" aria-expanded=\\\"false\\\" aria-controls=\\\"cb-list\\\" class=\\\"w-72 rounded-md border px-3 py-2 bg-white dark:bg-gray-900\\\" placeholder=\\\"Search fruits\\\"/><ul id=\\\"cb-list\\\" role=\\\"listbox\\\" class=\\\"absolute z-10 mt-1 w-72 rounded-md border bg-white dark:bg-gray-900 p-1 shadow-md\\\"><li role=\\\"option\\\" class=\\\"px-2 py-1.5 rounded hover:bg-blue-50 dark:hover:bg-gray-800\\\">Apple</li><li role=\\\"option\\\" class=\\\"px-2 py-1.5 rounded hover:bg-blue-50 dark:hover:bg-gray-800\\\">Banana</li></ul></div>"
   },
   {
     "id": "form-searchbox",
@@ -1403,7 +1405,7 @@
     "category": "forms",
     "tags": ["search", "input", "button"],
     "difficulty": "beginner",
-    "jsxCode": "<SearchBox placeholder=\"Search components...\" />",
+    "jsxCode": "<SearchBox placeholder=\\\"Search components...\\\" />",
     "props": { "placeholder": "string", "onSearch": "function" },
     "previewProps": { "placeholder": "Search components..." },
     "short": "Input with search and clear controls.",
@@ -1411,7 +1413,8 @@
     "notes": "Ensure the search button has discernible text for screen readers and use a form submit for Enter key handling.",
     "libraries": [],
     "previewHeight": 76,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<form class=\\\"flex w-80 items-center gap-2\\\"><div class=\\\"relative flex-1\\\"><span class=\\\"pointer-events-none absolute inset-y-0 left-2 flex items-center text-slate-400\\\">🔎</span><input type=\\\"search\\\" class=\\\"w-full rounded-md border pl-8 pr-8 py-2 bg-white dark:bg-gray-900\\\" placeholder=\\\"Search components...\\\"/></div><button type=\\\"submit\\\" class=\\\"rounded-md bg-blue-600 px-3 py-2 text-white hover:bg-blue-700\\\">Search</button></form>"
   },
   {
     "id": "form-number",
@@ -1420,15 +1423,16 @@
     "category": "forms",
     "tags": ["number", "stepper"],
     "difficulty": "beginner",
-    "jsxCode": "<InputNumber label=\"Quantity\" min={0} max={10} step={1} defaultValue={2} />",
+    "jsxCode": "<InputNumber label=\\\"Quantity\\\" min={0} max={10} step={1} defaultValue={2} />",
     "props": { "label": "string", "min": "number", "max": "number", "step": "number", "defaultValue": "number" },
-    "previewProps": { "label": "Quantity", "defaultValue": 2 },
+    "previewProps": { "label": "Quantity", "min": 0, "max": 10, "step": 1, "defaultValue": 2 },
     "short": "Numeric input with stepper buttons.",
     "description": "Accessible numeric field with +/- buttons and min/max clamping.",
     "notes": "Buttons include aria-labels for screen readers. Validate input and clamp on change.",
     "libraries": [],
     "previewHeight": 68,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<label class=\\\"block text-sm font-medium\\\">Quantity</label><div class=\\\"mt-1 inline-flex items-stretch rounded-md border bg-white dark:bg-gray-900\\\"><button aria-label=\\\"Decrement\\\" class=\\\"px-2 border-r\\\">-</button><input type=\\\"number\\\" class=\\\"w-20 px-2 text-center\\\" min=\\\"0\\\" max=\\\"10\\\" value=\\\"2\\\"/><button aria-label=\\\"Increment\\\" class=\\\"px-2 border-l\\\">+</button></div>"
   },
   {
     "id": "form-strong-password",
@@ -1437,15 +1441,16 @@
     "category": "forms",
     "tags": ["password", "strength", "validation"],
     "difficulty": "intermediate",
-    "jsxCode": "<StrongPassword label=\"Password\" placeholder=\"Enter a strong password\" />",
+    "jsxCode": "<StrongPassword label=\\\"Password\\\" placeholder=\\\"Enter a strong password\\\" />",
     "props": { "label": "string", "placeholder": "string" },
-    "previewProps": { "label": "Password" },
+    "previewProps": { "label": "Password", "placeholder": "Enter a strong password" },
     "short": "Password field with strength meter.",
     "description": "Shows a visual strength bar and label based on basic heuristics.",
     "notes": "Use aria-live=polite for dynamic strength feedback. Do not rely solely on client-side checks.",
     "libraries": [],
     "previewHeight": 110,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<label class=\\\"block text-sm font-medium\\\">Password</label><div class=\\\"mt-1 space-y-2\\\"><input type=\\\"password\\\" class=\\\"w-80 rounded-md border px-3 py-2 bg-white dark:bg-gray-900\\\" placeholder=\\\"Enter a strong password\\\"/><div class=\\\"h-1.5 w-80 rounded bg-gray-200 dark:bg-gray-700\\\"><div class=\\\"h-1.5 w-1/2 rounded bg-green-500\\\"></div></div><p class=\\\"text-xs text-slate-600 dark:text-slate-300\\\">Strength: Medium</p></div>"
   },
   {
     "id": "form-toggle-password",
@@ -1454,7 +1459,7 @@
     "category": "forms",
     "tags": ["password", "toggle"],
     "difficulty": "beginner",
-    "jsxCode": "<TogglePassword label=\"Password\" />",
+    "jsxCode": "<TogglePassword label=\\\"Password\\\" />",
     "props": { "label": "string" },
     "previewProps": { "label": "Password" },
     "short": "Show/hide password visibility toggle.",
@@ -1462,7 +1467,8 @@
     "notes": "The toggle button uses aria-pressed to reflect state and has an accessible name. Ensure focus order remains logical.",
     "libraries": [],
     "previewHeight": 80,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<label class=\\\"block text-sm font-medium\\\">Password</label><div class=\\\"relative mt-1 w-80\\\"><input type=\\\"password\\\" class=\\\"w-full rounded-md border px-3 py-2 pr-10 bg-white dark:bg-gray-900\\\"/><button type=\\\"button\\\" aria-pressed=\\\"false\\\" aria-label=\\\"Show password\\\" class=\\\"absolute inset-y-0 right-0 px-3 text-slate-500\\\">👁️</button></div>"
   },
   {
     "id": "form-toggle-count",
@@ -1479,7 +1485,8 @@
     "notes": "Primary toggle uses aria-pressed to convey state. Disable the increment button when the toggle is off for clarity and accessibility.",
     "libraries": [],
     "previewHeight": 70,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div class=\\\"flex items-center gap-3\\\"><button aria-pressed=\\\"true\\\" class=\\\"rounded-md border px-3 py-1.5\\\">Enabled</button><button disabled class=\\\"rounded-md bg-blue-600 px-3 py-1.5 text-white disabled:opacity-50\\\">+1</button><span class=\\\"text-sm text-slate-700 dark:text-slate-300\\\">Count: 0</span></div>"
   },
   {
     "id": "form-copy-markup",
@@ -1488,7 +1495,7 @@
     "category": "forms",
     "tags": ["copy", "clipboard", "code"],
     "difficulty": "beginner",
-    "jsxCode": "<CopyMarkup code={'<button class=\"px-3 py-1.5 rounded bg-blue-600 text-white\">Click</button>'} />",
+    "jsxCode": "<CopyMarkup code={'<button class=\\\\\"px-3 py-1.5 rounded bg-blue-600 text-white\\\\\">Click</button>'} />",
     "props": { "code": "string" },
     "previewProps": { "code": "<button class='px-3 py-1.5 rounded bg-blue-600 text-white'>Click</button>" },
     "short": "Code/markup block with copy button.",
@@ -1496,7 +1503,8 @@
     "notes": "Uses the Clipboard API; include aria-live feedback for success. Provide non-JS fallback if needed.",
     "libraries": [],
     "previewHeight": 150,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div class=\\\"w-96 rounded-md border bg-white dark:bg-gray-900\\\"><div class=\\\"border-b p-2 text-xs text-slate-700 dark:text-slate-300\\\">Example</div><pre class=\\\"p-3 text-xs overflow-auto\\\"><code>&lt;button class=\\\"px-3 py-1.5 rounded bg-blue-600 text-white\\\"&gt;Click&lt;/button&gt;</code></pre><div class=\\\"border-t p-2 text-right\\\"><button class=\\\"rounded bg-slate-900 text-white text-xs px-2 py-1 dark:bg-slate-700\\\">Copy</button></div></div>"
   },
   {
     "id": "form-pin-input",
@@ -1513,7 +1521,8 @@
     "notes": "Use inputMode='numeric' and aria-labels for each cell. Support backspace and arrow navigation. Announce submission on final digit with aria-live if auto-submit.",
     "libraries": [],
     "previewHeight": 72,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div class=\\\"flex gap-2\\\"><input inputmode=\\\"numeric\\\" maxlength=\\\"1\\\" class=\\\"h-10 w-10 text-center rounded-md border\\\"/><input inputmode=\\\"numeric\\\" maxlength=\\\"1\\\" class=\\\"h-10 w-10 text-center rounded-md border\\\"/><input inputmode=\\\"numeric\\\" maxlength=\\\"1\\\" class=\\\"h-10 w-10 text-center rounded-md border\\\"/><input inputmode=\\\"numeric\\\" maxlength=\\\"1\\\" class=\\\"h-10 w-10 text-center rounded-md border\\\"/></div>"
   },
   {
     "id": "overlay-dropdown",
