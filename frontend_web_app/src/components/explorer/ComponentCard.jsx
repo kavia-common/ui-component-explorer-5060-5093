@@ -24,7 +24,7 @@ function ComponentCard({ item }) {
       </div>
       <div className="flex items-start justify-between gap-3">
         <div>
-          <div className="font-medium text-gray-800 group-hover:text-blue-700 dark:text-gray-200 dark:group-hover:text-blue-300">
+          <div className="font-medium text-slate-800 group-hover:text-blue-700 dark:text-slate-200 dark:group-hover:text-blue-300">
             {item.name}
           </div>
           {item.tags?.length ? (

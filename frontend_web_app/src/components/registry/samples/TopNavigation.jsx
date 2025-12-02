@@ -12,9 +12,9 @@ function TopNavigation({ brand = 'Brand', links = [] }) {
     <header className="flex w-full max-w-2xl items-center justify-between border-b border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
       <div className="flex items-center gap-2">
         <span className="inline-block h-5 w-5 rounded bg-main-gradient ring-1 ring-black/5" aria-hidden="true" />
-        <span className="font-semibold text-gray-900 dark:text-white">{brand}</span>
+        <span className="font-semibold text-slate-900 dark:text-slate-100">{brand}</span>
       </div>
-      <nav className="flex items-center gap-4 text-sm text-gray-700 dark:text-gray-200">
+      <nav className="flex items-center gap-4 text-sm text-slate-700 dark:text-slate-200">
         {links.map((l, idx) => (
           <a
             key={idx}

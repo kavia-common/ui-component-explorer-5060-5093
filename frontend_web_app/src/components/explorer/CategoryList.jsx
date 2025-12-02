@@ -29,7 +29,7 @@ function CategoryList({ categories = [], onItemClick }) {
             className={`flex items-center justify-between rounded-md px-3 py-2 text-sm transition focus-ring-main-gradient ${
               active
                 ? 'active-main-gradient text-blue-800 dark:text-blue-200'
-                : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800'
+                : 'text-slate-700 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-gray-800'
             }`}
           >
             <span>{c.name}</span>

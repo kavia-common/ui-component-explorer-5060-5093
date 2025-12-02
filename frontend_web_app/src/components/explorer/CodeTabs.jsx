@@ -23,7 +23,7 @@ function CodeTabs({ code = '' }) {
   return (
     <div className="rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-800">
       <div className="flex items-center justify-between border-b border-gray-200 p-2 dark:border-gray-700">
-        <div className="flex items-center gap-2 px-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+        <div className="flex items-center gap-2 px-2 text-sm font-medium text-slate-800 dark:text-slate-200">
           <Icon name="code" />
           <span>Code</span>
         </div>

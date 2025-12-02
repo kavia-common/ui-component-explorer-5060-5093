@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 function Breadcrumbs({ items = [] }) {
   return (
     <nav aria-label="Breadcrumb" className="text-sm">
-      <ol className="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-300">
+      <ol className="flex flex-wrap items-center gap-2 text-slate-600 dark:text-slate-300">
         {items.map((item, idx) => (
           <li key={idx} className="flex items-center">
             {item.to ? (
@@ -22,7 +22,7 @@ function Breadcrumbs({ items = [] }) {
                 {item.label}
               </Link>
             ) : (
-              <span className="font-medium text-gray-900 dark:text-white">{item.label}</span>
+              <span className="font-medium text-slate-900 dark:text-slate-100">{item.label}</span>
             )}
             {idx < items.length - 1 && <span className="mx-2 text-gray-400">/</span>}
           </li>

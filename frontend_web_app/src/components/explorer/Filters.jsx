@@ -47,7 +47,7 @@ function Filters({ allTags = [] }) {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2">
           <Icon name="adjustments" className="h-5 w-5 text-gray-500 dark:text-gray-300" />
-          <div className="text-sm font-medium text-gray-800 dark:text-gray-200">Filters</div>
+          <div className="text-sm font-medium text-slate-800 dark:text-slate-200">Filters</div>
         </div>
         <div className="flex flex-1 items-center gap-2">
           <input

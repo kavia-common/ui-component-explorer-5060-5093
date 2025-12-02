@@ -17,7 +17,7 @@ function PropControls({ controls = [], onChange }) {
   }
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-800">
-      <div className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Props</div>
+      <div className="mb-2 text-sm font-medium text-slate-800 dark:text-slate-200">Props</div>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {controls.map((c, idx) => (
           <label key={idx} className="text-sm">

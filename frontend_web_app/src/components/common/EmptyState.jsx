@@ -16,8 +16,8 @@ function EmptyState({ title = 'Nothing to show', description = 'Try adjusting fi
       <div className="mb-3 rounded-full bg-blue-50 p-3 text-blue-600 dark:bg-blue-900/20 dark:text-blue-300">
         <Icon name="search" className="h-6 w-6" />
       </div>
-      <h3 className="text-base font-semibold text-gray-900 dark:text-white">{title}</h3>
-      {description && <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{description}</p>}
+      <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">{title}</h3>
+      {description && <p className="mt-1 text-sm text-slate-700 dark:text-slate-200">{description}</p>}
       {onReset && (
         <Button variant="secondary" size="sm" className="mt-4" onClick={onReset}>
           Reset

@@ -19,8 +19,8 @@ function MediaCard({ title = 'Ocean Sunset', description = 'A calming gradient w
           loading="lazy"
         />
         <div>
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{title}</h3>
-          <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">{description}</p>
+          <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">{title}</h3>
+          <p className="mt-1 text-sm text-slate-700 dark:text-slate-200">{description}</p>
           <div className="mt-3 h-1 w-16 rounded-full bg-gradient-to-r from-blue-500 to-amber-400" />
         </div>
       </div>

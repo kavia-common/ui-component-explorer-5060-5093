@@ -15,7 +15,7 @@ function SimpleNavbar({ brand = 'Ocean', links = [{ label: 'Home' }, { label: 'C
           <div className="h-6 w-6 rounded-md bg-main-gradient shadow-sm ring-1 ring-black/5" />
           <span className="text-sm font-semibold text-gray-900 dark:text-white">{brand}</span>
         </div>
-        <nav className="flex items-center gap-4 text-sm text-gray-700 dark:text-gray-200">
+        <nav className="flex items-center gap-4 text-sm text-slate-700 dark:text-slate-200">
           {links.map((l, i) => (
             <a
               key={i}

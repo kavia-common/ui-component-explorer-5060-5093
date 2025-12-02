@@ -196,7 +196,7 @@ function MainLayout() {
 
       {/* Footer */}
       <footer className="border-t border-gray-200 bg-surface py-6 dark:border-gray-800 dark:bg-gray-900" role="contentinfo">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 text-sm text-gray-600 dark:text-gray-300">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 text-sm text-slate-700 dark:text-slate-200">
           <span>© {new Date().getFullYear()} UI Component Explorer</span>
           <a
             className="text-blue-600 hover:underline dark:text-blue-400 focus-ring-main-gradient rounded-[3px]"

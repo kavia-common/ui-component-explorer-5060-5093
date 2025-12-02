@@ -35,8 +35,8 @@ function Home() {
         canonical={typeof window !== 'undefined' ? window.location.origin + '/' : undefined}
       />
       <section className="rounded-lg bg-gradient-to-r from-blue-500/10 to-gray-50 p-6 dark:from-blue-500/10 dark:to-gray-900">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Discover ready-to-use UI components</h1>
-        <p className="mt-1 text-gray-600 dark:text-gray-300">
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Discover ready-to-use UI components</h1>
+        <p className="mt-1 text-slate-700 dark:text-slate-200">
           Browse, preview, and copy React + Tailwind components with light/dark support.
         </p>
       </section>

@@ -77,8 +77,8 @@ function ComponentDetail() {
               { label: component?.name || id },
             ]}
           />
-          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">{component?.name || id}</h1>
-          <p className="text-gray-600 dark:text-gray-300">
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">{component?.name || id}</h1>
+          <p className="text-slate-700 dark:text-slate-200">
             {component?.description || 'Preview and copy code for this component.'}
           </p>
         </div>

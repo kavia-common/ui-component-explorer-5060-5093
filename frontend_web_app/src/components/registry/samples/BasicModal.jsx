@@ -15,8 +15,8 @@ function BasicModal({ title = 'Confirm action', open = true }) {
       <div className="pointer-events-none absolute inset-0 rounded-md bg-black/30" />
       {/* Dialog */}
       <div className="relative mx-auto w-full max-w-md rounded-lg border border-gray-200 bg-white p-4 shadow-xl ring-1 ring-black/5 dark:border-gray-700 dark:bg-gray-900">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{title}</h3>
-        <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">Are you sure you want to proceed? This action cannot be undone.</p>
+        <h3 className="text-sm font-semibold text-slate-900 dark:text-slate-100">{title}</h3>
+        <p className="mt-1 text-sm text-slate-700 dark:text-slate-200">Are you sure you want to proceed? This action cannot be undone.</p>
         <div className="mt-4 flex justify-end gap-2">
           <button className="rounded-md border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-800 transition hover:bg-gray-50 focus-ring-main-gradient dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700" type="button">
             Cancel

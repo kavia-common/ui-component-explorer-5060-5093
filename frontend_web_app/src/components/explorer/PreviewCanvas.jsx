@@ -33,10 +33,10 @@ function PreviewCanvas({ height = 140, componentId, overrideProps, note, childre
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-800">
-      <div className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Live Preview</div>
+      <div className="mb-2 text-sm font-medium text-slate-800 dark:text-slate-200">Live Preview</div>
       <Container>
         {content || (
-          <span className="text-xs text-gray-500 dark:text-gray-400">Preview area</span>
+          <span className="text-xs text-slate-600 dark:text-slate-300">Preview area</span>
         )}
       </Container>
       {note && <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">{note}</div>}
