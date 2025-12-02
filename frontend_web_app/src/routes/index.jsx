@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home';
-import Category from '../pages/Category';
+import ComponentsPage from '../pages/Components';
 import ComponentDetail from '../pages/ComponentDetail';
 
 /**
@@ -16,7 +16,7 @@ function RoutesIndex() {
       <Route element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="/" element={<Home />} />
-        <Route path="/category/:slug" element={<Category />} />
+        <Route path="/category/:slug" element={<ComponentsPage />} />
         <Route path="/component/:id" element={<ComponentDetail />} />
       </Route>
 

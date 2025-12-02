@@ -3,27 +3,21 @@ import { Link } from 'react-router-dom';
 import Meta from './Meta';
 import Button from './Button';
 import Breadcrumbs from './Breadcrumbs';
-import { getCategories, getFeaturedComponents } from '../../utils/data';
-import ComponentGrid from '../explorer/ComponentGrid';
+import { getCategories } from '../../utils/data';
 
 /**
  * PUBLIC_INTERFACE
  * Welcome - Landing page hero and quick-start navigation.
- * Provides:
- * - Accessible hero with app intro
- * - Primary CTAs (browse components, popular categories)
- * - Featured categories cards and a small featured components grid
- * - Updates meta title to "Welcome"
+ * Keeps the page focused on intro and navigation only (no component previews).
  */
 function Welcome() {
   const categories = getCategories().slice(0, 6);
-  const featured = getFeaturedComponents(3);
 
   return (
     <div className="space-y-8">
       <Meta
         title="Welcome"
-        description="Welcome to the UI Component Explorer. Browse, preview, and copy React + Tailwind components. Jump into categories or see featured picks."
+        description="Welcome to the UI Component Explorer. Browse, preview, and copy React + Tailwind components. Jump into categories via the sidebar or shortcuts."
         canonical={typeof window !== 'undefined' ? window.location.origin + '/' : undefined}
       />
 
@@ -39,8 +33,8 @@ function Welcome() {
                 Build faster with ready-to-use UI components
               </h1>
               <p className="mt-2 text-slate-700 dark:text-slate-200">
-                Explore a curated library of React + Tailwind components. Preview live, copy code instantly, and stay in
-                flow with dark/light themes.
+                Explore a curated library of React + Tailwind components. Use the sidebar to pick a category and dive
+                into live previews with one-click copy.
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
@@ -59,7 +53,7 @@ function Welcome() {
         </section>
       </div>
 
-      {/* Featured categories */}
+      {/* Category shortcuts only; no component showcases on the home page */}
       <section aria-labelledby="featured-categories-heading" className="space-y-4">
         <h2 id="featured-categories-heading" className="text-lg font-semibold text-gray-900 dark:text-white">
           Top Categories
@@ -90,22 +84,6 @@ function Welcome() {
             </Link>
           ))}
         </div>
-      </section>
-
-      {/* Featured components preview */}
-      <section aria-labelledby="featured-components-heading" className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 id="featured-components-heading" className="text-lg font-semibold text-gray-900 dark:text-white">
-            Featured Components
-          </h2>
-          <Link
-            to="/?q="
-            className="text-sm text-blue-700 underline decoration-1 underline-offset-2 hover:opacity-90 focus-ring-main-gradient rounded-[3px] dark:text-blue-300"
-          >
-            View all
-          </Link>
-        </div>
-        <ComponentGrid items={featured} />
       </section>
     </div>
   );
