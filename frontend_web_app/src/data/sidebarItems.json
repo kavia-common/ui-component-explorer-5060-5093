@@ -19,8 +19,32 @@
     "group": "Base Components",
     "slug": "base-components",
     "items": [
+      { "label": "Accordion", "to": "/category/buttons#accordion" },
+      { "label": "Alerts", "to": "/category/cards#alerts" },
+      { "label": "Avatar", "to": "/category/buttons#avatar" },
+      { "label": "Avatar Group", "to": "/category/buttons#avatar-group" },
+      { "label": "Badge", "to": "/category/buttons#badge" },
+      { "label": "Blockquote", "to": "/category/cards#blockquote" },
       { "label": "Buttons", "to": "/category/buttons" },
-      { "label": "Badges", "to": "/category/buttons#badges", "badge": "🔥" }
+      { "label": "Button Group", "to": "/category/buttons#button-group" },
+      { "label": "Card", "to": "/category/cards#card" },
+      { "label": "Chat Bubbles", "to": "/category/cards#chat-bubbles" },
+      { "label": "Carousel", "to": "/category/cards#carousel" },
+      { "label": "Collapse", "to": "/category/cards#collapse" },
+      { "label": "Datepicker", "to": "/category/forms#datepicker" },
+      { "label": "Devices", "to": "/category/cards#devices" },
+      { "label": "Lists", "to": "/category/cards#lists" },
+      { "label": "List Group", "to": "/category/cards#list-group" },
+      { "label": "Legend Indicator", "to": "/category/cards#legend-indicator" },
+      { "label": "Progress", "to": "/category/cards#progress" },
+      { "label": "File Uploading Progress", "to": "/category/cards#file-uploading-progress" },
+      { "label": "Ratings", "to": "/category/cards#ratings" },
+      { "label": "Skeleton", "to": "/category/cards#skeleton" },
+      { "label": "Spinners", "to": "/category/cards#spinners" },
+      { "label": "Styled Icons", "to": "/category/cards#styled-icons" },
+      { "label": "Toasts", "to": "/category/cards#toasts" },
+      { "label": "Timeline", "to": "/category/cards#timeline" },
+      { "label": "Tree View", "to": "/category/cards#tree-view" }
     ]
   },
   {
