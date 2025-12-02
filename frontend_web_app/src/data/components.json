@@ -116,7 +116,8 @@
     "featured": false,
     "previewHeight": 100,
     "darkModeSupported": true,
-    "responsiveNotes": "Content wraps for narrow screens."
+    "responsiveNotes": "Content wraps for narrow screens.",
+    "code": "<div className=\"flex items-start gap-2 rounded-lg border border-green-200 bg-green-50 p-3 text-green-800 dark:border-green-900/40 dark:bg-green-900/20 dark:text-green-200\"><svg className=\"h-5 w-5\" viewBox=\"0 0 24 24\" fill=\"none\"><circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"currentColor\" strokeWidth=\"2\"/><path d=\"M9 12l2 2 4-4\" stroke=\"currentColor\" strokeWidth=\"2\" fill=\"none\"/></svg><div><div className=\"font-medium\">All set</div><p className=\"text-sm\">Your changes have been saved.</p></div></div>"
   },
   {
     "id": "card-basic",
@@ -167,7 +168,8 @@
     "featured": false,
     "previewHeight": 160,
     "darkModeSupported": true,
-    "responsiveNotes": "Image stacks on small screens."
+    "responsiveNotes": "Image stacks on small screens.",
+    "code": "<article className=\"flex items-center gap-3 rounded-lg border bg-white p-3 shadow-sm dark:border-gray-800 dark:bg-gray-800\"><img src=\"https://picsum.photos/seed/ocean/160/100\" alt=\"Ocean Sunset\" className=\"h-20 w-32 rounded object-cover\" loading=\"lazy\"/><div><h3 className=\"font-medium text-slate-900 dark:text-slate-100\">Ocean Sunset</h3><p className=\"text-sm text-slate-600 dark:text-slate-300\">A calming gradient with blue and amber accents.</p></div></article>"
   },
   {
     "id": "nav-topbar",
@@ -191,7 +193,7 @@
     "previewHeight": 100,
     "darkModeSupported": true,
     "responsiveNotes": "Links collapse or wrap on narrow viewports.",
-    "code": "<header className=\"flex items-center justify-between rounded-md bg-white p-3 shadow-sm dark:bg-gray-900\"><div className=\"font-semibold text-slate-900 dark:text-slate-100\">Brand</div><nav className=\"hidden gap-4 md:flex\"><a className=\"text-slate-700 hover:underline dark:text-slate-200\" href=\"#\">Docs</a><a className=\"text-slate-700 hover:underline dark:text-slate-200\" href=\"#\">Blog</a></nav><button className=\"md:hidden rounded-md border px-2 py-1 text-sm dark:border-gray-700\">Menu</button></header>"
+    "code": "<header className=\"flex items-center justify-between rounded-md border bg-white p-3 shadow-sm dark:border-gray-800 dark:bg-gray-900\" role=\"navigation\"><div className=\"font-semibold text-slate-900 dark:text-slate-100\">Brand</div><nav className=\"hidden gap-4 md:flex\"><a className=\"text-slate-700 hover:underline dark:text-slate-200\" href=\"#\">Docs</a><a className=\"text-slate-700 hover:underline dark:text-slate-200\" href=\"#\">Blog</a></nav><button className=\"rounded-md border px-2 py-1 text-sm md:hidden dark:border-gray-700\" aria-label=\"Open menu\">Menu</button></header>"
   },
   {
     "id": "navbar-simple",
@@ -238,7 +240,8 @@
     "featured": false,
     "previewHeight": 180,
     "darkModeSupported": true,
-    "responsiveNotes": "Dialog centers and scales on small screens."
+    "responsiveNotes": "Dialog centers and scales on small screens.",
+    "code": "<div className=\"fixed inset-0 z-50 flex items-center justify-center\"><div className=\"absolute inset-0 bg-black/40\"></div><div role=\"dialog\" aria-modal=\"true\" className=\"relative w-full max-w-sm rounded-lg bg-white p-4 shadow-lg dark:bg-gray-900\"><h2 className=\"mb-2 text-lg font-semibold text-slate-900 dark:text-slate-100\">Confirm action</h2><p className=\"mb-3 text-sm text-slate-700 dark:text-slate-300\">Are you sure you want to continue?</p><div className=\"flex justify-end gap-2\"><button className=\"rounded-md border px-3 py-1.5 text-sm dark:border-gray-700\">Cancel</button><button className=\"rounded-md bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-800\">Confirm</button></div></div></div>"
   },
   {
     "id": "input-text",
@@ -285,7 +288,8 @@
     "featured": false,
     "previewHeight": 80,
     "darkModeSupported": true,
-    "responsiveNotes": "Full-width control within forms."
+    "responsiveNotes": "Full-width control within forms.",
+    "code": "<input type=\"email\" className=\"w-72 rounded-md border px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-300 dark:border-gray-700 dark:bg-gray-900 dark:text-slate-100 dark:focus:ring-blue-800\" placeholder=\"you@example.com\"/>"
   },
   {
     "id": "form-input",
@@ -370,7 +374,8 @@
     "notes": "Use fieldset/legend for grouped checkboxes. Ensure a clear hit area.",
     "libraries": [],
     "previewHeight": 64,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<label className=\"inline-flex items-center gap-2\"><input type=\"checkbox\" defaultChecked className=\"h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-300 dark:border-gray-700 dark:bg-gray-900 dark:focus:ring-blue-800\"/><span className=\"text-sm text-slate-800 dark:text-slate-200\">Subscribe to newsletter</span></label>"
   },
   {
     "id": "form-radio",
@@ -387,7 +392,8 @@
     "notes": "Wrap related radios in a fieldset with a descriptive legend.",
     "libraries": [],
     "previewHeight": 80,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<fieldset className=\"space-y-2\"><legend className=\"text-sm font-medium text-slate-800 dark:text-slate-200\">Billing cycle</legend><label className=\"flex items-center gap-2 text-sm\"><input type=\"radio\" name=\"billing\" defaultChecked className=\"h-4 w-4 text-blue-600 focus:ring-blue-300 dark:focus:ring-blue-800\"/>Monthly</label><label className=\"flex items-center gap-2 text-sm\"><input type=\"radio\" name=\"billing\" className=\"h-4 w-4 text-blue-600 focus:ring-blue-300 dark:focus:ring-blue-800\"/>Yearly</label></fieldset>"
   },
   {
     "id": "form-switch",
@@ -404,7 +410,8 @@
     "notes": "Use switches for immediate actions; use checkboxes for form submissions.",
     "libraries": [],
     "previewHeight": 64,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<label className=\"inline-flex items-center gap-2 text-sm\"><span>Enable notifications</span><button role=\"switch\" aria-checked=\"true\" className=\"relative inline-flex h-6 w-11 items-center rounded-full bg-blue-600\"><span className=\"inline-block h-5 w-5 translate-x-5 rounded-full bg-white transition\"></span></button></label>"
   },
   {
     "id": "form-select",
@@ -438,7 +445,8 @@
     "notes": "Consider keyboard support and visible value; ensure contrast on the track and thumb.",
     "libraries": [],
     "previewHeight": 72,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div className=\"w-72\"><input type=\"range\" defaultValue=\"40\" className=\"w-full accent-blue-600\"/></div>"
   },
   {
     "id": "form-color-tailwind",
@@ -500,7 +508,8 @@
     "featured": true,
     "previewHeight": 220,
     "darkModeSupported": true,
-    "responsiveNotes": "Single column on small screens; wider spacing on desktop."
+    "responsiveNotes": "Single column on small screens; wider spacing on desktop.",
+    "code": "<form className=\"space-y-3\"><div><label className=\"block text-sm font-medium text-slate-800 dark:text-slate-200\">Name</label><input type=\"text\" className=\"mt-1 w-full rounded-md border px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-300 dark:border-gray-700 dark:bg-gray-900 dark:text-slate-100 dark:focus:ring-blue-800\" placeholder=\"Your name\"/></div><div><label className=\"block text-sm font-medium text-slate-800 dark:text-slate-200\">Email</label><input type=\"email\" className=\"mt-1 w-full rounded-md border px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-300 dark:border-gray-700 dark:bg-gray-900 dark:text-slate-100 dark:focus:ring-blue-800\" placeholder=\"you@example.com\"/></div><div><label className=\"block text-sm font-medium text-slate-800 dark:text-slate-200\">Message</label><textarea rows=\"4\" className=\"mt-1 w-full rounded-md border px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-300 dark:border-gray-700 dark:bg-gray-900 dark:text-slate-100 dark:focus:ring-blue-800\" placeholder=\"How can we help?\"></textarea></div><div className=\"pt-1\"><button type=\"submit\" className=\"rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-800\">Send</button></div></form>"
   },
   {
     "id": "pagination-basic",
@@ -571,7 +580,8 @@
     "featured": false,
     "previewHeight": 200,
     "darkModeSupported": true,
-    "responsiveNotes": "Use mobile-friendly input on small screens."
+    "responsiveNotes": "Use mobile-friendly input on small screens.",
+    "code": "<input type=\"date\" className=\"w-48 rounded-md border px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-300 dark:border-gray-700 dark:bg-gray-900 dark:text-slate-100 dark:focus:ring-blue-800\"/>"
   },
   {
     "id": "color-picker-basic",
@@ -611,7 +621,8 @@
     "short": "Responsive max-width wrapper with padding.",
     "description": "A responsive container with max-width variants and balanced horizontal padding.",
     "notes": "Use as a top-level wrapper for pages or sections.",
-    "libraries": []
+    "libraries": [],
+    "code": "<section className=\"mx-auto w-full max-w-5xl px-4\">Content</section>"
   },
   {
     "id": "layout-columns",
@@ -626,7 +637,8 @@
     "short": "Responsive grid columns with gap control.",
     "description": "A simple grid wrapper that maps responsive column counts to Tailwind classes.",
     "notes": "Use gap as Tailwind spacing scale token (e.g., 4, 6, 8).",
-    "libraries": []
+    "libraries": [],
+    "code": "<div className=\"grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3\"><div className=\"h-16 rounded bg-gray-100 dark:bg-gray-800\"></div><div className=\"h-16 rounded bg-gray-100 dark:bg-gray-800\"></div><div className=\"h-16 rounded bg-gray-100 dark:bg-gray-800\"></div></div>"
   },
   {
     "id": "layout-grid",
@@ -641,7 +653,8 @@
     "short": "Generic CSS grid with column count and gap.",
     "description": "A utility grid with configurable columns, gap, and auto-rows.",
     "notes": "Combine with col-span-* classes or GridItem helper.",
-    "libraries": []
+    "libraries": [],
+    "code": "<div className=\"grid grid-cols-12 gap-4\"><div className=\"col-span-3 h-16 rounded bg-gray-100 dark:bg-gray-800\"></div><div className=\"col-span-6 h-16 rounded bg-gray-100 dark:bg-gray-800\"></div><div className=\"col-span-3 h-16 rounded bg-gray-100 dark:bg-gray-800\"></div></div>"
   },
   {
     "id": "layout-splitter",
@@ -771,7 +784,8 @@
     "short": "Accessible expand/collapse sections.",
     "featured": false,
     "previewHeight": 220,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div className=\"w-full divide-y divide-gray-200 rounded-md border border-gray-200 dark:divide-gray-800 dark:border-gray-800\"><button type=\"button\" className=\"flex w-full items-center justify-between px-4 py-3 text-left text-slate-800 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:text-slate-100 dark:hover:bg-blue-900/20 dark:focus:ring-blue-800\"><span className=\"font-medium\">What is Ocean theme?</span><span>▾</span></button><div className=\"px-4 pb-4 text-sm text-slate-700 dark:text-slate-200\">A clean modern palette with blue and amber accents.</div></div>"
   },
 
   {
@@ -824,7 +838,8 @@
     "notes": "Include alt text. Generate initials when image fails to load.",
     "libraries": [],
     "previewHeight": 96,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<img src=\"https://i.pravatar.cc/96?img=5\" alt=\"Leslie Alexander\" className=\"h-12 w-12 rounded-full object-cover\"/>"
   },
 
   {
@@ -850,7 +865,8 @@
     "notes": "Ensure avatar order has meaning. Provide tooltips or labels for names.",
     "libraries": [],
     "previewHeight": 84,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div className=\"flex -space-x-2\"><img src=\"https://i.pravatar.cc/96?img=5\" alt=\"Leslie\" className=\"h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-900\"/><img src=\"https://i.pravatar.cc/96?img=6\" alt=\"Courtney\" className=\"h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-900\"/><img src=\"https://i.pravatar.cc/96?img=7\" alt=\"Devon\" className=\"h-8 w-8 rounded-full ring-2 ring-white dark:ring-gray-900\"/><span className=\"inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-xs text-slate-700 ring-2 ring-white dark:bg-gray-800 dark:text-slate-200 dark:ring-gray-900\">+1</span></div>"
   },
 
   {
@@ -1051,7 +1067,8 @@
     "notes": "Use role='progressbar' and aria-valuenow/aria-valuemin/aria-valuemax.",
     "libraries": [],
     "previewHeight": 80,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div className=\"w-80\"><div className=\"mb-1 text-xs text-slate-600 dark:text-slate-300\">65%</div><div role=\"progressbar\" aria-valuenow=\"65\" aria-valuemin=\"0\" aria-valuemax=\"100\" className=\"h-2 w-full rounded bg-gray-200 dark:bg-gray-700\"><div className=\"h-2 w-2/3 rounded bg-blue-600\"></div></div></div>"
   },
 
   {
@@ -1107,7 +1124,8 @@
     "notes": "Respect reduced motion; provide aria-busy or progress indicators for assistive tech.",
     "libraries": [],
     "previewHeight": 120,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div className=\"space-y-2\"><div className=\"h-3 w-64 animate-pulse rounded bg-gray-200 dark:bg-gray-700\"></div><div className=\"h-3 w-72 animate-pulse rounded bg-gray-200 dark:bg-gray-700\"></div><div className=\"h-3 w-56 animate-pulse rounded bg-gray-200 dark:bg-gray-700\"></div></div>"
   },
 
   {
@@ -1125,7 +1143,8 @@
     "notes": "Use aria-live politely for longer operations; avoid infinite blockers.",
     "libraries": [],
     "previewHeight": 120,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div className=\"flex items-center gap-4\"><div className=\"h-6 w-6 animate-spin rounded-full border-2 border-blue-600 border-t-transparent\"></div><svg className=\"h-6 w-6 animate-spin text-blue-600\" viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\" stroke=\"currentColor\" strokeWidth=\"4\" fill=\"none\" opacity=\"0.25\"/><path d=\"M12 2a10 10 0 0 1 10 10\" stroke=\"currentColor\" strokeWidth=\"4\"/></svg></div>"
   },
 
   {
@@ -1146,7 +1165,8 @@
       { "name": "@heroicons/react (optional)", "install": "npm i @heroicons/react" }
     ],
     "previewHeight": 100,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div className=\"flex items-center gap-3\"><span className=\"inline-flex h-8 w-8 items-center justify-center rounded-md bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300\">★</span><span className=\"inline-flex h-8 w-8 items-center justify-center rounded-md bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-300\">◆</span><span className=\"inline-flex h-8 w-8 items-center justify-center rounded-md bg-gray-100 text-slate-700 dark:bg-gray-800 dark:text-slate-300\">●</span></div>"
   },
 
   {
@@ -1167,7 +1187,8 @@
       { "name": "react-hot-toast (optional)", "install": "npm i react-hot-toast" }
     ],
     "previewHeight": 200,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div className=\"fixed right-4 top-4 space-y-2\"><div className=\"rounded-md border bg-white p-3 shadow dark:border-gray-800 dark:bg-gray-800\">Saved successfully</div><div className=\"rounded-md border bg-white p-3 shadow dark:border-gray-800 dark:bg-gray-800\">Profile updated</div></div>"
   },
 
   {
@@ -1208,7 +1229,8 @@
     "notes": "Add roving tabindex and aria-expanded for complete accessibility in production.",
     "libraries": [],
     "previewHeight": 220,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<ul role=\"tree\" className=\"space-y-1 text-sm\"><li role=\"treeitem\" aria-expanded=\"true\"><span className=\"font-medium\">src</span><ul role=\"group\" className=\"ml-4 mt-1 space-y-1\"><li role=\"treeitem\">components</li><li role=\"treeitem\">pages</li></ul></li><li role=\"treeitem\" aria-expanded=\"true\"><span className=\"font-medium\">public</span><ul role=\"group\" className=\"ml-4 mt-1 space-y-1\"><li role=\"treeitem\">assets</li></ul></li></ul>"
   },
   {
     "id": "navbar",
@@ -1276,7 +1298,8 @@
     "notes": "Implements ArrowLeft/Right, Home/End, roving tabindex, and ARIA roles.",
     "libraries": [],
     "previewHeight": 180,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<div role=\"tablist\" aria-label=\"Tabs\" className=\"flex gap-2 border-b\"><button role=\"tab\" aria-selected=\"true\" className=\"rounded-t-md bg-white px-3 py-1.5 text-sm text-blue-700 dark:bg-gray-900 dark:text-blue-300\">Profile</button><button role=\"tab\" aria-selected=\"false\" className=\"px-3 py-1.5 text-sm text-slate-700 hover:underline dark:text-slate-200\">Billing</button><button role=\"tab\" aria-selected=\"false\" className=\"px-3 py-1.5 text-sm text-slate-700 hover:underline dark:text-slate-200\">Notifications</button></div><div role=\"tabpanel\" className=\"p-3 text-sm text-slate-700 dark:text-slate-300\">Profile content…</div>"
   },
   {
     "id": "sidebar-sample",
@@ -1327,7 +1350,8 @@
     "notes": "Wrap with nav[aria-label='Breadcrumb'] for semantics.",
     "libraries": [],
     "previewHeight": 60,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<nav aria-label=\"Breadcrumb\" className=\"text-sm\"><ol className=\"flex items-center gap-2 text-slate-600 dark:text-slate-300\"><li><a href=\"#\" className=\"hover:underline\">Home</a></li><li>/</li><li><a href=\"#\" className=\"hover:underline\">Library</a></li><li>/</li><li aria-current=\"page\" className=\"text-slate-800 dark:text-slate-100\">Data</li></ol></nav>"
   },
   {
     "id": "pagination",
@@ -1344,7 +1368,8 @@
     "notes": "Use semantic nav and aria-label for pagination. Include aria-current for active page.",
     "libraries": [],
     "previewHeight": 72,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<nav aria-label=\"Pagination\" className=\"inline-flex items-center gap-1\"><button className=\"rounded-md border px-2 py-1 text-sm dark:border-gray-700\">Prev</button><button aria-current=\"page\" className=\"rounded-md bg-blue-600 px-2 py-1 text-sm text-white\">2</button><button className=\"rounded-md border px-2 py-1 text-sm dark:border-gray-700\">3</button><button className=\"rounded-md border px-2 py-1 text-sm dark:border-gray-700\">Next</button></nav>"
   },
   {
     "id": "stepper",
@@ -1361,7 +1386,8 @@
     "notes": "Use semantic list or nav if steps are navigable.",
     "libraries": [],
     "previewHeight": 120,
-    "darkModeSupported": true
+    "darkModeSupported": true,
+    "code": "<ol className=\"flex items-center gap-4 text-sm\"><li className=\"flex items-center gap-2 text-blue-700 dark:text-blue-300\"><span className=\"inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30\">1</span> Account</li><li className=\"flex items-center gap-2 text-blue-700 dark:text-blue-300\"><span className=\"inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30\">2</span> Profile</li><li className=\"flex items-center gap-2 text-slate-600 dark:text-slate-300\"><span className=\"inline-flex h-6 w-6 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800\">3</span> Confirm</li></ol>"
   },
   {
     "id": "form-advanced-select",
@@ -1501,7 +1527,7 @@
     "category": "forms",
     "tags": ["copy", "clipboard", "code"],
     "difficulty": "beginner",
-    "jsxCode": "<CopyMarkup code={'<button class=\\\\\"px-3 py-1.5 rounded bg-blue-600 text-white\\\\\">Click</button>'} />",
+    "jsxCode": "<CopyMarkup code={'<button class=\\\\\\\"px-3 py-1.5 rounded bg-blue-600 text-white\\\\\\\">Click</button>'} />",
     "props": { "code": "string" },
     "previewProps": { "code": "<button class='px-3 py-1.5 rounded bg-blue-600 text-white'>Click</button>" },
     "short": "Code/markup block with copy button.",
@@ -1604,7 +1630,7 @@
       { "name": "@floating-ui/react (optional)", "install": "npm i @floating-ui/react" }
     ],
     "previewHeight": 120,
-    "darkModeSupported": true
+    "darkModeSupported": true"
   },
   {
     "id": "overlay-tooltip",
