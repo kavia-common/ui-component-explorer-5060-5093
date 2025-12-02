@@ -389,97 +389,12 @@ const TableIcon = createIcon(
   </>
 );
 
-// Registry map
-const registry = {
-  default: DefaultIcon,
-  // Layout & Content
-  container: ContainerIcon,
-  columns: ColumnsIcon,
-  grid: GridIcon,
-  'layout-splitter': SplitIcon,
-  typography: TypographyIcon,
-  images: ImageIcon,
-  links: LinkIcon,
-  divider: DividerIcon,
-  'dividers-and-hr': DividerIcon,
-  kbd: KbdIcon,
-  'custom-scrollbar': ScrollbarIcon,
+/**
+ * Reordered: define small icon components BEFORE the registry that references them
+ * to avoid ReferenceError during module evaluation.
+ */
 
-  // Base Components
-  accordion: AccordionIcon,
-  alerts: AlertIcon,
-  avatar: AvatarIcon,
-  'avatar-group': AvatarIcon,
-  badge: BadgeIcon,
-  blockquote: TypographyIcon,
-  buttons: BadgeIcon,
-  'button-group': BadgeIcon,
-  card: CardIcon,
-  'chat-bubbles': ChatIcon,
-  carousel: CarouselIcon,
-  collapse: CollapseIcon,
-  datepicker: DateIcon,
-  devices: DevicesIcon,
-  lists: ListIcon,
-  'list-group': ListIcon,
-  'legend-indicator': BadgeIcon,
-  progress: ProgressIcon,
-  'file-uploading-progress': ProgressIcon,
-  ratings: StarIcon, // will define StarIcon below
-  skeleton: GridIcon,
-  spinners: SpinnerIcon,
-  'styled-icons': BadgeIcon,
-  toasts: ToastIcon,
-  timeline: TimelineIcon,
-  'tree-view': TreeIcon,
-
-  // Navigations
-  navbar: NavbarIcon,
-  'mega-menu': MegaMenuIcon,
-  navs: NavsIcon,
-  tabs: TabsIcon,
-  'sidebar-new': SidebarIcon,
-  scrollspy: ScrollspyIcon,
-  breadcrumb: BreadcrumbIcon,
-  pagination: PaginationIcon,
-  stepper: StepperIcon,
-
-  // Basic Forms
-  input: InputIcon,
-  'input-group': InputIcon,
-  textarea: InputIcon,
-  'file-input': InputIcon,
-  checkbox: SquareCheckIcon, // define below
-  radio: CircleDotIcon, // define below
-  switch: ToggleIcon, // define below
-  select: SelectIcon,
-  'range-slider': RangeIcon,
-  'color-picker': ColorIcon,
-  timepicker: TimeIcon,
-
-  // Advanced Forms
-  'advanced-select': SelectIcon,
-  combobox: SelectIcon,
-  searchbox: InputIcon,
-  'input-number': InputIcon,
-  'strong-password': LockIcon, // define below
-  'toggle-password': EyeIcon, // define below
-  'toggle-count': InputIcon,
-  'copy-markup': CopyIcon, // define below
-  'pin-input': InputIcon,
-  overlays: ModalIcon,
-  dropdown: DropdownIcon,
-  'context-menu': ContextMenuIcon,
-  modal: ModalIcon,
-  'offcanvas-drawer': DrawerIcon,
-  popover: PopoverIcon,
-  tooltip: TooltipIcon,
-
-  // Tables
-  'data-tables': TableIcon,
-};
-
-// Additional small icons
+// Additional small icons (moved above)
 const StarIcon = createIcon(<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />);
 const SquareCheckIcon = createIcon(
   <>
@@ -517,6 +432,96 @@ const CopyIcon = createIcon(
     <rect x="4" y="4" width="11" height="11" rx="2" />
   </>
 );
+
+// Registry map (now after dependencies are defined)
+const registry = {
+  default: DefaultIcon,
+  // Layout & Content
+  container: ContainerIcon,
+  columns: ColumnsIcon,
+  grid: GridIcon,
+  'layout-splitter': SplitIcon,
+  typography: TypographyIcon,
+  images: ImageIcon,
+  links: LinkIcon,
+  divider: DividerIcon,
+  'dividers-and-hr': DividerIcon,
+  kbd: KbdIcon,
+  'custom-scrollbar': ScrollbarIcon,
+
+  // Base Components
+  accordion: AccordionIcon,
+  alerts: AlertIcon,
+  avatar: AvatarIcon,
+  'avatar-group': AvatarIcon,
+  badge: BadgeIcon,
+  blockquote: TypographyIcon,
+  buttons: BadgeIcon,
+  'button-group': BadgeIcon,
+  card: CardIcon,
+  'chat-bubbles': ChatIcon,
+  carousel: CarouselIcon,
+  collapse: CollapseIcon,
+  datepicker: DateIcon,
+  devices: DevicesIcon,
+  lists: ListIcon,
+  'list-group': ListIcon,
+  'legend-indicator': BadgeIcon,
+  progress: ProgressIcon,
+  'file-uploading-progress': ProgressIcon,
+  ratings: StarIcon,
+  skeleton: GridIcon,
+  spinners: SpinnerIcon,
+  'styled-icons': BadgeIcon,
+  toasts: ToastIcon,
+  timeline: TimelineIcon,
+  'tree-view': TreeIcon,
+
+  // Navigations
+  navbar: NavbarIcon,
+  'mega-menu': MegaMenuIcon,
+  navs: NavsIcon,
+  tabs: TabsIcon,
+  'sidebar-new': SidebarIcon,
+  scrollspy: ScrollspyIcon,
+  breadcrumb: BreadcrumbIcon,
+  pagination: PaginationIcon,
+  stepper: StepperIcon,
+
+  // Basic Forms
+  input: InputIcon,
+  'input-group': InputIcon,
+  textarea: InputIcon,
+  'file-input': InputIcon,
+  checkbox: SquareCheckIcon,
+  radio: CircleDotIcon,
+  switch: ToggleIcon,
+  select: SelectIcon,
+  'range-slider': RangeIcon,
+  'color-picker': ColorIcon,
+  timepicker: TimeIcon,
+
+  // Advanced Forms
+  'advanced-select': SelectIcon,
+  combobox: SelectIcon,
+  searchbox: InputIcon,
+  'input-number': InputIcon,
+  'strong-password': LockIcon,
+  'toggle-password': EyeIcon,
+  'toggle-count': InputIcon,
+  'copy-markup': CopyIcon,
+  'pin-input': InputIcon,
+  overlays: ModalIcon,
+  dropdown: DropdownIcon,
+  'context-menu': ContextMenuIcon,
+  modal: ModalIcon,
+  'offcanvas-drawer': DrawerIcon,
+  popover: PopoverIcon,
+  tooltip: TooltipIcon,
+
+  // Tables
+  'data-tables': TableIcon,
+};
 
 // PUBLIC_INTERFACE
 export function getIconComponent(key) {
