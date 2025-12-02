@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import rawSidebarItems from '../../data/sidebarItems.json';
 import { buildQueryString, parseQueryParams } from '../../utils/filter';
@@ -9,6 +9,8 @@ import {
   setRouteScopedSidebarMap,
   getSidebarAccordionSetting,
   isBrowser,
+  getGroupPref,
+  setGroupPref,
 } from '../../utils/storage';
 import Badge from './Badge';
 import { getIconComponent } from '../../utils/icons';
@@ -17,9 +19,15 @@ import { getIconComponent } from '../../utils/icons';
  * PUBLIC_INTERFACE
  * Sidebar - Renders a collapsible, accessible navigation from a data config with compact, adaptive layout.
  * - Group headers show an icon; leaf items render text only (no icon) to save horizontal space.
- * - Sticky, slim search input; full-height auto-fill scroll area with custom scrollbar.
- * - Optional mobile "Show more" expander (non-intrusive; only appears below small height viewports).
- * - Groups persist open/closed state; filtering auto-expands groups temporarily.
+ * - Sticky, slim global filter; full-height auto-fill scroll area with custom scrollbar.
+ * - For very large groups (e.g., Base components), adds:
+ *   1) Virtualized windowed list rendering,
+ *   2) Sticky alphabetical sub-index and sticky in-list subheaders,
+ *   3) Compact "Collapse all / Expand all" control in sticky header,
+ *   4) Local filter scoped to that group only,
+ *   5) Default show first N with "Show more", persisted per group,
+ *   6) Only list region scrolls; smooth performance,
+ *   7) Persist group-expanded, show more, and filter states in localStorage.
  *
  * Props:
  * - onItemClick?: () => void (used by mobile drawer to close on navigate)
@@ -222,7 +230,6 @@ function Sidebar({ onItemClick }) {
     };
   }, []);
 
-  // Ocean Professional styled sidebar with integrated search
   return (
     <nav aria-label="Sidebar navigation" className="flex h-full min-h-0 flex-col">
       {/* Sticky Search (slim). Avoids consuming too much space */}
@@ -255,8 +262,24 @@ function Sidebar({ onItemClick }) {
           {filteredGroups.map((group) => {
             const userOpen = !!open[group.slug];
             const isOpen = isFiltering ? true : userOpen;
-            const GroupIcon = group?.icon ? getIconComponent(group.icon) : null;
 
+            if (group.slug === 'base-components') {
+              return (
+                <LargeBaseGroup
+                  key={group.slug}
+                  group={group}
+                  isOpen={isOpen}
+                  onToggle={() => toggleGroup(group.slug)}
+                  activeKey={activeKey}
+                  preservedQS={preservedQS}
+                  go={go}
+                  buildNav={buildNav}
+                  renderBadge={renderBadge}
+                />
+              );
+            }
+
+            const GroupIcon = group?.icon ? getIconComponent(group.icon) : null;
             return (
               <div key={group.slug} className="rounded-md">
                 <button
@@ -285,16 +308,12 @@ function Sidebar({ onItemClick }) {
                   aria-label={group.group}
                   className={`${isOpen ? 'block' : 'hidden'}`}
                 >
-                  {/* Items list: compact density; prevent large gaps when collapsed by not reserving space */}
                   <ul className="py-1 space-y-0.5">
                     {group.items?.map((it) => {
                       const nav = buildNav(group.slug, it);
                       const key = `${nav.pathname}${nav.hash || ''}`;
                       const active = key === activeKey;
-
-                      // Support disabled/non-clickable items (optional flag)
                       const isDisabled = it.disabled === true;
-
                       return (
                         <li key={`${group.slug}-${it.label}`}>
                           <Link
@@ -317,7 +336,6 @@ function Sidebar({ onItemClick }) {
                             tabIndex={isDisabled ? -1 : 0}
                           >
                             <span className="flex min-w-0 items-center">
-                              {/* Leaf items: text only (no icon) */}
                               <span className={`truncate ${active ? 'text-white' : 'text-slate-50'}`}>{it.label}</span>
                             </span>
                             <div className="ml-1 flex items-center gap-1.5">
@@ -362,6 +380,366 @@ function Sidebar({ onItemClick }) {
         </div>
       )}
     </nav>
+  );
+}
+
+/**
+ * LargeBaseGroup - advanced containment for very large groups like "Base components".
+ * Implements local filter, alphabetical sub-index, sticky subheaders, windowed rendering, and show more.
+ */
+function LargeBaseGroup({ group, isOpen, onToggle, activeKey, preservedQS, go, buildNav, renderBadge }) {
+  const GroupIcon = group?.icon ? getIconComponent(group.icon) : null;
+  const baseSlug = group.slug;
+  const persisted = getGroupPref(baseSlug);
+  const DEFAULT_N = 12;
+  const [localFilter, setLocalFilter] = useState(persisted.filter || '');
+  const [showAll, setShowAll] = useState(Boolean(persisted.showAll));
+  const [collapseAll, setCollapseAll] = useState(false);
+
+  const normalizedLocal = (localFilter || '').trim().toLowerCase();
+  const filteredItems = useMemo(() => {
+    if (!normalizedLocal) return group.items;
+    return group.items.filter(
+      (it) =>
+        it.label.toLowerCase().includes(normalizedLocal) ||
+        (it.blurb && it.blurb.toLowerCase().includes(normalizedLocal))
+    );
+  }, [group.items, normalizedLocal]);
+
+  const limitedItems = useMemo(() => {
+    if (showAll) return filteredItems;
+    return filteredItems.slice(0, DEFAULT_N);
+  }, [filteredItems, showAll]);
+
+  const buildAlphaGroups = useCallback((items = []) => {
+    const map = new Map();
+    items.forEach((it) => {
+      const letter = (it.label?.[0] || '#').toUpperCase();
+      const key = /[A-Z]/.test(letter) ? letter : '#';
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(it);
+    });
+    const letters = Array.from(map.keys()).sort((a, b) => {
+      if (a === '#') return 1;
+      if (b === '#') return -1;
+      return a.localeCompare(b);
+    });
+    return letters.map((l) => ({
+      letter: l,
+      items: map.get(l).sort((a, b) => a.label.localeCompare(b.label)),
+    }));
+  }, []);
+
+  const alphaGroups = useMemo(() => buildAlphaGroups(limitedItems), [limitedItems, buildAlphaGroups]);
+
+  const rows = useMemo(() => {
+    const r = [];
+    alphaGroups.forEach((ag) => {
+      r.push({ type: 'header', key: `h-${ag.letter}`, letter: ag.letter });
+      ag.items.forEach((it) => r.push({ type: 'item', key: `i-${ag.letter}-${it.slug}`, item: it }));
+    });
+    return r;
+  }, [alphaGroups]);
+
+  const containerRef = useRef(null);
+  const ROW_H = 32;
+  const HDR_H = 28;
+
+  const heights = useMemo(() => rows.map((r) => (r.type === 'header' ? HDR_H : ROW_H)), [rows]);
+  const prefixHeights = useMemo(() => {
+    const out = new Array(heights.length + 1).fill(0);
+    for (let i = 1; i <= heights.length; i++) out[i] = out[i - 1] + heights[i - 1];
+    return out;
+  }, [heights]);
+  const totalHeight = prefixHeights[prefixHeights.length - 1];
+
+  const [range, setRange] = useState({ start: 0, end: Math.min(rows.length - 1, 40) });
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    let rafId = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const top = el.scrollTop;
+        const viewport = el.clientHeight;
+        let s = 0;
+        let e = prefixHeights.length - 1;
+        while (s < e) {
+          const m = (s + e) >> 1;
+          if (prefixHeights[m] < top) s = m + 1;
+          else e = m;
+        }
+        const startIdx = Math.max(0, s - 1);
+        let s2 = startIdx;
+        let e2 = prefixHeights.length - 1;
+        const target = top + viewport;
+        while (s2 < e2) {
+          const m2 = Math.floor((s2 + e2) / 2);
+          if (prefixHeights[m2] < target) s2 = m2 + 1;
+          else e2 = m2;
+        }
+        const endIdx = Math.min(rows.length - 1, s2);
+        setRange({
+          start: Math.max(0, startIdx - 8),
+          end: Math.min(rows.length - 1, endIdx + 8),
+        });
+      });
+    };
+    onScroll();
+    el.addEventListener('scroll', onScroll, { passive: true });
+    const ro = new ResizeObserver(onScroll);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener('scroll', onScroll);
+      ro.disconnect();
+      cancelAnimationFrame(rafId);
+    };
+  }, [prefixHeights, rows.length]);
+
+  useEffect(() => {
+    setGroupPref(baseSlug, { filter: localFilter });
+  }, [baseSlug, localFilter]);
+  useEffect(() => {
+    setGroupPref(baseSlug, { showAll });
+  }, [baseSlug, showAll]);
+
+  const indexLetters = useMemo(() => alphaGroups.map((g) => g.letter), [alphaGroups]);
+  const onJump = (letter) => {
+    const headerIdx = rows.findIndex((r) => r.type === 'header' && r.letter === letter);
+    if (headerIdx >= 0) {
+      const el = containerRef.current;
+      if (!el) return;
+      el.scrollTo({ top: prefixHeights[headerIdx], behavior: 'smooth' });
+    }
+  };
+
+  const collapseAllLetters = () => setCollapseAll(true);
+  const expandAllLetters = () => setCollapseAll(false);
+
+  const visibleRows = useMemo(() => {
+    if (!collapseAll) return rows;
+    const firstLetter = alphaGroups[0]?.letter;
+    return rows.filter(
+      (r) =>
+        (r.type === 'header' && r.letter === firstLetter) ||
+        (r.type === 'item' && r.key.startsWith(`i-${firstLetter}-`))
+    );
+  }, [collapseAll, rows, alphaGroups]);
+
+  const vHeights = useMemo(() => visibleRows.map((r) => (r.type === 'header' ? HDR_H : ROW_H)), [visibleRows]);
+  const vPrefix = useMemo(() => {
+    const out = new Array(vHeights.length + 1).fill(0);
+    for (let i = 1; i <= vHeights.length; i++) out[i] = out[i - 1] + vHeights[i - 1];
+    return out;
+  }, [vHeights]);
+  const vTotal = vPrefix[vPrefix.length - 1];
+  const [vRange, setVRange] = useState({ start: 0, end: Math.min(visibleRows.length - 1, 40) });
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    let rafId = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const top = el.scrollTop;
+        const viewport = el.clientHeight;
+        let s = 0, e = vPrefix.length - 1;
+        while (s < e) {
+          const m = (s + e) >> 1;
+          if (vPrefix[m] < top) s = m + 1;
+          else e = m;
+        }
+        const startIdx = Math.max(0, s - 1);
+        let s2 = startIdx, e2 = vPrefix.length - 1;
+        const target = top + viewport;
+        while (s2 < e2) {
+          const m2 = Math.floor((s2 + e2) / 2);
+          if (vPrefix[m2] < target) s2 = m2 + 1;
+          else e2 = m2;
+        }
+        const endIdx = Math.min(visibleRows.length - 1, s2);
+        setVRange({ start: Math.max(0, startIdx - 8), end: Math.min(visibleRows.length - 1, endIdx + 8) });
+      });
+    };
+    onScroll();
+    el.addEventListener('scroll', onScroll, { passive: true });
+    const ro = new ResizeObserver(onScroll);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener('scroll', onScroll);
+      ro.disconnect();
+      cancelAnimationFrame(rafId);
+    };
+  }, [vPrefix, visibleRows.length]);
+
+  return (
+    <div className="rounded-md">
+      <div className="sticky top-0 z-[1] flex items-center justify-between rounded-md px-2 py-2.5 text-sm font-semibold text-white/95 bg-main-gradient/80 backdrop-blur">
+        <button
+          type="button"
+          aria-expanded={isOpen}
+          aria-controls={`section-${group.slug}`}
+          onClick={onToggle}
+          className="inline-flex items-center gap-2 sidebar-ring rounded-md px-1.5 py-1 hover:bg-white/10"
+        >
+          {GroupIcon ? <GroupIcon className="h-4 w-4 text-white" aria-hidden="true" /> : null}
+          <span className="text-white">{group.group}</span>
+          <svg className={`h-3.5 w-3.5 transition-transform ${isOpen ? 'rotate-180' : ''}`} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={collapseAllLetters}
+            className="rounded-md px-2 py-1 text-xs text-white/90 hover:bg-white/10 sidebar-ring"
+            aria-label="Collapse all subgroups"
+            title="Collapse all"
+          >
+            Collapse
+          </button>
+          <button
+            type="button"
+            onClick={expandAllLetters}
+            className="rounded-md px-2 py-1 text-xs text-white/90 hover:bg-white/10 sidebar-ring"
+            aria-label="Expand all subgroups"
+            title="Expand all"
+          >
+            Expand
+          </button>
+        </div>
+      </div>
+
+      <div id={`section-${group.slug}`} role="region" aria-label={group.group} className={`${isOpen ? 'block' : 'hidden'}`}>
+        {/* Local filter + alpha index */}
+        <div className="sticky top-[40px] z-[1] bg-main-gradient/75 backdrop-blur px-2 py-1.5">
+          <div className="flex items-center gap-2">
+            <div className="relative flex-1">
+              <label className="sr-only" htmlFor={`${group.slug}-filter`}>Filter {group.group}</label>
+              <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-2 text-white/80">
+                <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+                  <path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+              </div>
+              <input
+                id={`${group.slug}-filter`}
+                type="search"
+                value={localFilter}
+                onChange={(e) => setLocalFilter(e.target.value)}
+                placeholder={`Filter in ${group.group}…`}
+                className="w-full rounded-md border border-white/15 bg-white/10 pl-7 pr-2 py-1.5 text-sm leading-5 text-white placeholder:text-white/70 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent"
+              />
+            </div>
+            <div className="hidden lg:flex items-center gap-1 overflow-x-auto">
+              {indexLetters.map((l) => (
+                <button
+                  key={l}
+                  type="button"
+                  onClick={() => onJump(l)}
+                  className="rounded px-1.5 py-0.5 text-xs text-white/90 hover:bg-white/10 sidebar-ring"
+                  aria-label={`Jump to ${l}`}
+                  title={l}
+                >
+                  {l}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Virtualized list region: only this area scrolls */}
+        <div ref={containerRef} className="max-h-[55vh] overflow-y-auto custom-scrollbar px-0.5" role="listbox" aria-label={`${group.group} items`}>
+          <div style={{ height: collapseAll ? vTotal : totalHeight, position: 'relative' }}>
+            {(collapseAll ? visibleRows.slice(vRange.start, vRange.end + 1) : rows.slice(range.start, range.end + 1)).map((row, idx) => {
+              const realIndex = (collapseAll ? vRange.start : range.start) + idx;
+              const top = (collapseAll ? vPrefix : prefixHeights)[realIndex];
+              if (row.type === 'header') {
+                return (
+                  <div
+                    key={row.key}
+                    className="sticky z-0 px-2"
+                    style={{ position: 'absolute', top, height: HDR_H, left: 0, right: 0 }}
+                    aria-hidden="true"
+                  >
+                    <div className="sticky top-[72px] -mx-0.5 px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-white/80 bg-main-gradient/60 backdrop-blur rounded">
+                      {row.letter}
+                    </div>
+                  </div>
+                );
+              }
+              const it = row.item;
+              const nav = buildNav(group.slug, it);
+              const key = `${nav.pathname}${nav.hash || ''}`;
+              const active = key === activeKey;
+              const isDisabled = it.disabled === true;
+              return (
+                <div
+                  key={row.key}
+                  style={{ position: 'absolute', top, height: ROW_H, left: 0, right: 0 }}
+                >
+                  <Link
+                    to={{ pathname: nav.pathname, search: preservedQS, hash: nav.hash }}
+                    onClick={(e) => {
+                      if (isDisabled) {
+                        e.preventDefault();
+                        return;
+                      }
+                      e.preventDefault();
+                      go(group.slug, it)(e);
+                    }}
+                    className={`group flex items-center justify-between gap-1.5 rounded-md px-2 py-1.5 text-sm leading-5 transition-colors duration-150 sidebar-ring ${
+                      active
+                        ? 'sidebar-active-item text-white font-semibold'
+                        : 'text-slate-50 hover:bg-[rgb(37_99_235_/0.10)]'
+                    } ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                    aria-current={active ? 'page' : undefined}
+                    aria-disabled={isDisabled || undefined}
+                    tabIndex={isDisabled ? -1 : 0}
+                  >
+                    <span className="flex min-w-0 items-center">
+                      <span className={`truncate ${active ? 'text-white' : 'text-slate-50'}`}>{it.label}</span>
+                    </span>
+                    <div className="ml-1 flex items-center gap-1.5">
+                      {renderBadge(it.badge)}
+                      <svg
+                        className={`h-3 w-3 ${active ? 'text-white' : 'text-slate-50'} group-hover:text-white`}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Show more / Show all */}
+        {filteredItems.length > DEFAULT_N && (
+          <div className="px-2 py-1.5">
+            <button
+              type="button"
+              onClick={() => setShowAll((s) => !s)}
+              className="w-full rounded-md border border-white/20 bg-white/10 px-3 py-1.5 text-sm leading-5 text-white hover:bg-[rgb(37_99_235_/0.10)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent"
+              aria-expanded={showAll}
+              aria-controls={`section-${group.slug}`}
+            >
+              {showAll ? `Show less` : `Show ${filteredItems.length - DEFAULT_N} more`}
+            </button>
+          </div>
+        )}
+
+        {/* Empty state for local filter */}
+        {filteredItems.length === 0 && (
+          <div className="px-2 py-2 text-xs leading-5 text-white/80">No matches in {group.group}.</div>
+        )}
+      </div>
+    </div>
   );
 }
 
