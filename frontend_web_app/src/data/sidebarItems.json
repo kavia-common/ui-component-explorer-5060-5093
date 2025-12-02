@@ -51,10 +51,15 @@
     "group": "Navigations",
     "slug": "navigations",
     "items": [
-      { "label": "Top Navigation", "to": "/category/navigation#top" },
       { "label": "Navbar", "to": "/category/navigation#navbar" },
-      { "label": "Breadcrumbs", "to": "/category/navigation#breadcrumbs" },
-      { "label": "Pagination", "to": "/category/navigation#pagination" }
+      { "label": "Mega Menu", "to": "/category/navigation#mega-menu" },
+      { "label": "Navs", "to": "/category/navigation#navs" },
+      { "label": "Tabs", "to": "/category/navigation#tabs" },
+      { "label": "Sidebar New", "to": "/category/navigation#sidebar-new" },
+      { "label": "Scrollspy", "to": "/category/navigation#scrollspy" },
+      { "label": "Breadcrumb", "to": "/category/navigation#breadcrumb" },
+      { "label": "Pagination", "to": "/category/navigation#pagination" },
+      { "label": "Stepper", "to": "/category/navigation#stepper" }
     ]
   },
   {
