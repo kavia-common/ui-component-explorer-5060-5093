@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getComponentById } from '../utils/data';
 import Breadcrumbs from '../components/common/Breadcrumbs';
@@ -7,6 +7,8 @@ import CodeTabs from '../components/explorer/CodeTabs';
 import PropControls from '../components/explorer/PropControls';
 import Button from '../components/common/Button';
 import Icon from '../components/common/Icon';
+import { copyCodeSnippet } from '../utils/copy';
+import { getPreviewProps } from '../utils/preview';
 
 /**
  * PUBLIC_INTERFACE
@@ -16,19 +18,27 @@ function ComponentDetail() {
   const { id } = useParams();
   const component = getComponentById(id);
 
+  // Seed local preview state with registry previewProps (non-destructive; basic placeholders)
+  const [previewOverrides, setPreviewOverrides] = useState(() => getPreviewProps(id));
+
   const copyCode = async () => {
-    try {
-      await navigator.clipboard.writeText(component?.code || '');
-    } catch {
-      // ignore
-    }
+    await copyCodeSnippet(component?.code || '');
   };
 
-  // Placeholder prop controls (non-functional preview for now)
-  const controls = [
-    { label: 'Label', type: 'text', value: 'Primary' },
-    { label: 'Variant', type: 'select', value: 'primary', options: ['primary', 'secondary'] },
-  ];
+  // Placeholder prop controls representing a simple edit over preview props
+  const controls = Object.entries(previewOverrides || {}).map(([key, value]) => {
+    if (typeof value === 'string') {
+      return { label: key, type: 'text', value };
+    }
+    return null;
+  }).filter(Boolean);
+
+  const handleControlChange = (index, value) => {
+    // For now, tie index to key ordering in controls
+    const key = controls[index]?.label;
+    if (!key) return;
+    setPreviewOverrides((prev) => ({ ...prev, [key]: value }));
+  };
 
   return (
     <div className="space-y-6">
@@ -53,11 +63,15 @@ function ComponentDetail() {
         </div>
       </div>
 
-      <PreviewCanvas height={component?.previewHeight || 140} />
+      <PreviewCanvas
+        height={component?.previewHeight || 140}
+        componentId={id}
+        overrideProps={previewOverrides}
+      />
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_320px]">
         <CodeTabs code={component?.code || ''} />
-        <PropControls controls={controls} onChange={() => {}} />
+        <PropControls controls={controls} onChange={handleControlChange} />
       </div>
     </div>
   );

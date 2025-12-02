@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../common/Button';
 import Icon from '../common/Icon';
+import { copyCodeSnippet } from '../../utils/copy';
 
 /**
  * PUBLIC_INTERFACE
@@ -12,12 +13,10 @@ function CodeTabs({ code = '' }) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(code);
+    const ok = await copyCodeSnippet(code);
+    if (ok) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1200);
-    } catch {
-      // ignore
     }
   };
 
