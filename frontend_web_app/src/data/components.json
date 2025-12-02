@@ -5,20 +5,22 @@
     "slug": "primary-button",
     "category": "buttons",
     "tags": ["button", "cta", "action"],
-    "description": "A primary call-to-action button with solid style.",
-    "featured": true,
-    "previewHeight": 80,
     "difficulty": "beginner",
-    "darkModeSupported": true,
-    "responsiveNotes": "Works across sizes; width adapts to content.",
+    "jsxCode": "<PrimaryButton label=\\\"Primary\\\" />",
     "props": { "label": "string", "onClick": "function" },
     "previewProps": { "label": "Primary" },
-    "jsxCode": "<PrimaryButton label=\"Primary\" />",
     "seo": {
       "keywords": ["primary button", "cta", "tailwind button", "react button"],
       "description": "Primary action button with Ocean Professional focus ring and subtle shadow."
     },
-    "code": "<button className=\"px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition\">Primary</button>"
+    "notes": "Use for primary call to action. Ensure only one primary button per view for clarity.",
+    "libraries": [],
+    "description": "A primary call-to-action button with solid style.",
+    "featured": true,
+    "previewHeight": 80,
+    "darkModeSupported": true,
+    "responsiveNotes": "Works across sizes; width adapts to content.",
+    "code": "<button className=\\\"px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition\\\">Primary</button>"
   },
   {
     "id": "btn-secondary",
@@ -26,19 +28,21 @@
     "slug": "secondary-button",
     "category": "buttons",
     "tags": ["button", "secondary", "ghost"],
-    "description": "A neutral secondary button for less prominent actions.",
-    "featured": false,
-    "previewHeight": 80,
     "difficulty": "beginner",
-    "darkModeSupported": true,
-    "responsiveNotes": "Adapts to container width; pairs with primary button.",
+    "jsxCode": "<SecondaryButton label=\\\"Secondary\\\" />",
     "props": { "label": "string", "onClick": "function" },
     "previewProps": { "label": "Secondary" },
-    "jsxCode": "<SecondaryButton label=\"Secondary\" />",
     "seo": {
       "keywords": ["secondary button", "ghost button", "neutral action"],
       "description": "Secondary button with subtle hover and focus rings."
-    }
+    },
+    "notes": "Pair with primary buttons or use as neutral action. Avoid equal prominence with primary.",
+    "libraries": [],
+    "description": "A neutral secondary button for less prominent actions.",
+    "featured": false,
+    "previewHeight": 80,
+    "darkModeSupported": true,
+    "responsiveNotes": "Adapts to container width; pairs with primary button."
   },
   {
     "id": "badge-status",
@@ -46,19 +50,21 @@
     "slug": "status-badge",
     "category": "buttons",
     "tags": ["badge", "label", "status"],
-    "description": "Small badge used to denote statuses, tags, or counts.",
-    "featured": false,
-    "previewHeight": 80,
     "difficulty": "beginner",
-    "darkModeSupported": true,
-    "responsiveNotes": "Badges flow inline; wrap as needed.",
+    "jsxCode": "<StatusBadge text=\\\"New\\\" color=\\\"blue\\\" />",
     "props": { "text": "string", "color": "blue|amber|gray" },
     "previewProps": { "text": "New", "color": "blue" },
-    "jsxCode": "<StatusBadge text=\"New\" color=\"blue\" />",
     "seo": {
       "keywords": ["badge", "status", "tag", "pill"],
       "description": "Rounded badge with Ocean Professional colors."
-    }
+    },
+    "notes": "Use semantic colors. Keep text short. Badges should not be focusable unless interactive.",
+    "libraries": [],
+    "description": "Small badge used to denote statuses, tags, or counts.",
+    "featured": false,
+    "previewHeight": 80,
+    "darkModeSupported": true,
+    "responsiveNotes": "Badges flow inline; wrap as needed."
   },
   {
     "id": "alert-info",
@@ -66,19 +72,21 @@
     "slug": "info-alert",
     "category": "cards",
     "tags": ["alert", "notice", "info"],
-    "description": "An informational alert with icon and accessible markup.",
-    "featured": true,
-    "previewHeight": 100,
     "difficulty": "beginner",
-    "darkModeSupported": true,
-    "responsiveNotes": "Content wraps for narrow screens.",
+    "jsxCode": "<InfoAlert title=\\\"Heads up\\\" message=\\\"This is an informational alert.\\\" />",
     "props": { "title": "string", "message": "string" },
     "previewProps": { "title": "Heads up", "message": "This is an informational alert." },
-    "jsxCode": "<InfoAlert title=\"Heads up\" message=\"This is an informational alert.\" />",
     "seo": {
       "keywords": ["alert", "info", "notification"],
       "description": "Info alert with blue accent and focusable close button."
-    }
+    },
+    "notes": "Announce important info with role=alert if dynamically inserted; avoid overuse.",
+    "libraries": [],
+    "description": "An informational alert with icon and accessible markup.",
+    "featured": true,
+    "previewHeight": 100,
+    "darkModeSupported": true,
+    "responsiveNotes": "Content wraps for narrow screens."
   },
   {
     "id": "alert-success",
@@ -86,19 +94,21 @@
     "slug": "success-alert",
     "category": "cards",
     "tags": ["alert", "success", "notice"],
-    "description": "A success alert with green accent and icon.",
-    "featured": false,
-    "previewHeight": 100,
     "difficulty": "beginner",
-    "darkModeSupported": true,
-    "responsiveNotes": "Content wraps for narrow screens.",
+    "jsxCode": "<SuccessAlert title=\\\"All set\\\" message=\\\"Your changes have been saved.\\\" />",
     "props": { "title": "string", "message": "string" },
     "previewProps": { "title": "All set", "message": "Your changes have been saved." },
-    "jsxCode": "<SuccessAlert title=\"All set\" message=\"Your changes have been saved.\" />",
     "seo": {
       "keywords": ["success alert", "notification", "message"],
       "description": "Success alert with subtle shadow and Ocean palette."
-    }
+    },
+    "notes": "Use for positive confirmations. Consider dismiss actions and timed disappearance in toasts.",
+    "libraries": [],
+    "description": "A success alert with green accent and icon.",
+    "featured": false,
+    "previewHeight": 100,
+    "darkModeSupported": true,
+    "responsiveNotes": "Content wraps for narrow screens."
   },
   {
     "id": "card-basic",
@@ -106,20 +116,22 @@
     "slug": "basic-card",
     "category": "cards",
     "tags": ["card", "container", "layout"],
-    "description": "A simple card container with header and body.",
-    "featured": true,
-    "previewHeight": 140,
     "difficulty": "beginner",
-    "darkModeSupported": true,
-    "responsiveNotes": "Width scales with parent container; content wraps.",
+    "jsxCode": "<BasicCard title=\\\"Card Header\\\">Card body content...</BasicCard>",
     "props": { "title": "string", "children": "node" },
     "previewProps": { "title": "Card Header", "children": "Card body content..." },
-    "jsxCode": "<BasicCard title=\"Card Header\">Card body content...</BasicCard>",
     "seo": {
       "keywords": ["card", "panel", "container"],
       "description": "Card with subtle shadow and rounded corners."
     },
-    "code": "<div className=\"rounded-lg border p-4 bg-white dark:bg-gray-800\"><div className=\"mb-2 text-sm font-semibold\">Card Header</div><p className=\"text-gray-600 dark:text-gray-300\">Card body content...</p></div>"
+    "notes": "Cards are containers for grouped content. Keep vertical rhythm consistent across lists.",
+    "libraries": [],
+    "description": "A simple card container with header and body.",
+    "featured": true,
+    "previewHeight": 140,
+    "darkModeSupported": true,
+    "responsiveNotes": "Width scales with parent container; content wraps.",
+    "code": "<div className=\\\"rounded-lg border p-4 bg-white dark:bg-gray-800\\\"><div className=\\\"mb-2 text-sm font-semibold\\\">Card Header</div><p className=\\\"text-gray-600 dark:text-gray-300\\\">Card body content...</p></div>"
   },
   {
     "id": "card-media",
@@ -127,23 +139,25 @@
     "slug": "media-card",
     "category": "cards",
     "tags": ["card", "media", "image", "layout"],
-    "description": "Card with image thumbnail, title, and description.",
-    "featured": false,
-    "previewHeight": 160,
     "difficulty": "beginner",
-    "darkModeSupported": true,
-    "responsiveNotes": "Image stacks on small screens.",
+    "jsxCode": "<MediaCard title=\\\"Ocean Sunset\\\" description=\\\"A calming gradient with blue and amber accents.\\\" imageUrl=\\\"/path\\\" />",
     "props": { "title": "string", "description": "string", "imageUrl": "string" },
     "previewProps": {
       "title": "Ocean Sunset",
       "description": "A calming gradient with blue and amber accents.",
       "imageUrl": "https://picsum.photos/seed/ocean/160/100"
     },
-    "jsxCode": "<MediaCard title=\"Ocean Sunset\" description=\"A calming gradient with blue and amber accents.\" imageUrl=\"/path\" />",
     "seo": {
       "keywords": ["media card", "image card", "thumbnail"],
       "description": "Media card optimized for responsive layouts."
-    }
+    },
+    "notes": "Use loading=\"lazy\" for images and include descriptive alt text.",
+    "libraries": [],
+    "description": "Card with image thumbnail, title, and description.",
+    "featured": false,
+    "previewHeight": 160,
+    "darkModeSupported": true,
+    "responsiveNotes": "Image stacks on small screens."
   },
   {
     "id": "nav-topbar",
@@ -151,23 +165,21 @@
     "slug": "top-navigation",
     "category": "navigation",
     "tags": ["navigation", "header", "navbar"],
-    "description": "A responsive top navigation bar with brand and actions.",
-    "featured": false,
-    "previewHeight": 100,
     "difficulty": "intermediate",
-    "darkModeSupported": true,
-    "responsiveNotes": "Links collapse or wrap on narrow viewports.",
+    "jsxCode": "<TopNavigation brand=\\\"Brand\\\" links={[{label:'Docs'},{label:'Blog'}]} />",
     "props": { "brand": "string", "links": "array" },
-    "previewProps": {
-      "brand": "Brand",
-      "links": [{ "label": "Docs" }, { "label": "Blog" }]
-    },
-    "jsxCode": "<TopNavigation brand=\"Brand\" links={[{label:'Docs'},{label:'Blog'}]} />",
+    "previewProps": { "brand": "Brand", "links": [{ "label": "Docs" }, { "label": "Blog" }] },
     "seo": {
       "keywords": ["navbar", "navigation", "header"],
       "description": "Top navigation with Ocean gradient accent on hover."
     },
-    "code": "<header className=\"flex items-center justify-between border-b p-3 bg-white dark:bg-gray-900\"><div className=\"font-semibold\">Brand</div><nav className=\"flex items-center gap-4 text-sm\"><a className=\"hover:text-blue-600\" href=\"#\">Docs</a><a className=\"hover:text-blue-600\" href=\"#\">Blog</a></nav></header>"
+    "notes": "Ensure navigation landmarks (role=navigation) and skip links when used in real layouts.",
+    "libraries": [],
+    "description": "A responsive top navigation bar with brand and actions.",
+    "featured": false,
+    "previewHeight": 100,
+    "darkModeSupported": true,
+    "responsiveNotes": "Links collapse or wrap on narrow viewports."
   },
   {
     "id": "navbar-simple",
@@ -175,22 +187,21 @@
     "slug": "simple-navbar",
     "category": "navigation",
     "tags": ["navigation", "navbar", "links"],
-    "description": "Minimal navbar with brand and inline links.",
-    "featured": true,
-    "previewHeight": 84,
     "difficulty": "beginner",
-    "darkModeSupported": true,
-    "responsiveNotes": "Links wrap on small widths.",
+    "jsxCode": "<SimpleNavbar brand=\\\"Ocean\\\" links={[{label:'Home'},{label:'Components'},{label:'About'}]} />",
     "props": { "brand": "string", "links": "array" },
-    "previewProps": {
-      "brand": "Ocean",
-      "links": [{ "label": "Home" }, { "label": "Components" }, { "label": "About" }]
-    },
-    "jsxCode": "<SimpleNavbar brand=\"Ocean\" links={[{label:'Home'},{label:'Components'},{label:'About'}]} />",
+    "previewProps": { "brand": "Ocean", "links": [{ "label": "Home" }, { "label": "Components" }, { "label": "About" }] },
     "seo": {
       "keywords": ["navbar", "simple header", "topbar"],
       "description": "Simple navbar with clean spacing and hover styles."
-    }
+    },
+    "notes": "Use semantic header and nav elements; ensure link focus visibility.",
+    "libraries": [],
+    "description": "Minimal navbar with brand and inline links.",
+    "featured": true,
+    "previewHeight": 84,
+    "darkModeSupported": true,
+    "responsiveNotes": "Links wrap on small widths."
   },
   {
     "id": "modal-basic",
@@ -198,19 +209,21 @@
     "slug": "basic-modal",
     "category": "cards",
     "tags": ["modal", "dialog", "overlay"],
-    "description": "Accessible modal dialog with overlay and focus trapping.",
-    "featured": false,
-    "previewHeight": 180,
     "difficulty": "advanced",
-    "darkModeSupported": true,
-    "responsiveNotes": "Dialog centers and scales on small screens.",
+    "jsxCode": "<BasicModal title=\\\"Confirm action\\\" open />",
     "props": { "title": "string", "open": "boolean" },
     "previewProps": { "title": "Confirm action", "open": true },
-    "jsxCode": "<BasicModal title=\"Confirm action\" open />",
     "seo": {
       "keywords": ["modal", "dialog", "overlay", "accessible"],
       "description": "Modal with Ocean focus rings and subtle drop shadow."
-    }
+    },
+    "notes": "For production, add focus trapping, aria-modal, aria-labelledby, and ESC/overlay dismissal.",
+    "libraries": [],
+    "description": "Accessible modal dialog with overlay and focus trapping.",
+    "featured": false,
+    "previewHeight": 180,
+    "darkModeSupported": true,
+    "responsiveNotes": "Dialog centers and scales on small screens."
   },
   {
     "id": "input-text",
@@ -218,20 +231,21 @@
     "slug": "text-input",
     "category": "forms",
     "tags": ["input", "form", "field"],
-    "description": "A standard text input with focus styles.",
-    "featured": false,
-    "previewHeight": 80,
     "difficulty": "beginner",
-    "darkModeSupported": true,
-    "responsiveNotes": "Full-width input in narrow containers.",
+    "jsxCode": "<TextInput placeholder=\\\"Type here\\\" />",
     "props": { "placeholder": "string", "value": "string" },
     "previewProps": { "placeholder": "Type here" },
-    "jsxCode": "<TextInput placeholder=\"Type here\" />",
     "seo": {
       "keywords": ["text input", "form field", "input"],
       "description": "Input with Ocean blue focus ring and rounded corners."
     },
-    "code": "<input type=\"text\" placeholder=\"Type here\" className=\"w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100\" />"
+    "notes": "Always associate labels with inputs. Ensure sufficient contrast on placeholder text.",
+    "libraries": [],
+    "description": "A standard text input with focus styles.",
+    "featured": false,
+    "previewHeight": 80,
+    "darkModeSupported": true,
+    "responsiveNotes": "Full-width input in narrow containers."
   },
   {
     "id": "input-email",
@@ -239,19 +253,21 @@
     "slug": "email-input",
     "category": "forms",
     "tags": ["input", "email", "form"],
-    "description": "Email input with validation-friendly styles.",
-    "featured": false,
-    "previewHeight": 80,
     "difficulty": "beginner",
-    "darkModeSupported": true,
-    "responsiveNotes": "Full-width control within forms.",
+    "jsxCode": "<EmailInput placeholder=\\\"you@example.com\\\" />",
     "props": { "placeholder": "string", "value": "string" },
     "previewProps": { "placeholder": "you@example.com" },
-    "jsxCode": "<EmailInput placeholder=\"you@example.com\" />",
     "seo": {
       "keywords": ["email input", "form input", "validation"],
       "description": "Email input styled for accessibility and clarity."
-    }
+    },
+    "notes": "Use type=email for mobile keyboard optimization and basic validation.",
+    "libraries": [],
+    "description": "Email input with validation-friendly styles.",
+    "featured": false,
+    "previewHeight": 80,
+    "darkModeSupported": true,
+    "responsiveNotes": "Full-width control within forms."
   },
   {
     "id": "form-contact",
@@ -259,19 +275,21 @@
     "slug": "contact-form",
     "category": "forms",
     "tags": ["form", "layout", "input", "textarea"],
-    "description": "A simple contact form layout with name, email, and message.",
-    "featured": true,
-    "previewHeight": 220,
     "difficulty": "intermediate",
-    "darkModeSupported": true,
-    "responsiveNotes": "Single column on small screens; wider spacing on desktop.",
+    "jsxCode": "<ContactForm />",
     "props": { "onSubmit": "function" },
     "previewProps": {},
-    "jsxCode": "<ContactForm />",
     "seo": {
       "keywords": ["contact form", "form layout", "textarea"],
       "description": "Form with Ocean focus rings and clear label hierarchy."
-    }
+    },
+    "notes": "Validate fields and show helpful error messages. Consider ARIA live regions for async submit.",
+    "libraries": [],
+    "description": "A simple contact form layout with name, email, and message.",
+    "featured": true,
+    "previewHeight": 220,
+    "darkModeSupported": true,
+    "responsiveNotes": "Single column on small screens; wider spacing on desktop."
   },
   {
     "id": "pagination-basic",
@@ -279,19 +297,21 @@
     "slug": "pagination",
     "category": "navigation",
     "tags": ["pagination", "nav", "controls"],
-    "description": "Basic pagination controls with previous/next and pages.",
-    "featured": false,
-    "previewHeight": 84,
     "difficulty": "intermediate",
-    "darkModeSupported": true,
-    "responsiveNotes": "Pages wrap on small viewports; primary color highlights current.",
+    "jsxCode": "<Pagination page={2} totalPages={5} />",
     "props": { "page": "number", "totalPages": "number" },
     "previewProps": { "page": 2, "totalPages": 5 },
-    "jsxCode": "<Pagination page={2} totalPages={5} />",
     "seo": {
       "keywords": ["pagination", "pager", "navigation"],
       "description": "Accessible pagination with keyboard focus states."
-    }
+    },
+    "notes": "Include aria-current for active page and label the nav with aria-label='Pagination'.",
+    "libraries": [],
+    "description": "Basic pagination controls with previous/next and pages.",
+    "featured": false,
+    "previewHeight": 84,
+    "darkModeSupported": true,
+    "responsiveNotes": "Pages wrap on small viewports; primary color highlights current."
   },
   {
     "id": "breadcrumb-basic",
@@ -299,20 +319,68 @@
     "slug": "breadcrumbs",
     "category": "navigation",
     "tags": ["breadcrumbs", "nav", "links"],
-    "description": "Breadcrumb navigation trail for hierarchy.",
-    "featured": false,
-    "previewHeight": 72,
     "difficulty": "beginner",
-    "darkModeSupported": true,
-    "responsiveNotes": "Text wraps gracefully; separators are subtle.",
-    "props": { "items": "array" },
-    "previewProps": {
-      "items": [{ "label": "Home" }, { "label": "Library" }, { "label": "Data" }]
-    },
     "jsxCode": "<BreadcrumbSample items={[{label:'Home'},{label:'Library'},{label:'Data'}]} />",
+    "props": { "items": "array" },
+    "previewProps": { "items": [{ "label": "Home" }, { "label": "Library" }, { "label": "Data" }] },
     "seo": {
       "keywords": ["breadcrumbs", "navigation", "trail"],
       "description": "Breadcrumbs with Ocean hover accents."
-    }
+    },
+    "notes": "Wrap in nav with aria-label='Breadcrumb' for assistive tech.",
+    "libraries": [],
+    "description": "Breadcrumb navigation trail for hierarchy.",
+    "featured": false,
+    "previewHeight": 72,
+    "darkModeSupported": true,
+    "responsiveNotes": "Text wraps gracefully; separators are subtle."
+  },
+  {
+    "id": "datepicker-basic",
+    "name": "Date Picker",
+    "slug": "date-picker",
+    "category": "forms",
+    "tags": ["datepicker", "calendar", "date"],
+    "difficulty": "intermediate",
+    "jsxCode": "<DayPicker /* see notes for lazy import */ />",
+    "props": { "value": "Date", "onChange": "function" },
+    "previewProps": {},
+    "seo": {
+      "keywords": ["date picker", "calendar input"],
+      "description": "Calendar UI for selecting dates."
+    },
+    "notes": "Recommended library: react-day-picker. Install: npm i react-day-picker. See Details for lazy import example.",
+    "libraries": [
+      { "name": "react-day-picker", "install": "npm i react-day-picker" }
+    ],
+    "description": "A basic date picker with calendar UI.",
+    "featured": false,
+    "previewHeight": 200,
+    "darkModeSupported": true,
+    "responsiveNotes": "Use mobile-friendly input on small screens."
+  },
+  {
+    "id": "color-picker-basic",
+    "name": "Color Picker",
+    "slug": "color-picker",
+    "category": "forms",
+    "tags": ["color", "picker", "input"],
+    "difficulty": "intermediate",
+    "jsxCode": "<HexColorPicker /* see notes for lazy import */ />",
+    "props": { "color": "string", "onChange": "function" },
+    "previewProps": {},
+    "seo": {
+      "keywords": ["color picker", "color input"],
+      "description": "Interactive color selection UI."
+    },
+    "notes": "Recommended library: react-colorful. Install: npm i react-colorful. Use lazy import and suspense for optional enhancement.",
+    "libraries": [
+      { "name": "react-colorful", "install": "npm i react-colorful" }
+    ],
+    "description": "A modern color picker component.",
+    "featured": false,
+    "previewHeight": 160,
+    "darkModeSupported": true,
+    "responsiveNotes": "Provide text input fallback for keyboard users."
   }
 ]

@@ -25,6 +25,8 @@ import StatusBadge from './samples/StatusBadge';
 import ContactForm from './samples/ContactForm';
 import Pagination from './samples/Pagination';
 import BreadcrumbSample from './samples/BreadcrumbSample';
+import DatePickerBasic from './samples/DatePickerBasic';
+import ColorPickerBasic from './samples/ColorPickerBasic';
 
 /**
  * PUBLIC_INTERFACE
@@ -109,6 +111,16 @@ const registry = {
     component: BreadcrumbSample,
     defaultProps: { items: [{ label: 'Home' }, { label: 'Library' }, { label: 'Data' }] },
     previewProps: undefined,
+  },
+  'datepicker-basic': {
+    component: DatePickerBasic,
+    defaultProps: { value: '', onChange: () => {} },
+    previewProps: { value: '' }
+  },
+  'color-picker-basic': {
+    component: ColorPickerBasic,
+    defaultProps: { color: '#2563EB', onChange: () => {} },
+    previewProps: { color: '#2563EB' }
   },
 };
 

@@ -97,7 +97,36 @@ function ComponentDetail() {
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_320px]">
         <CodeTabs code={component?.code || ''} />
-        <PropControls controls={controls} onChange={handleControlChange} />
+        <div className="space-y-4">
+          <PropControls controls={controls} onChange={handleControlChange} />
+          <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-800">
+            <div className="mb-2 text-sm font-medium text-slate-800 dark:text-slate-200">Details</div>
+            {component?.notes ? (
+              <p className="text-sm text-slate-700 dark:text-slate-200">{component.notes}</p>
+            ) : (
+              <p className="text-sm text-slate-500 dark:text-slate-300">
+                No additional notes for this component.
+              </p>
+            )}
+            {Array.isArray(component?.libraries) && component.libraries.length > 0 ? (
+              <div className="mt-3">
+                <div className="text-xs font-semibold text-slate-900 dark:text-slate-100">Libraries</div>
+                <ul className="mt-1 space-y-1">
+                  {component.libraries.map((lib, idx) => (
+                    <li key={idx} className="text-xs text-slate-700 dark:text-slate-300">
+                      <span className="font-mono">{lib.name}</span>
+                      {lib.install ? (
+                        <>
+                          {' '}• Install: <code className="rounded bg-gray-100 px-1 py-0.5 dark:bg-gray-900">{lib.install}</code>
+                        </>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        </div>
       </div>
     </div>
   );

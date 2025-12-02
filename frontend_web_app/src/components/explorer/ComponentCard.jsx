@@ -27,6 +27,11 @@ function ComponentCard({ item }) {
           <div className="font-medium text-slate-800 group-hover:text-blue-700 dark:text-slate-200 dark:group-hover:text-blue-300">
             {item.name}
           </div>
+          {item.description ? (
+            <div className="mt-0.5 line-clamp-2 text-xs text-slate-600 dark:text-slate-300">
+              {item.description}
+            </div>
+          ) : null}
           {item.tags?.length ? (
             <div className="mt-2 flex flex-wrap gap-1.5">
               {item.tags.slice(0, 3).map((t) => (
