@@ -41,6 +41,25 @@ import Links from './samples/Links.jsx';
 import Dividers from './samples/Dividers.jsx';
 import CustomScrollbar from './samples/CustomScrollbar.jsx';
 import KbdSample from './samples/Kbd.jsx';
+import Accordion from './samples/Accordion.jsx';
+import BaseAlert from './samples/Alerts.jsx';
+import Avatar, { AvatarGroup } from './samples/Avatar.jsx';
+import Blockquote from './samples/Blockquote.jsx';
+import ButtonGroup from './samples/ButtonGroup.jsx';
+import ChatBubbles from './samples/ChatBubbles.jsx';
+import Carousel from './samples/Carousel.jsx';
+import Collapse from './samples/Collapse.jsx';
+import DevicesMockup from './samples/Devices.jsx';
+import { Lists as ListsSample, ListGroup as ListGroupSample } from './samples/Lists.jsx';
+import { LegendIndicator, Progress as ProgressSample } from './samples/LegendProgress.jsx';
+import UploadProgress from './samples/UploadProgress.jsx';
+import Ratings from './samples/Ratings.jsx';
+import Skeleton from './samples/Skeleton.jsx';
+import Spinners from './samples/Spinners.jsx';
+import StyledIcons from './samples/StyledIcons.jsx';
+import Toasts from './samples/Toasts.jsx';
+import Timeline from './samples/Timeline.jsx';
+import TreeView from './samples/TreeView.jsx';
 
 /**
  * PUBLIC_INTERFACE
@@ -234,32 +253,89 @@ const registry = {
   'placeholder-custom-scrollbar': { component: GenericPlaceholder, previewProps: { title: 'Custom Scrollbar', blurb: 'Scrollbar theming examples.' } },
 
   // Other placeholders unchanged...
-  'placeholder-accordion': { component: GenericPlaceholder, previewProps: { title: 'Accordion', blurb: 'Disclosure lists with expand/collapse.' } },
+  'base-accordion': {
+    component: Accordion,
+    defaultProps: {
+      items: [
+        { title: 'What is Ocean theme?', content: 'A clean modern palette with blue and amber accents.' },
+        { title: 'Is it accessible?', content: 'Yes — keyboard focus, roles, and labels.' }
+      ]
+    },
+    previewProps: undefined
+  },
   'placeholder-alerts': { component: GenericPlaceholder, previewProps: { title: 'Alerts', blurb: 'Inline notices for statuses and messages.' } },
-  'placeholder-avatar': { component: GenericPlaceholder, previewProps: { title: 'Avatar', blurb: 'User avatars and sizes.' } },
-  'placeholder-avatar-group': { component: GenericPlaceholder, previewProps: { title: 'Avatar Group', blurb: 'Overlapping or stacked avatar sets.' } },
-  'placeholder-badge': { component: GenericPlaceholder, previewProps: { title: 'Badge', blurb: 'Tiny labels for statuses and tags.' } },
-  'placeholder-blockquote': { component: GenericPlaceholder, previewProps: { title: 'Blockquote', blurb: 'Quoted content styles.' } },
+  'base-avatar': {
+    component: Avatar,
+    defaultProps: { name: 'Leslie Alexander', src: 'https://i.pravatar.cc/96?img=5', size: 'md' },
+    previewProps: undefined
+  },
+  'base-avatar-group': {
+    component: AvatarGroup,
+    defaultProps: {
+      users: [
+        { name: 'Leslie', src: 'https://i.pravatar.cc/96?img=5' },
+        { name: 'Courtney', src: 'https://i.pravatar.cc/96?img=6' },
+        { name: 'Devon', src: 'https://i.pravatar.cc/96?img=7' },
+        { name: 'Alex', src: 'https://i.pravatar.cc/96?img=8' }
+      ],
+      max: 3
+    },
+    previewProps: undefined
+  },
+  'base-badge': {
+    component: ({ text = 'Beta' }) => (
+      <span className="inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-200">
+        {text}
+      </span>
+    ),
+    defaultProps: { text: 'Beta' },
+    previewProps: undefined
+  },
+  'base-blockquote': {
+    component: Blockquote,
+    defaultProps: { children: '“Simplicity is the soul of efficiency.”', cite: 'Austin Freeman' },
+    previewProps: undefined
+  },
   'placeholder-buttons': { component: GenericPlaceholder, previewProps: { title: 'Buttons', blurb: 'Primary, secondary, and more button variants.' } },
-  'placeholder-button-group': { component: GenericPlaceholder, previewProps: { title: 'Button Group', blurb: 'Grouped buttons with spacing.' } },
+  'base-button-group': {
+    component: ButtonGroup,
+    defaultProps: { options: [{ label: 'Left', value: 'left' }, { label: 'Center', value: 'center' }, { label: 'Right', value: 'right' }], value: 'left' },
+    previewProps: undefined
+  },
   'placeholder-card': { component: GenericPlaceholder, previewProps: { title: 'Card', blurb: 'Content containers with header and body.' } },
-  'placeholder-chat-bubbles': { component: GenericPlaceholder, previewProps: { title: 'Chat Bubbles', blurb: 'Message bubbles for chat UIs.' } },
-  'placeholder-carousel': { component: GenericPlaceholder, previewProps: { title: 'Carousel', blurb: 'Sliding content areas.' } },
-  'placeholder-collapse': { component: GenericPlaceholder, previewProps: { title: 'Collapse', blurb: 'Hide/show content areas.' } },
+  'base-chat-bubbles': {
+    component: ChatBubbles,
+    defaultProps: { messages: [{ me: false, text: 'Hello!' }, { me: true, text: 'Hi there 👋' }] },
+    previewProps: undefined
+  },
+  'base-carousel': {
+    component: Carousel,
+    defaultProps: {},
+    previewProps: {}
+  },
+  'base-collapse': {
+    component: Collapse,
+    defaultProps: { title: 'Advanced options', children: 'Hidden content...' },
+    previewProps: undefined
+  },
   'placeholder-datepicker': { component: GenericPlaceholder, previewProps: { title: 'Datepicker', blurb: 'Pick dates with a calendar UI.' } },
-  'placeholder-devices': { component: GenericPlaceholder, previewProps: { title: 'Devices', blurb: 'Device frames for screenshots.' } },
-  'placeholder-lists': { component: GenericPlaceholder, previewProps: { title: 'Lists', blurb: 'Styled list patterns.' } },
-  'placeholder-list-group': { component: GenericPlaceholder, previewProps: { title: 'List Group', blurb: 'Grouped list items with borders.' } },
-  'placeholder-legend-indicator': { component: GenericPlaceholder, previewProps: { title: 'Legend Indicator', blurb: 'Small color indicators for legends.' } },
-  'placeholder-progress': { component: GenericPlaceholder, previewProps: { title: 'Progress', blurb: 'Progress bars and loaders.' } },
-  'placeholder-file-uploading-progress': { component: GenericPlaceholder, previewProps: { title: 'File Uploading Progress', blurb: 'File upload progress patterns.' } },
-  'placeholder-ratings': { component: GenericPlaceholder, previewProps: { title: 'Ratings', blurb: 'Star and score rating components.' } },
-  'placeholder-skeleton': { component: GenericPlaceholder, previewProps: { title: 'Skeleton', blurb: 'Loading placeholder elements.' } },
-  'placeholder-spinners': { component: GenericPlaceholder, previewProps: { title: 'Spinners', blurb: 'Activity indicators and spinners.' } },
-  'placeholder-styled-icons': { component: GenericPlaceholder, previewProps: { title: 'Styled Icons', blurb: 'Iconography with consistent styles.' } },
-  'placeholder-toasts': { component: GenericPlaceholder, previewProps: { title: 'Toasts', blurb: 'Transient notifications.' } },
-  'placeholder-timeline': { component: GenericPlaceholder, previewProps: { title: 'Timeline', blurb: 'Sequential timeline views.' } },
-  'placeholder-tree-view': { component: GenericPlaceholder, previewProps: { title: 'Tree View', blurb: 'Hierarchical expandable lists.' } },
+  'base-devices': {
+    component: DevicesMockup,
+    defaultProps: {},
+    previewProps: {}
+  },
+  'base-lists': { component: ListsSample, defaultProps: {}, previewProps: {} },
+  'base-list-group': { component: ListGroupSample, defaultProps: { items: [{ title: 'Profile' }, { title: 'Billing' }, { title: 'Team' }] }, previewProps: undefined },
+  'base-legend-indicator': { component: LegendIndicator, defaultProps: { color: 'blue', label: 'Active' }, previewProps: undefined },
+  'base-progress': { component: ProgressSample, defaultProps: { value: 65 }, previewProps: undefined },
+  'base-upload-progress': { component: UploadProgress, defaultProps: { filename: 'ocean.png', percent: 42 }, previewProps: undefined },
+  'base-ratings': { component: Ratings, defaultProps: { value: 3.5 }, previewProps: undefined },
+  'base-skeleton': { component: Skeleton, defaultProps: { lines: 3 }, previewProps: undefined },
+  'base-spinners': { component: Spinners, defaultProps: {}, previewProps: {} },
+  'base-styled-icons': { component: StyledIcons, defaultProps: {}, previewProps: {} },
+  'base-toasts': { component: Toasts, defaultProps: {}, previewProps: {} },
+  'base-timeline': { component: Timeline, defaultProps: { items: [{ title: 'Kickoff', date: 'Jan 10' }, { title: 'Design', date: 'Jan 18' }, { title: 'Build', date: 'Feb 02' }] }, previewProps: undefined },
+  'base-tree-view': { component: TreeView, defaultProps: { data: [{ label: 'src', children: [{ label: 'components' }, { label: 'pages' }] }, { label: 'public', children: [{ label: 'assets' }] }] }, previewProps: undefined },
 
   'placeholder-navbar': { component: GenericPlaceholder, previewProps: { title: 'Navbar', blurb: 'Top navigation bars with brand and links.' } },
   'placeholder-mega-menu': { component: GenericPlaceholder, previewProps: { title: 'Mega Menu', blurb: 'Large menu panels with sections.' } },

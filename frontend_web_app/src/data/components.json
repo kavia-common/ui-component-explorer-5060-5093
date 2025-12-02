@@ -549,5 +549,467 @@
     "description": "Small, rounded kbd elements to display keyboard shortcuts and combinations.",
     "notes": "Use the semantic <kbd> HTML element. Group combos with + separators and provide accessible labels.",
     "libraries": []
+  },
+
+  {
+    "id": "base-accordion",
+    "name": "Accordion",
+    "slug": "accordion",
+    "category": "base",
+    "tags": ["accordion", "disclosure", "collapse"],
+    "difficulty": "intermediate",
+    "jsxCode": "<Accordion items={[{title:'Section 1',content:'Content 1'}]} />",
+    "props": { "items": "array" },
+    "previewProps": { "items": [{ "title": "What is Ocean theme?", "content": "A clean modern palette with blue and amber accents." }, { "title": "Is it accessible?", "content": "Yes — focus outlines, roles, and keyboard support included." }] },
+    "seo": {
+      "keywords": ["accordion", "disclosure", "collapse"],
+      "description": "Accessible accordion built with details/summary and Tailwind."
+    },
+    "notes": "Tailwind-only using <details>/<summary> and optional JS for single-open behavior. Make summary focusable with keyboard support (Enter/Space toggles).",
+    "libraries": [
+      { "name": "@headlessui/react (optional)", "install": "npm i @headlessui/react" }
+    ],
+    "description": "Disclosure list with expand/collapse sections.",
+    "short": "Accessible expand/collapse sections.",
+    "featured": false,
+    "previewHeight": 220,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "alert-warning",
+    "name": "Warning Alert",
+    "slug": "warning-alert",
+    "category": "base",
+    "tags": ["alert", "warning", "notice"],
+    "difficulty": "beginner",
+    "jsxCode": "<InfoAlert /* styled variant */ />",
+    "props": { "title": "string", "message": "string" },
+    "previewProps": { "title": "Heads up", "message": "Please review the changes before proceeding." },
+    "short": "Cautionary inline notice.",
+    "description": "Warning alert with amber accent and icon.",
+    "notes": "Use role='alert' only when dynamically rendered and important to announce.",
+    "libraries": [],
+    "previewHeight": 100,
+    "darkModeSupported": true
+  },
+  {
+    "id": "alert-error",
+    "name": "Error Alert",
+    "slug": "error-alert",
+    "category": "base",
+    "tags": ["alert", "error", "notice"],
+    "difficulty": "beginner",
+    "jsxCode": "<InfoAlert /* styled variant */ />",
+    "props": { "title": "string", "message": "string" },
+    "previewProps": { "title": "Something went wrong", "message": "We couldn't save your changes." },
+    "short": "Error message with icon.",
+    "description": "Destructive alert with red accent and icon.",
+    "notes": "Reserve for important blocking errors. Provide remediation or contact info.",
+    "libraries": [],
+    "previewHeight": 100,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-avatar",
+    "name": "Avatar",
+    "slug": "avatar",
+    "category": "base",
+    "tags": ["avatar", "user", "image"],
+    "difficulty": "beginner",
+    "jsxCode": "<Avatar name=\"Leslie Alexander\" src=\"/path\" />",
+    "props": { "name": "string", "src": "string", "size": "sm|md|lg" },
+    "previewProps": { "name": "Leslie Alexander", "src": "https://i.pravatar.cc/96?img=5", "size": "md" },
+    "short": "User avatar with fallback initials.",
+    "description": "Circular avatar showing image or initials fallback.",
+    "notes": "Include alt text. Generate initials when image fails to load.",
+    "libraries": [],
+    "previewHeight": 96,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-avatar-group",
+    "name": "Avatar Group",
+    "slug": "avatar-group",
+    "category": "base",
+    "tags": ["avatar", "group", "stack"],
+    "difficulty": "beginner",
+    "jsxCode": "<AvatarGroup users={[...]} />",
+    "props": { "users": "array", "max": "number" },
+    "previewProps": {
+      "users": [
+        { "name": "Leslie", "src": "https://i.pravatar.cc/96?img=5" },
+        { "name": "Courtney", "src": "https://i.pravatar.cc/96?img=6" },
+        { "name": "Devon", "src": "https://i.pravatar.cc/96?img=7" },
+        { "name": "Alex", "src": "https://i.pravatar.cc/96?img=8" }
+      ],
+      "max": 3
+    },
+    "short": "Overlapping circle avatars with +N counter.",
+    "description": "Compact group of avatars with overflow indicator.",
+    "notes": "Ensure avatar order has meaning. Provide tooltips or labels for names.",
+    "libraries": [],
+    "previewHeight": 84,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-badge",
+    "name": "Badge",
+    "slug": "badge",
+    "category": "base",
+    "tags": ["badge", "pill", "label"],
+    "difficulty": "beginner",
+    "jsxCode": "<span className=\"inline-flex items-center rounded-full bg-blue-100 text-blue-800 px-2 py-0.5 text-xs\">New</span>",
+    "props": { "text": "string" },
+    "previewProps": { "text": "Beta" },
+    "short": "Pill badge with semantic colors.",
+    "description": "Simple solid badge for statuses and tags.",
+    "notes": "Use color for meaning and pair with text for accessibility.",
+    "libraries": [],
+    "previewHeight": 64,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-blockquote",
+    "name": "Blockquote",
+    "slug": "blockquote",
+    "category": "base",
+    "tags": ["blockquote", "quote"],
+    "difficulty": "beginner",
+    "jsxCode": "<blockquote className=\"border-l-4 border-blue-500 pl-4 italic text-slate-700 dark:text-slate-200\">Quote</blockquote>",
+    "props": { "children": "node", "cite": "string" },
+    "previewProps": {},
+    "short": "Stylish quotation with left border.",
+    "description": "Semantic blockquote with subtle accent.",
+    "notes": "Prefer <figure> with <figcaption> and cite when attribution is present.",
+    "libraries": [],
+    "previewHeight": 90,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-button-group",
+    "name": "Button Group",
+    "slug": "button-group",
+    "category": "base",
+    "tags": ["buttons", "group"],
+    "difficulty": "beginner",
+    "jsxCode": "<ButtonGroup options={[...]} value=\"left\" />",
+    "props": { "options": "array", "value": "string" },
+    "previewProps": { "options": [{"label":"Left","value":"left"},{"label":"Center","value":"center"},{"label":"Right","value":"right"}], "value": "left" },
+    "short": "Adjacent buttons with shared borders.",
+    "description": "Segmented controls with connected corners and focus rings.",
+    "notes": "Use aria-pressed on toggle buttons; consider role='tablist' for tabs-like behavior.",
+    "libraries": [],
+    "previewHeight": 84,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-chat-bubbles",
+    "name": "Chat Bubbles",
+    "slug": "chat-bubbles",
+    "category": "base",
+    "tags": ["chat", "message", "bubble"],
+    "difficulty": "beginner",
+    "jsxCode": "<ChatBubbles messages={[...]} />",
+    "props": { "messages": "array" },
+    "previewProps": { "messages": [{ "me": false, "text": "Hello!" }, { "me": true, "text": "Hi there 👋" }] },
+    "short": "Left/right chat bubble layout.",
+    "description": "Message bubbles with tails and timestamps.",
+    "notes": "Respect prefers-reduced-motion for typing indicators.",
+    "libraries": [],
+    "previewHeight": 160,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-carousel",
+    "name": "Carousel",
+    "slug": "carousel",
+    "category": "base",
+    "tags": ["carousel", "slider"],
+    "difficulty": "intermediate",
+    "jsxCode": "<Carousel /* Tailwind-only demo */ />",
+    "props": {},
+    "previewProps": {},
+    "short": "Horizontal snap slider with arrows.",
+    "description": "CSS scroll-snap carousel with buttons; no external libs.",
+    "notes": "Tailwind-only: use overflow-x-auto and scroll-snap. For advanced features consider a library.",
+    "libraries": [
+      { "name": "keen-slider (optional)", "install": "npm i keen-slider" },
+      { "name": "swiper (optional)", "install": "npm i swiper" }
+    ],
+    "previewHeight": 170,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-collapse",
+    "name": "Collapse",
+    "slug": "collapse",
+    "category": "base",
+    "tags": ["collapse", "toggle"],
+    "difficulty": "beginner",
+    "jsxCode": "<Collapse title=\"Advanced options\">Hidden content...</Collapse>",
+    "props": { "title": "string", "children": "node" },
+    "previewProps": { "title": "Advanced options" },
+    "short": "Show/hide content area.",
+    "description": "Disclosure control for simple hide/show.",
+    "notes": "Use aria-expanded and aria-controls when not using details/summary.",
+    "libraries": [],
+    "previewHeight": 120,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-devices",
+    "name": "Devices",
+    "slug": "devices",
+    "category": "base",
+    "tags": ["device", "frame", "mockup"],
+    "difficulty": "beginner",
+    "jsxCode": "<DevicesMockup />",
+    "props": {},
+    "previewProps": {},
+    "short": "Simple device frames for screenshots.",
+    "description": "CSS-only mock devices (phone/laptop) for showcasing screenshots.",
+    "notes": "Use background and border radii to suggest devices. Keep alt text meaningful.",
+    "libraries": [],
+    "previewHeight": 180,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-lists",
+    "name": "Lists",
+    "slug": "lists",
+    "category": "base",
+    "tags": ["list", "ul", "ol"],
+    "difficulty": "beginner",
+    "jsxCode": "<Lists />",
+    "props": {},
+    "previewProps": {},
+    "short": "Bulleted, numbered, and icon lists.",
+    "description": "Common list patterns with spacing and markers.",
+    "notes": "Prefer semantic lists (<ul>/<ol>) and consistent vertical rhythm.",
+    "libraries": [],
+    "previewHeight": 120,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-list-group",
+    "name": "List Group",
+    "slug": "list-group",
+    "category": "base",
+    "tags": ["list", "group", "bordered"],
+    "difficulty": "beginner",
+    "jsxCode": "<ListGroup items={[...]} />",
+    "props": { "items": "array" },
+    "previewProps": { "items": [{ "title": "Profile" }, { "title": "Billing" }, { "title": "Team" }] },
+    "short": "Bordered stacked list with hover.",
+    "description": "Stacked list items with dividers and states.",
+    "notes": "Use role='list' and role='listitem' for non-semantic wrappers.",
+    "libraries": [],
+    "previewHeight": 160,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-legend-indicator",
+    "name": "Legend Indicator",
+    "slug": "legend-indicator",
+    "category": "base",
+    "tags": ["legend", "indicator", "dot"],
+    "difficulty": "beginner",
+    "jsxCode": "<LegendIndicator color=\"blue\" label=\"Active\" />",
+    "props": { "color": "string", "label": "string" },
+    "previewProps": { "color": "blue", "label": "Active" },
+    "short": "Tiny colored dots with labels.",
+    "description": "Compact legend items used in charts and keys.",
+    "notes": "Ensure color alone isn’t the only differentiator; include labels.",
+    "libraries": [],
+    "previewHeight": 72,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-progress",
+    "name": "Progress",
+    "slug": "progress",
+    "category": "base",
+    "tags": ["progress", "bar"],
+    "difficulty": "beginner",
+    "jsxCode": "<Progress value={65} />",
+    "props": { "value": "number" },
+    "previewProps": { "value": 65 },
+    "short": "Determinate progress bar.",
+    "description": "Accessible progress bar with label and ARIA attributes.",
+    "notes": "Use role='progressbar' and aria-valuenow/aria-valuemin/aria-valuemax.",
+    "libraries": [],
+    "previewHeight": 80,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-upload-progress",
+    "name": "File Uploading Progress",
+    "slug": "file-uploading-progress",
+    "category": "base",
+    "tags": ["upload", "progress"],
+    "difficulty": "beginner",
+    "jsxCode": "<UploadProgress filename=\"ocean.png\" percent={42} />",
+    "props": { "filename": "string", "percent": "number" },
+    "previewProps": { "filename": "ocean.png", "percent": 42 },
+    "short": "File row with progress bar.",
+    "description": "Upload list item with thumbnail, name, and progress.",
+    "notes": "Indicate paused/failed states with icons and colors.",
+    "libraries": [],
+    "previewHeight": 110,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-ratings",
+    "name": "Ratings",
+    "slug": "ratings",
+    "category": "base",
+    "tags": ["rating", "stars"],
+    "difficulty": "beginner",
+    "jsxCode": "<Ratings value={3.5} />",
+    "props": { "value": "number" },
+    "previewProps": { "value": 3.5 },
+    "short": "Star rating display (half steps).",
+    "description": "Pure CSS star rating using masks or layered icons.",
+    "notes": "Tailwind-only demo with SVG stars. For interactive ratings, consider a library.",
+    "libraries": [
+      { "name": "react-rating (optional)", "install": "npm i react-rating" }
+    ],
+    "previewHeight": 70,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-skeleton",
+    "name": "Skeleton",
+    "slug": "skeleton",
+    "category": "base",
+    "tags": ["skeleton", "loading"],
+    "difficulty": "beginner",
+    "jsxCode": "<Skeleton lines={3} />",
+    "props": { "lines": "number" },
+    "previewProps": { "lines": 3 },
+    "short": "Animated gray placeholders.",
+    "description": "Loading placeholder bars and blocks.",
+    "notes": "Respect reduced motion; provide aria-busy or progress indicators for assistive tech.",
+    "libraries": [],
+    "previewHeight": 120,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-spinners",
+    "name": "Spinners",
+    "slug": "spinners",
+    "category": "base",
+    "tags": ["spinner", "loading"],
+    "difficulty": "beginner",
+    "jsxCode": "<Spinners />",
+    "props": {},
+    "previewProps": {},
+    "short": "SVG and border spinners.",
+    "description": "Indeterminate loaders with reduced-motion support.",
+    "notes": "Use aria-live politely for longer operations; avoid infinite blockers.",
+    "libraries": [],
+    "previewHeight": 120,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-styled-icons",
+    "name": "Styled Icons",
+    "slug": "styled-icons",
+    "category": "base",
+    "tags": ["icons", "styled"],
+    "difficulty": "beginner",
+    "jsxCode": "<StyledIcons />",
+    "props": {},
+    "previewProps": {},
+    "short": "Consistent icon sizing and colors.",
+    "description": "Icon system with sizes, colors, and containers.",
+    "notes": "Use a central icon registry. Mind accessible labels for standalone icons.",
+    "libraries": [
+      { "name": "lucide-react (optional)", "install": "npm i lucide-react" },
+      { "name": "@heroicons/react (optional)", "install": "npm i @heroicons/react" }
+    ],
+    "previewHeight": 100,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-toasts",
+    "name": "Toasts",
+    "slug": "toasts",
+    "category": "base",
+    "tags": ["toast", "notification"],
+    "difficulty": "intermediate",
+    "jsxCode": "<Toasts />",
+    "props": {},
+    "previewProps": {},
+    "short": "Transient notifications (top-right).",
+    "description": "CSS-only toast stack with transitions.",
+    "notes": "Tailwind-only demo using absolute container and transitions. For portals & ARIA live regions, consider a library.",
+    "libraries": [
+      { "name": "sonner (optional)", "install": "npm i sonner" },
+      { "name": "react-hot-toast (optional)", "install": "npm i react-hot-toast" }
+    ],
+    "previewHeight": 200,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-timeline",
+    "name": "Timeline",
+    "slug": "timeline",
+    "category": "base",
+    "tags": ["timeline", "steps"],
+    "difficulty": "beginner",
+    "jsxCode": "<Timeline items={[...]} />",
+    "props": { "items": "array" },
+    "previewProps": { "items": [{ "title": "Kickoff", "date": "Jan 10" }, { "title": "Design", "date": "Jan 18" }, { "title": "Build", "date": "Feb 02" }] },
+    "short": "Vertical timeline with dots.",
+    "description": "Ordered events with connectors and meta.",
+    "notes": "Use aria-describedby for date/metadata and ensure good contrast.",
+    "libraries": [],
+    "previewHeight": 200,
+    "darkModeSupported": true
+  },
+
+  {
+    "id": "base-tree-view",
+    "name": "Tree View",
+    "slug": "tree-view",
+    "category": "base",
+    "tags": ["tree", "hierarchy", "expandable"],
+    "difficulty": "intermediate",
+    "jsxCode": "<TreeView data={[...]} />",
+    "props": { "data": "array" },
+    "previewProps": {
+      "data": [
+        { "label": "src", "children": [{ "label": "components" }, { "label": "pages" }] },
+        { "label": "public", "children": [{ "label": "assets" }] }
+      ]
+    },
+    "short": "Expandable hierarchical list.",
+    "description": "Keyboard accessible tree with disclosure triangles.",
+    "notes": "Add roving tabindex and aria-expanded for complete accessibility in production.",
+    "libraries": [],
+    "previewHeight": 220,
+    "darkModeSupported": true
   }
 ]
