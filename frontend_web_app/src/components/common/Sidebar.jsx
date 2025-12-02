@@ -143,87 +143,90 @@ function Sidebar({ onItemClick }) {
   };
 
   return (
-    <nav aria-label="Sidebar navigation" className="space-y-3">
-      {sidebarItems.map((group) => {
-        const isOpen = !!open[group.slug];
-        // graceful group icon: only render if present and known; otherwise no spacer
-        const GroupIcon = group?.icon ? getIconComponent(group.icon) : null;
+    <nav aria-label="Sidebar navigation" className="space-y-3 bg-main-gradient rounded-xl p-2">
+      {/* soft overlay to prevent over-saturation while keeping brand gradient visible */}
+      <div className="bg-overlay-soft rounded-lg p-1">
+        {sidebarItems.map((group) => {
+          const isOpen = !!open[group.slug];
+          // graceful group icon: only render if present and known; otherwise no spacer
+          const GroupIcon = group?.icon ? getIconComponent(group.icon) : null;
 
-        return (
-          <div key={group.slug} className="rounded-md border border-gray-200 dark:border-gray-800">
-            <button
-              type="button"
-              aria-expanded={isOpen}
-              aria-controls={`section-${group.slug}`}
-              onClick={() => toggleGroup(group.slug)}
-              className="flex w-full items-center justify-between rounded-t-md bg-white px-3 py-2 text-left text-sm font-semibold text-slate-800 transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-900 dark:text-slate-100 dark:hover:bg-gray-800"
-            >
-              <span className="inline-flex items-center gap-2">
-                {GroupIcon ? (
-                  <GroupIcon className="h-4 w-4 text-gray-500 dark:text-gray-400" aria-hidden="true" />
-                ) : null}
-                {group.group}
-              </span>
-              <svg
-                className={`h-4 w-4 text-gray-500 dark:text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
+          return (
+            <div key={group.slug} className="rounded-md bg-white/10 ring-1 ring-white/10 backdrop-blur-sm">
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                aria-controls={`section-${group.slug}`}
+                onClick={() => toggleGroup(group.slug)}
+                className="flex w-full items-center justify-between rounded-t-md px-3 py-2 text-left text-sm font-semibold text-slate-900 transition hover:bg-white/10 focus:outline-none focus-ring-main-gradient dark:text-slate-100 dark:hover:bg-black/20"
               >
-                <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-            <div
-              id={`section-${group.slug}`}
-              role="region"
-              aria-label={group.group}
-              className={`border-t border-gray-200 dark:border-gray-800 ${isOpen ? 'block' : 'hidden'}`}
-            >
-              <ul className="bg-white p-1 max-h-80 overflow-y-auto dark:bg-gray-900">
-                {group.items?.map((it) => {
-                  const nav = buildNav(group.slug, it);
-                  const key = `${nav.pathname}${nav.hash || ''}`;
-                  const active = key === activeKey;
-                  return (
-                    <li key={`${group.slug}-${it.label}`}>
-                      <Link
-                        to={{ pathname: nav.pathname, search: preservedQS, hash: nav.hash }}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          go(group.slug, it)(e);
-                        }}
-                        className={`flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition focus:outline-none focus-ring-main-gradient ${
-                          active
-                            ? 'active-main-gradient text-blue-800 dark:text-blue-200'
-                            : 'text-slate-700 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-gray-800'
-                        }`}
-                        aria-current={active ? 'page' : undefined}
-                      >
-                        {/* Left side: label only (no icon for leaf) */}
-                        <span className="flex min-w-0 items-center">
-                          <span className="truncate">{it.label}</span>
-                        </span>
-                        {/* Right side: badge + chevron (decorative) */}
-                        <div className="ml-2 flex items-center gap-2">
-                          {renderBadge(it.badge)}
-                          <svg
-                            className={`h-3.5 w-3.5 text-gray-500 dark:text-gray-400 ${active ? 'opacity-100' : 'opacity-70'}`}
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            aria-hidden="true"
-                          >
-                            <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </div>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+                <span className="inline-flex items-center gap-2">
+                  {GroupIcon ? (
+                    <GroupIcon className="h-4 w-4 text-slate-700 dark:text-slate-200" aria-hidden="true" />
+                  ) : null}
+                  {group.group}
+                </span>
+                <svg
+                  className={`h-4 w-4 text-slate-700 dark:text-slate-200 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <div
+                id={`section-${group.slug}`}
+                role="region"
+                aria-label={group.group}
+                className={`${isOpen ? 'block' : 'hidden'}`}
+              >
+                <ul className="p-1 max-h-80 overflow-y-auto">
+                  {group.items?.map((it) => {
+                    const nav = buildNav(group.slug, it);
+                    const key = `${nav.pathname}${nav.hash || ''}`;
+                    const active = key === activeKey;
+                    return (
+                      <li key={`${group.slug}-${it.label}`}>
+                        <Link
+                          to={{ pathname: nav.pathname, search: preservedQS, hash: nav.hash }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            go(group.slug, it)(e);
+                          }}
+                          className={`flex items-center justify-between gap-2 rounded-md px-3 py-2 text-sm transition focus:outline-none focus-ring-main-gradient ${
+                            active
+                              ? 'active-on-gradient text-slate-900 dark:text-slate-100'
+                              : 'text-slate-800 hover-item-contrast dark:text-slate-200'
+                          }`}
+                          aria-current={active ? 'page' : undefined}
+                        >
+                          {/* Left side: label only (no icon for leaf) */}
+                          <span className="flex min-w-0 items-center">
+                            <span className="truncate">{it.label}</span>
+                          </span>
+                          {/* Right side: badge + chevron (decorative) */}
+                          <div className="ml-2 flex items-center gap-2">
+                            {renderBadge(it.badge)}
+                            <svg
+                              className={`h-3.5 w-3.5 text-slate-700 dark:text-slate-200 ${active ? 'opacity-100' : 'opacity-80'}`}
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              aria-hidden="true"
+                            >
+                              <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </div>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </nav>
   );
 }

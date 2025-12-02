@@ -140,15 +140,15 @@ function MainLayout() {
           role="dialog"
           aria-modal="true"
           aria-label="Navigation"
-          className={`absolute left-0 top-0 h-full w-72 transform border-r border-gray-200 bg-surface p-4 shadow-xl transition-transform dark:border-gray-800 dark:bg-gray-900 ${
+          className={`absolute left-0 top-0 h-full w-72 transform bg-main-gradient p-4 shadow-xl transition-transform ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
           } overflow-y-auto`}
         >
-          <div className="mb-3 flex items-center justify-between">
-            <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">Menu</span>
+          <div className="mb-3 flex items-center justify-between bg-overlay-soft rounded-md px-2 py-2">
+            <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">Menu</span>
             <button
               type="button"
-              className="rounded-md p-2 text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 dark:text-gray-300 dark:hover:bg-gray-800"
+              className="rounded-md p-2 text-slate-700 hover:bg-white/10 focus:outline-none focus-ring-main-gradient dark:text-slate-200 dark:hover:bg-black/20"
               onClick={() => setSidebarOpen(false)}
             >
               <span className="sr-only">Close menu</span>
@@ -170,10 +170,12 @@ function MainLayout() {
       {/* Desktop Layout: Sidebar + Main */}
       <div className="mx-auto hidden max-w-7xl grid-cols-[260px_minmax(0,1fr)] md:grid">
         {/* Sidebar */}
-        <aside className="border-r border-gray-200 bg-surface px-4 py-4 dark:border-gray-800 dark:bg-gray-900 max-h-[calc(100vh-64px)] overflow-y-auto" role="complementary" aria-label="Sidebar navigation">
-          <Sidebar onItemClick={() => setSidebarOpen(false)} />
-          <div className="mt-6 rounded-lg border border-blue-100 bg-blue-50 p-3 text-sm text-blue-800 dark:border-blue-900/40 dark:bg-blue-900/20 dark:text-blue-200">
-            Tip: Use the search bar to quickly find components.
+        <aside className="bg-main-gradient px-4 py-4 max-h-[calc(100vh-64px)] overflow-y-auto" role="complementary" aria-label="Sidebar navigation">
+          <div className="bg-overlay-soft rounded-lg p-3">
+            <Sidebar onItemClick={() => setSidebarOpen(false)} />
+            <div className="mt-6 rounded-lg bg-white/10 p-3 text-sm text-slate-900 ring-1 ring-white/10 dark:text-slate-100">
+              Tip: Use the search bar to quickly find components.
+            </div>
           </div>
         </aside>
 
