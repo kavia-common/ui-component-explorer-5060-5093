@@ -3,11 +3,16 @@
     "group": "Layout & Content",
     "slug": "layout-content",
     "items": [
-      { "label": "Cards", "to": "/category/cards" },
-      { "label": "Modals", "to": "/category/cards#modals", "badge": "New" },
-      { "label": "Alerts", "to": "/category/cards#alerts" },
-      { "label": "Media", "to": "/category/cards#media" },
-      { "label": "Dividers and <hr>", "to": "/category/cards#dividers" }
+      { "label": "Container", "to": "/category/cards#container" },
+      { "label": "Columns", "to": "/category/cards#columns" },
+      { "label": "Grid", "to": "/category/cards#grid" },
+      { "label": "Layout Splitter", "to": "/category/cards#layout-splitter" },
+      { "label": "Typography", "to": "/category/cards#typography" },
+      { "label": "Images", "to": "/category/cards#images" },
+      { "label": "Links", "to": "/category/cards#links" },
+      { "label": "Dividers and <hr>", "to": "/category/cards#dividers" },
+      { "label": "KBD", "to": "/category/cards#kbd" },
+      { "label": "Custom Scrollbar", "to": "/category/cards#custom-scrollbar" }
     ]
   },
   {
