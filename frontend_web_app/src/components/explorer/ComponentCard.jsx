@@ -5,9 +5,12 @@ import Icon from '../common/Icon';
 
 /**
  * PUBLIC_INTERFACE
- * ComponentCard - Card showing a small preview area, title, and tags.
+ * ComponentCard - Card showing a small preview area, title, difficulty, and tags.
  * Props:
- * - item: { id, name, tags?: string[], previewHeight?: number, short?: string }
+ * - item: {
+ *     id, name, tags?: string[], previewHeight?: number, short?: string,
+ *     description?: string, difficulty?: 'beginner'|'intermediate'|'advanced'
+ *   }
  */
 function ComponentCard({ item }) {
   const height = item?.previewHeight ? Math.max(64, item.previewHeight) : 96;
@@ -24,8 +27,19 @@ function ComponentCard({ item }) {
       </div>
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="font-medium text-slate-800 group-hover:text-blue-700 dark:text-slate-200 dark:group-hover:text-blue-300">
-            {item.name}
+          <div className="flex items-center gap-2">
+            <div className="font-medium text-slate-800 group-hover:text-blue-700 dark:text-slate-200 dark:group-hover:text-blue-300">
+              {item.name}
+            </div>
+            {item.difficulty ? (
+              <span
+                className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700 dark:bg-slate-700 dark:text-slate-200"
+                aria-label={`Difficulty ${item.difficulty}`}
+                title={`Difficulty: ${item.difficulty}`}
+              >
+                {item.difficulty}
+              </span>
+            ) : null}
           </div>
           {item.short ? (
             <div className="mt-0.5 line-clamp-2 text-xs text-slate-600 dark:text-slate-300">
