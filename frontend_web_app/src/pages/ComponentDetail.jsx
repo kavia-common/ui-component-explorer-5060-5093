@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getComponentById } from '../utils/data';
 import Breadcrumbs from '../components/common/Breadcrumbs';
@@ -10,6 +10,7 @@ import Icon from '../components/common/Icon';
 import { copyCodeSnippet } from '../utils/copy';
 import { getPreviewProps } from '../utils/preview';
 import Meta from '../components/common/Meta';
+import { getComponentSnippet } from '../utils/tokens';
 
 /**
  * PUBLIC_INTERFACE
@@ -22,8 +23,10 @@ function ComponentDetail() {
   // Seed local preview state with registry previewProps (non-destructive; basic placeholders)
   const [previewOverrides, setPreviewOverrides] = useState(() => getPreviewProps(id));
 
+  const snippet = useMemo(() => getComponentSnippet(component), [component]);
+
   const copyCode = async () => {
-    await copyCodeSnippet(component?.code || '');
+    await copyCodeSnippet(snippet);
   };
 
   // Placeholder prop controls representing a simple edit over preview props
@@ -96,7 +99,7 @@ function ComponentDetail() {
       />
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1fr_320px]">
-        <CodeTabs code={component?.code || ''} />
+        <CodeTabs code={snippet} />
         <div className="space-y-4">
           <PropControls controls={controls} onChange={handleControlChange} />
           <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-800">

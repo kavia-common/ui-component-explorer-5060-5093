@@ -14,10 +14,9 @@ import { getPreviewComponent, getPreviewProps } from '../../utils/preview';
 function PreviewCanvas({ height = 140, componentId, overrideProps, note, children }) {
   const Container = ({ children: c }) => (
     <div
-      className="flex items-center justify-center rounded-md border border-dashed border-gray-300 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-900/40"
+      className="flex items-center justify-center rounded-md border border-dashed border-gray-300 bg-gradient-to-b from-blue-500/10 to-gray-50 p-4 dark:border-gray-700 dark:from-blue-500/10 dark:to-gray-900"
       style={{ minHeight: `${height}px` }}
     >
-      {/* Dark mode helper background pane for stronger contrast in previews */}
       <div className="w-full">
         <div className="mx-auto flex w-full max-w-3xl items-center justify-center">{c}</div>
       </div>
@@ -32,7 +31,7 @@ function PreviewCanvas({ height = 140, componentId, overrideProps, note, childre
   }
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-800">
+    <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-800">
       <div className="mb-2 text-sm font-medium text-slate-800 dark:text-slate-200">Live Preview</div>
       <Container>
         {content || (

@@ -20,7 +20,7 @@ function ComponentCard({ item }) {
       className="group block rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-gray-800 dark:bg-gray-800"
     >
       <div
-        className="mb-3 flex items-center justify-center rounded-md border border-dashed border-gray-300 bg-gray-50 transition group-hover:bg-blue-50 dark:border-gray-700 dark:bg-gray-900/40 dark:group-hover:bg-blue-900/20"
+        className="mb-3 flex items-center justify-center rounded-md border border-dashed border-gray-300 bg-gradient-to-b from-blue-500/10 to-gray-50 transition dark:border-gray-700 dark:from-blue-500/10 dark:to-gray-900"
         style={{ height }}
       >
         <span className="text-xs text-gray-500 dark:text-gray-400">Preview</span>

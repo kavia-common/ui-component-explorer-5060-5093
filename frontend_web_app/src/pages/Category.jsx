@@ -74,12 +74,14 @@ function Category() {
             { label: titleText },
           ]}
         />
-        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-          {titleText}
-        </h1>
-        <p className="text-slate-700 dark:text-slate-200">
-          {descText}
-        </p>
+        <div className="rounded-lg p-4 bg-gradient-to-b from-blue-500/10 to-gray-50 dark:from-blue-500/10 dark:to-gray-900">
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+            {titleText}
+          </h1>
+          <p className="mt-1 text-slate-700 dark:text-slate-200">
+            {descText}
+          </p>
+        </div>
       </div>
 
       {isPlaceholder ? (

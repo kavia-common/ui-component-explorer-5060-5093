@@ -21,14 +21,14 @@ function Button({
   ...rest
 }) {
   const base =
-    'inline-flex items-center justify-center rounded-md font-semibold transition focus:outline-none focus:ring-2 focus-ring-main-gradient';
+    'inline-flex items-center justify-center rounded-md font-semibold transition focus:outline-none focus-ring-main-gradient';
   const variants = {
     primary:
-      'text-white bg-main-gradient hover:brightness-105 active:brightness-95 shadow-sm focus:ring-2 focus:ring-offset-0 focus:ring-blue-300 dark:focus:ring-blue-800',
+      'text-white bg-main-gradient hover:brightness-105 active:brightness-95 shadow-sm',
     secondary:
-      'bg-white text-slate-800 border border-gray-200 hover:bg-gray-50 focus:ring-blue-300 dark:bg-gray-800 dark:text-slate-100 dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-blue-800',
+      'bg-white text-slate-800 border border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:text-slate-100 dark:border-gray-700 dark:hover:bg-gray-700',
     ghost:
-      'bg-transparent text-slate-700 hover:bg-gray-100 focus:ring-blue-300 dark:text-slate-200 dark:hover:bg-gray-800 dark:focus:ring-blue-800',
+      'bg-transparent text-slate-700 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-gray-800',
   };
   const sizes = {
     sm: 'px-3 py-1.5 text-sm',

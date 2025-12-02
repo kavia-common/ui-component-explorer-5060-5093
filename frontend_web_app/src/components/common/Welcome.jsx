@@ -25,7 +25,7 @@ function Welcome() {
         <Breadcrumbs items={[{ label: 'Welcome' }]} />
         <section
           aria-labelledby="welcome-heading"
-          className="rounded-xl bg-gradient-to-r from-blue-500/10 to-gray-50 p-6 dark:from-blue-500/10 dark:to-gray-900"
+          className="rounded-xl bg-gradient-to-b from-blue-500/10 to-gray-50 p-6 dark:from-blue-500/10 dark:to-gray-900"
         >
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div className="max-w-2xl">
