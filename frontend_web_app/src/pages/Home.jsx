@@ -6,6 +6,7 @@ import Meta from '../components/common/Meta';
 import { parseQueryParams } from '../utils/filter';
 import { searchComponents } from '../utils/search';
 import { filterComponents } from '../utils/filter';
+import EmptyState from '../components/common/EmptyState';
 
 /**
  * PUBLIC_INTERFACE
@@ -43,7 +44,10 @@ function Home() {
       {results ? (
         <section>
           <h2 className="mb-3 text-lg font-semibold text-gray-900 dark:text-white">Search results</h2>
-          <ComponentGrid items={results} />
+          <ComponentGrid
+            items={results}
+            empty={<EmptyState title="No results" description="Try a different search or clear filters." />}
+          />
         </section>
       ) : (
         <section>

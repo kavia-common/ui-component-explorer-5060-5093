@@ -8,7 +8,97 @@
     "description": "A primary call-to-action button with solid style.",
     "featured": true,
     "previewHeight": 80,
+    "difficulty": "beginner",
+    "darkModeSupported": true,
+    "responsiveNotes": "Works across sizes; width adapts to content.",
+    "props": { "label": "string", "onClick": "function" },
+    "previewProps": { "label": "Primary" },
+    "jsxCode": "<PrimaryButton label=\"Primary\" />",
+    "seo": {
+      "keywords": ["primary button", "cta", "tailwind button", "react button"],
+      "description": "Primary action button with Ocean Professional focus ring and subtle shadow."
+    },
     "code": "<button className=\"px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition\">Primary</button>"
+  },
+  {
+    "id": "btn-secondary",
+    "name": "Secondary Button",
+    "slug": "secondary-button",
+    "category": "buttons",
+    "tags": ["button", "secondary", "ghost"],
+    "description": "A neutral secondary button for less prominent actions.",
+    "featured": false,
+    "previewHeight": 80,
+    "difficulty": "beginner",
+    "darkModeSupported": true,
+    "responsiveNotes": "Adapts to container width; pairs with primary button.",
+    "props": { "label": "string", "onClick": "function" },
+    "previewProps": { "label": "Secondary" },
+    "jsxCode": "<SecondaryButton label=\"Secondary\" />",
+    "seo": {
+      "keywords": ["secondary button", "ghost button", "neutral action"],
+      "description": "Secondary button with subtle hover and focus rings."
+    }
+  },
+  {
+    "id": "badge-status",
+    "name": "Status Badge",
+    "slug": "status-badge",
+    "category": "buttons",
+    "tags": ["badge", "label", "status"],
+    "description": "Small badge used to denote statuses, tags, or counts.",
+    "featured": false,
+    "previewHeight": 80,
+    "difficulty": "beginner",
+    "darkModeSupported": true,
+    "responsiveNotes": "Badges flow inline; wrap as needed.",
+    "props": { "text": "string", "color": "blue|amber|gray" },
+    "previewProps": { "text": "New", "color": "blue" },
+    "jsxCode": "<StatusBadge text=\"New\" color=\"blue\" />",
+    "seo": {
+      "keywords": ["badge", "status", "tag", "pill"],
+      "description": "Rounded badge with Ocean Professional colors."
+    }
+  },
+  {
+    "id": "alert-info",
+    "name": "Info Alert",
+    "slug": "info-alert",
+    "category": "cards",
+    "tags": ["alert", "notice", "info"],
+    "description": "An informational alert with icon and accessible markup.",
+    "featured": true,
+    "previewHeight": 100,
+    "difficulty": "beginner",
+    "darkModeSupported": true,
+    "responsiveNotes": "Content wraps for narrow screens.",
+    "props": { "title": "string", "message": "string" },
+    "previewProps": { "title": "Heads up", "message": "This is an informational alert." },
+    "jsxCode": "<InfoAlert title=\"Heads up\" message=\"This is an informational alert.\" />",
+    "seo": {
+      "keywords": ["alert", "info", "notification"],
+      "description": "Info alert with blue accent and focusable close button."
+    }
+  },
+  {
+    "id": "alert-success",
+    "name": "Success Alert",
+    "slug": "success-alert",
+    "category": "cards",
+    "tags": ["alert", "success", "notice"],
+    "description": "A success alert with green accent and icon.",
+    "featured": false,
+    "previewHeight": 100,
+    "difficulty": "beginner",
+    "darkModeSupported": true,
+    "responsiveNotes": "Content wraps for narrow screens.",
+    "props": { "title": "string", "message": "string" },
+    "previewProps": { "title": "All set", "message": "Your changes have been saved." },
+    "jsxCode": "<SuccessAlert title=\"All set\" message=\"Your changes have been saved.\" />",
+    "seo": {
+      "keywords": ["success alert", "notification", "message"],
+      "description": "Success alert with subtle shadow and Ocean palette."
+    }
   },
   {
     "id": "card-basic",
@@ -19,7 +109,41 @@
     "description": "A simple card container with header and body.",
     "featured": true,
     "previewHeight": 140,
+    "difficulty": "beginner",
+    "darkModeSupported": true,
+    "responsiveNotes": "Width scales with parent container; content wraps.",
+    "props": { "title": "string", "children": "node" },
+    "previewProps": { "title": "Card Header", "children": "Card body content..." },
+    "jsxCode": "<BasicCard title=\"Card Header\">Card body content...</BasicCard>",
+    "seo": {
+      "keywords": ["card", "panel", "container"],
+      "description": "Card with subtle shadow and rounded corners."
+    },
     "code": "<div className=\"rounded-lg border p-4 bg-white dark:bg-gray-800\"><div className=\"mb-2 text-sm font-semibold\">Card Header</div><p className=\"text-gray-600 dark:text-gray-300\">Card body content...</p></div>"
+  },
+  {
+    "id": "card-media",
+    "name": "Media Card",
+    "slug": "media-card",
+    "category": "cards",
+    "tags": ["card", "media", "image", "layout"],
+    "description": "Card with image thumbnail, title, and description.",
+    "featured": false,
+    "previewHeight": 160,
+    "difficulty": "beginner",
+    "darkModeSupported": true,
+    "responsiveNotes": "Image stacks on small screens.",
+    "props": { "title": "string", "description": "string", "imageUrl": "string" },
+    "previewProps": {
+      "title": "Ocean Sunset",
+      "description": "A calming gradient with blue and amber accents.",
+      "imageUrl": "https://picsum.photos/seed/ocean/160/100"
+    },
+    "jsxCode": "<MediaCard title=\"Ocean Sunset\" description=\"A calming gradient with blue and amber accents.\" imageUrl=\"/path\" />",
+    "seo": {
+      "keywords": ["media card", "image card", "thumbnail"],
+      "description": "Media card optimized for responsive layouts."
+    }
   },
   {
     "id": "nav-topbar",
@@ -30,7 +154,63 @@
     "description": "A responsive top navigation bar with brand and actions.",
     "featured": false,
     "previewHeight": 100,
+    "difficulty": "intermediate",
+    "darkModeSupported": true,
+    "responsiveNotes": "Links collapse or wrap on narrow viewports.",
+    "props": { "brand": "string", "links": "array" },
+    "previewProps": {
+      "brand": "Brand",
+      "links": [{ "label": "Docs" }, { "label": "Blog" }]
+    },
+    "jsxCode": "<TopNavigation brand=\"Brand\" links={[{label:'Docs'},{label:'Blog'}]} />",
+    "seo": {
+      "keywords": ["navbar", "navigation", "header"],
+      "description": "Top navigation with Ocean gradient accent on hover."
+    },
     "code": "<header className=\"flex items-center justify-between border-b p-3 bg-white dark:bg-gray-900\"><div className=\"font-semibold\">Brand</div><nav className=\"flex items-center gap-4 text-sm\"><a className=\"hover:text-blue-600\" href=\"#\">Docs</a><a className=\"hover:text-blue-600\" href=\"#\">Blog</a></nav></header>"
+  },
+  {
+    "id": "navbar-simple",
+    "name": "Simple Navbar",
+    "slug": "simple-navbar",
+    "category": "navigation",
+    "tags": ["navigation", "navbar", "links"],
+    "description": "Minimal navbar with brand and inline links.",
+    "featured": true,
+    "previewHeight": 84,
+    "difficulty": "beginner",
+    "darkModeSupported": true,
+    "responsiveNotes": "Links wrap on small widths.",
+    "props": { "brand": "string", "links": "array" },
+    "previewProps": {
+      "brand": "Ocean",
+      "links": [{ "label": "Home" }, { "label": "Components" }, { "label": "About" }]
+    },
+    "jsxCode": "<SimpleNavbar brand=\"Ocean\" links={[{label:'Home'},{label:'Components'},{label:'About'}]} />",
+    "seo": {
+      "keywords": ["navbar", "simple header", "topbar"],
+      "description": "Simple navbar with clean spacing and hover styles."
+    }
+  },
+  {
+    "id": "modal-basic",
+    "name": "Basic Modal",
+    "slug": "basic-modal",
+    "category": "cards",
+    "tags": ["modal", "dialog", "overlay"],
+    "description": "Accessible modal dialog with overlay and focus trapping.",
+    "featured": false,
+    "previewHeight": 180,
+    "difficulty": "advanced",
+    "darkModeSupported": true,
+    "responsiveNotes": "Dialog centers and scales on small screens.",
+    "props": { "title": "string", "open": "boolean" },
+    "previewProps": { "title": "Confirm action", "open": true },
+    "jsxCode": "<BasicModal title=\"Confirm action\" open />",
+    "seo": {
+      "keywords": ["modal", "dialog", "overlay", "accessible"],
+      "description": "Modal with Ocean focus rings and subtle drop shadow."
+    }
   },
   {
     "id": "input-text",
@@ -41,6 +221,98 @@
     "description": "A standard text input with focus styles.",
     "featured": false,
     "previewHeight": 80,
+    "difficulty": "beginner",
+    "darkModeSupported": true,
+    "responsiveNotes": "Full-width input in narrow containers.",
+    "props": { "placeholder": "string", "value": "string" },
+    "previewProps": { "placeholder": "Type here" },
+    "jsxCode": "<TextInput placeholder=\"Type here\" />",
+    "seo": {
+      "keywords": ["text input", "form field", "input"],
+      "description": "Input with Ocean blue focus ring and rounded corners."
+    },
     "code": "<input type=\"text\" placeholder=\"Type here\" className=\"w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100\" />"
+  },
+  {
+    "id": "input-email",
+    "name": "Email Input",
+    "slug": "email-input",
+    "category": "forms",
+    "tags": ["input", "email", "form"],
+    "description": "Email input with validation-friendly styles.",
+    "featured": false,
+    "previewHeight": 80,
+    "difficulty": "beginner",
+    "darkModeSupported": true,
+    "responsiveNotes": "Full-width control within forms.",
+    "props": { "placeholder": "string", "value": "string" },
+    "previewProps": { "placeholder": "you@example.com" },
+    "jsxCode": "<EmailInput placeholder=\"you@example.com\" />",
+    "seo": {
+      "keywords": ["email input", "form input", "validation"],
+      "description": "Email input styled for accessibility and clarity."
+    }
+  },
+  {
+    "id": "form-contact",
+    "name": "Contact Form",
+    "slug": "contact-form",
+    "category": "forms",
+    "tags": ["form", "layout", "input", "textarea"],
+    "description": "A simple contact form layout with name, email, and message.",
+    "featured": true,
+    "previewHeight": 220,
+    "difficulty": "intermediate",
+    "darkModeSupported": true,
+    "responsiveNotes": "Single column on small screens; wider spacing on desktop.",
+    "props": { "onSubmit": "function" },
+    "previewProps": {},
+    "jsxCode": "<ContactForm />",
+    "seo": {
+      "keywords": ["contact form", "form layout", "textarea"],
+      "description": "Form with Ocean focus rings and clear label hierarchy."
+    }
+  },
+  {
+    "id": "pagination-basic",
+    "name": "Pagination",
+    "slug": "pagination",
+    "category": "navigation",
+    "tags": ["pagination", "nav", "controls"],
+    "description": "Basic pagination controls with previous/next and pages.",
+    "featured": false,
+    "previewHeight": 84,
+    "difficulty": "intermediate",
+    "darkModeSupported": true,
+    "responsiveNotes": "Pages wrap on small viewports; primary color highlights current.",
+    "props": { "page": "number", "totalPages": "number" },
+    "previewProps": { "page": 2, "totalPages": 5 },
+    "jsxCode": "<Pagination page={2} totalPages={5} />",
+    "seo": {
+      "keywords": ["pagination", "pager", "navigation"],
+      "description": "Accessible pagination with keyboard focus states."
+    }
+  },
+  {
+    "id": "breadcrumb-basic",
+    "name": "Breadcrumbs",
+    "slug": "breadcrumbs",
+    "category": "navigation",
+    "tags": ["breadcrumbs", "nav", "links"],
+    "description": "Breadcrumb navigation trail for hierarchy.",
+    "featured": false,
+    "previewHeight": 72,
+    "difficulty": "beginner",
+    "darkModeSupported": true,
+    "responsiveNotes": "Text wraps gracefully; separators are subtle.",
+    "props": { "items": "array" },
+    "previewProps": {
+      "items": [{ "label": "Home" }, { "label": "Library" }, { "label": "Data" }]
+    },
+    "jsxCode": "<BreadcrumbSample items={[{label:'Home'},{label:'Library'},{label:'Data'}]} />",
+    "seo": {
+      "keywords": ["breadcrumbs", "navigation", "trail"],
+      "description": "Breadcrumbs with Ocean hover accents."
+    }
   }
 ]

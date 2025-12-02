@@ -64,7 +64,7 @@ function Category() {
         empty={
           <EmptyState
             title="No components match your filters"
-            description="Try clearing search or deselecting some tags."
+            description="Try clearing the search, changing difficulty, or deselecting some tags."
           />
         }
       />
