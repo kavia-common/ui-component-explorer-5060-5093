@@ -26,6 +26,10 @@ export const oceanTheme = {
     heading: 'text-slate-900 dark:text-slate-100',
     body: 'text-slate-700 dark:text-slate-200',
     subtle: 'text-slate-600 dark:text-slate-300',
+    // Sidebar specific utilities for consistent usage:
+    sidebarHover: 'hover:bg-[rgb(37_99_235_/0.10)]',
+    sidebarActive: 'sidebar-active-item',
+    sidebarRing: 'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent',
   },
 };
 

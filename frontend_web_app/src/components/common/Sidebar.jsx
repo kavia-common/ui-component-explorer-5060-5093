@@ -243,7 +243,7 @@ function Sidebar({ onItemClick }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Filter components…"
-              className="w-full rounded-md border border-white/15 bg-white/10 pl-7 pr-2 py-1.5 text-sm leading-5 text-white placeholder:text-white/70 outline-none sidebar-focus-ring"
+              className="w-full rounded-md border border-white/15 bg-white/10 pl-7 pr-2 py-1.5 text-sm leading-5 text-white placeholder:text-white/70 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent"
             />
           </div>
         </div>
@@ -264,7 +264,7 @@ function Sidebar({ onItemClick }) {
                   aria-expanded={isOpen}
                   aria-controls={`section-${group.slug}`}
                   onClick={() => toggleGroup(group.slug)}
-                  className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-[13px] font-semibold text-white transition sidebar-focus-ring sidebar-hover-overlay"
+                  className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-[13px] font-semibold text-white transition focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent hover:bg-[rgb(37_99_235_/0.10)]"
                 >
                   <span className="inline-flex items-center gap-2">
                     {GroupIcon ? <GroupIcon className="h-4 w-4 text-inherit" aria-hidden="true" /> : null}
@@ -307,10 +307,10 @@ function Sidebar({ onItemClick }) {
                               e.preventDefault();
                               go(group.slug, it)(e);
                             }}
-                            className={`group flex items-center justify-between gap-2 rounded-md px-2 py-1.5 text-[13px] leading-5 transition-all duration-150 sidebar-focus-ring ${
+                            className={`group flex items-center justify-between gap-2 rounded-md px-2 py-1.5 text-[13px] leading-5 transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent ${
                               active
-                                ? 'active-main-gradient text-white font-semibold'
-                                : 'text-slate-50 hover:underline'
+                                ? 'sidebar-active-item text-white font-semibold'
+                                : 'text-slate-50 hover:bg-[rgb(37_99_235_/0.10)]'
                             } ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
                             aria-current={active ? 'page' : undefined}
                             aria-disabled={isDisabled || undefined}
@@ -354,7 +354,7 @@ function Sidebar({ onItemClick }) {
         <div className="sticky bottom-0 z-10 bg-main-gradient/95 px-2 py-2">
           <button
             type="button"
-            className="w-full rounded-md border border-white/20 bg-white/10 px-3 py-1.5 text-sm text-white hover:underline sidebar-focus-ring"
+            className="w-full rounded-md border border-white/20 bg-white/10 px-3 py-1.5 text-sm text-white hover:bg-[rgb(37_99_235_/0.10)] focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-300 focus-visible:ring-offset-transparent"
             onClick={() => setMobileExpanded(true)}
           >
             Show more
