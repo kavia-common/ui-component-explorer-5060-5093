@@ -28,8 +28,8 @@ function CategoryList({ categories = [], onItemClick }) {
             onClick={() => onItemClick?.(c.slug)}
             className={`flex items-center justify-between rounded-md px-3 py-2 text-sm transition focus-ring-main-gradient ${
               active
-                ? 'active-main-gradient text-blue-800 dark:text-blue-200'
-                : 'text-slate-700 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-gray-800'
+                ? 'text-blue-700 underline dark:text-blue-300'
+                : 'text-slate-700 hover:underline dark:text-slate-200'
             }`}
           >
             <span>{c.name}</span>

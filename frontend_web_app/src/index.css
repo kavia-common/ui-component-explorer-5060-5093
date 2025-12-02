@@ -32,33 +32,7 @@ code {
 .bg-main-gradient {
   background: linear-gradient(45deg, #af2497 10%, #902d9a 20%, #1840a0 100%);
 }
-/* Overlay helpers to ensure contrast atop gradients without over-saturation */
-.bg-overlay-soft {
-  background-color: rgba(255,255,255,0.08);
-}
-.dark .bg-overlay-soft {
-  background-color: rgba(0,0,0,0.15);
-}
-.bg-overlay-hover {
-  background-color: rgba(255,255,255,0.10);
-}
-.dark .bg-overlay-hover {
-  background-color: rgba(0,0,0,0.2);
-}
-/* Hover/active utility for items on gradient background */
-.hover-item-contrast:hover {
-  background-color: rgba(255,255,255,0.10);
-}
-.dark .hover-item-contrast:hover {
-  background-color: rgba(0,0,0,0.25);
-}
-/* Active state with subtle white/black film for contrast */
-.active-on-gradient {
-  background-color: rgba(255,255,255,0.14);
-}
-.dark .active-on-gradient {
-  background-color: rgba(0,0,0,0.28);
-}
+/* Removed transparent overlay utilities for Sidebar usage; rely on solid text treatments like underline */
 /* Text gradient using main accent */
 .text-main-gradient {
   background: linear-gradient(45deg, #af2497 10%, #902d9a 20%, #1840a0 100%);

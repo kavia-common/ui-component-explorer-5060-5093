@@ -17,7 +17,7 @@ function Breadcrumbs({ items = [] }) {
             {item.to ? (
               <Link
                 to={item.to}
-                className="text-main-gradient-link focus-ring-main-gradient rounded-[3px] hover:opacity-90"
+                className="text-blue-50 underline decoration-1 underline-offset-2 focus-ring-main-gradient rounded-[3px] md:text-blue-600 dark:md:text-blue-300 md:no-underline md:hover:underline"
               >
                 {item.label}
               </Link>

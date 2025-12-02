@@ -83,8 +83,6 @@ function MainLayout() {
 
   return (
     <div className="min-h-screen text-text bg-app-gradient">
-      {/* subtle overlay to keep Ocean surfaces readable */}
-      <div className="pointer-events-none fixed inset-0 bg-white/40 dark:bg-black/30" aria-hidden="true" />
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-gray-200 bg-surface/80 backdrop-blur-md dark:border-gray-800 dark:bg-gray-900/70" role="banner">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
@@ -142,23 +140,23 @@ function MainLayout() {
           aria-label="Navigation"
           className={`absolute left-0 top-0 h-full w-72 transform bg-main-gradient p-4 shadow-xl transition-transform ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } overflow-y-auto`}
+          } overflow-y-auto text-white`}
         >
-          <div className="mb-3 flex items-center justify-between bg-overlay-soft rounded-md px-2 py-2">
-            <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">Menu</span>
+          <div className="mb-3 flex items-center justify-between rounded-md px-2 py-2">
+            <span className="text-sm font-semibold text-white">Menu</span>
             <button
               type="button"
-              className="rounded-md p-2 text-slate-700 hover:bg-white/10 focus:outline-none focus-ring-main-gradient dark:text-slate-200 dark:hover:bg-black/20"
+              className="rounded-md p-2 text-white hover:underline focus:outline-none focus-ring-main-gradient"
               onClick={() => setSidebarOpen(false)}
             >
               <span className="sr-only">Close menu</span>
-              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </button>
           </div>
           <Sidebar onItemClick={() => setSidebarOpen(false)} />
-          <div className="mt-6 rounded-lg border border-blue-100 bg-blue-50 p-3 text-sm text-blue-800 dark:border-blue-900/40 dark:bg-blue-900/20 dark:text-blue-200">
+          <div className="mt-6 rounded-lg p-3 text-sm text-white/90 ring-1 ring-white/20">
             Tip: Use the search bar to quickly find components.
           </div>
           {/* Focus sentinels for trap */}
@@ -170,12 +168,10 @@ function MainLayout() {
       {/* Desktop Layout: Sidebar + Main */}
       <div className="mx-auto hidden max-w-7xl grid-cols-[260px_minmax(0,1fr)] md:grid">
         {/* Sidebar */}
-        <aside className="bg-main-gradient px-4 py-4 max-h-[calc(100vh-64px)] overflow-y-auto" role="complementary" aria-label="Sidebar navigation">
-          <div className="bg-overlay-soft rounded-lg p-3">
-            <Sidebar onItemClick={() => setSidebarOpen(false)} />
-            <div className="mt-6 rounded-lg bg-white/10 p-3 text-sm text-slate-900 ring-1 ring-white/10 dark:text-slate-100">
-              Tip: Use the search bar to quickly find components.
-            </div>
+        <aside className="bg-main-gradient px-4 py-4 max-h-[calc(100vh-64px)] overflow-y-auto text-white" role="complementary" aria-label="Sidebar navigation">
+          <Sidebar onItemClick={() => setSidebarOpen(false)} />
+          <div className="mt-6 rounded-lg p-3 text-sm text-white/90 ring-1 ring-white/20">
+            Tip: Use the search bar to quickly find components.
           </div>
         </aside>
 
@@ -201,12 +197,12 @@ function MainLayout() {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 text-sm text-slate-700 dark:text-slate-200">
           <span>© {new Date().getFullYear()} UI Component Explorer</span>
           <a
-            className="text-blue-600 hover:underline dark:text-blue-400 focus-ring-main-gradient rounded-[3px]"
+            className="text-blue-700 hover:underline dark:text-blue-300 focus-ring-main-gradient rounded-[3px]"
             href="https://reactjs.org"
             target="_blank"
             rel="noreferrer"
           >
-            <span className="bg-clip-text text-transparent text-main-gradient">Built with React + Tailwind</span>
+            <span>Built with React + Tailwind</span>
           </a>
         </div>
       </footer>
