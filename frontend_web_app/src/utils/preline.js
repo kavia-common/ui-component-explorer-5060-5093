@@ -9,6 +9,7 @@ import { useEffect } from 'react';
  * - We explicitly import from the compiled JS build 'preline' (NOT 'preline/src')
  *   to avoid CRA/Webpack trying to parse TypeScript sources.
  */
+ // PUBLIC_INTERFACE
 export async function initPreline() {
   try {
     // Dynamically import the compiled distribution bundle to avoid TS sources.
