@@ -136,7 +136,9 @@ function Sidebar({ onItemClick }) {
   };
 
   const go = (groupSlug, item) => (e) => {
+    // Navigate strictly; do not update any category/listing state here to avoid bleeding into detail views.
     const nav = buildNav(groupSlug, item);
+    if (!nav.pathname) return;
     navigate({ pathname: nav.pathname, search: preservedQS, hash: nav.hash }, { replace: false });
     onItemClick?.();
   };

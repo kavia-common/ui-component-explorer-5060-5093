@@ -31,7 +31,18 @@ function ComponentDetail() {
   // Compute guard first, but do not return before hooks are declared
   const isDetailRoute = /^\/component\/[^/]+$/.test(pathname || '');
 
+  // Fetch the single component by id
   const component = getComponentById(id);
+
+  // Diagnostics: instrument to ensure correct matching
+  if (typeof window !== 'undefined') {
+    // eslint-disable-next-line no-console
+    console.log('[ComponentDetail] route param id:', id);
+    // Determine matched length (0 or 1) - getComponentById returns single item
+    const matchedLen = component ? 1 : 0;
+    // eslint-disable-next-line no-console
+    console.log('[ComponentDetail] matched component length:', matchedLen);
+  }
 
   // Local preview overrides (basic control demo)
   const [previewOverrides, setPreviewOverrides] = useState(() => getPreviewProps(id));

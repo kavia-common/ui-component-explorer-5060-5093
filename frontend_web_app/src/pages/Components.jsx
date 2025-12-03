@@ -22,6 +22,7 @@ function ComponentsPage() {
 
   const items = useMemo(() => {
     // Strict filter: only components whose category EXACTLY equals the active slug.
+    // Defensive: this page should only be mounted at /category/:slug by routing.
     if (!slug) return [];
     const all = getAllComponents();
     return all.filter((c) => typeof c.category === 'string' && c.category === slug);
