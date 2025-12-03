@@ -1,0 +1,9 @@
+/* Tailwind base imports */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* App specific minor tweaks */
+:root {
+  color-scheme: light;
+}

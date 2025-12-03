@@ -1,0 +1,7 @@
+{
+  "components": [
+    { "id": "btn-1", "name": "Primary Button", "category": "Buttons" },
+    { "id": "card-1", "name": "Info Card", "category": "Cards" },
+    { "id": "nav-1", "name": "Top Navigation", "category": "Navigation" }
+  ]
+}
