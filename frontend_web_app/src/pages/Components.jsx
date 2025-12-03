@@ -217,6 +217,7 @@ function ComponentsPage() {
 
   if (!isCategoryRoute) {
     // Explicit guard: never render anything (or run heavy effects) on non-category routes.
+    // Also avoid returning placeholder nodes that might mount stray previews.
     return null;
   }
 

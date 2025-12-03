@@ -144,6 +144,7 @@ function Sidebar({ onItemClick }) {
     const nav = buildNav(groupSlug, item);
     if (!nav.pathname) return;
     navigate({ pathname: nav.pathname, search: preservedQS, hash: nav.hash }, { replace: false });
+    // Do not mutate open state for component navigation
     onItemClick?.();
   };
 
