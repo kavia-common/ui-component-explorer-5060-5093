@@ -164,11 +164,11 @@ function MainLayout() {
         </aside>
       </div>
 
-      {/* Desktop Layout: Sidebar + Main (inner scroll) */}
-      <div className="mx-auto hidden max-w-7xl grid-cols-[270px_minmax(0,1fr)] md:grid min-h-0 flex-1">
+      {/* Desktop Layout: Sidebar + Main (single inner scroll) */}
+      <div className="mx-auto hidden max-w-7xl grid-cols-[270px_minmax(0,1fr)] md:grid flex-1">
         {/* Sidebar: column */}
         <aside
-          className="bg-main-gradient text-white min-h-0"
+          className="bg-main-gradient text-white"
           role="complementary"
           aria-label="Sidebar navigation"
         >
@@ -176,17 +176,17 @@ function MainLayout() {
         </aside>
 
         {/* Main content - scrollable area */}
-        <main className="min-h-0 p-4 md:p-6">
-          <div className="main-content scrollable-y custom-scrollbar min-h-0 max-h-[calc(100vh-72px-24px)] rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <main className="p-4 md:p-6">
+          <div className="main-content scrollable-y custom-scrollbar rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <Outlet />
           </div>
         </main>
       </div>
 
-      {/* Mobile Main content (full width, inner scroll) */}
-      <div className="mx-auto max-w-7xl md:hidden min-h-0 flex-1">
-        <main className="min-h-0 p-4 md:p-6">
-          <div className="main-content scrollable-y custom-scrollbar min-h-0 max-h-[calc(100vh-56px-24px)] rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      {/* Mobile Main content (full width, single inner scroll) */}
+      <div className="mx-auto max-w-7xl md:hidden flex-1">
+        <main className="p-4 md:p-6">
+          <div className="main-content scrollable-y custom-scrollbar rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <Outlet />
           </div>
         </main>

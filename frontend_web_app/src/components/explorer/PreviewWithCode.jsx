@@ -104,8 +104,8 @@ function PreviewWithCode({
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-12 min-h-0">
-        <div className="md:col-span-8 min-h-0">
+      <div className="grid gap-4 md:grid-cols-12">
+        <div className="md:col-span-8">
           {mode === 'preview' ? (
             <PreviewCanvas className="bg-white dark:bg-gray-900" title={title} mode={mode}>
               <div style={minHeightStyle} className="flex items-center justify-center min-h-0">
@@ -113,8 +113,8 @@ function PreviewWithCode({
               </div>
             </PreviewCanvas>
           ) : (
-            <div className="rounded-lg border border-gray-200 bg-white p-0 shadow-sm dark:border-gray-800 dark:bg-gray-900 min-h-0">
-              <div className="max-h-[60vh] scrollable-y custom-scrollbar">
+            <div className="rounded-lg border border-gray-200 bg-white p-0 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <div className="scrollable-y custom-scrollbar">
                 <CodeBlock code={code || ''} language="jsx" title="Code" />
               </div>
             </div>
