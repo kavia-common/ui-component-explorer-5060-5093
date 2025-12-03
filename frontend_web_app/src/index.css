@@ -3,6 +3,33 @@
 @tailwind utilities;
 
 /* PUBLIC_INTERFACE
+   Custom scrollbar utilities used by layout-scrollbar snippets
+*/
+.custom-scrollbar {
+  scrollbar-color: #94a3b8 transparent; /* thumb track */
+  scrollbar-width: thin;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #94a3b8;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.custom-scrollbar.custom-scrollbar-rounded::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+}
+.custom-scrollbar.custom-scrollbar-rounded::-webkit-scrollbar-track {
+  border-radius: 9999px;
+}
+
+/* PUBLIC_INTERFACE
    Custom scrollbar utilities used by examples.
    Ocean Professional colors with dark mode support.
 */
