@@ -5,4 +5,4 @@ export { default as Filters } from './Filters';
 export { default as PreviewCanvas } from './PreviewCanvas';
 export { default as CodeTabs } from './CodeTabs';
 export { default as PropControls } from './PropControls';
-export { default as PreviewWithCode } from './PreviewWithCode.jsx';
+export { default as PreviewWithCode } from './PreviewWithCode';

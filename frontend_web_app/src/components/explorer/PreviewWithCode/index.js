@@ -1,1 +1,1 @@
-export { default } from '../PreviewWithCode';
+export { default } from '../PreviewWithCode.jsx';

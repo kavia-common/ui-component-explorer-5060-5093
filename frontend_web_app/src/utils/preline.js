@@ -11,24 +11,26 @@ import { useEffect } from 'react';
  */
  // PUBLIC_INTERFACE
 export async function initPreline() {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return; // SSR/no DOM
+  }
   try {
-    // Dynamically import the compiled distribution bundle to avoid TS sources.
-    const mod = await import('preline');
-    if (mod && typeof window !== 'undefined') {
-      try {
-        // Prefer official autoInit when available
-        if (window.HSStaticMethods && typeof window.HSStaticMethods.autoInit === 'function') {
-          window.HSStaticMethods.autoInit();
-        } else {
-          // Fallback: dispatch DOMContentLoaded so components can self-initialize
-          document.dispatchEvent(new Event('DOMContentLoaded', { bubbles: true }));
-        }
-      } catch {
-        // ignore initialization errors so UI continues to load
-      }
+    // Import compiled build; some bundlers expose side-effect init on import 'preline'
+    await import('preline');
+  } catch {
+    // Swallow import issues; provide no-op fallback
+  }
+
+  try {
+    const hs = window && window.HSStaticMethods;
+    if (hs && typeof hs.autoInit === 'function') {
+      hs.autoInit();
+    } else {
+      // Fallback: dispatch DOMContentLoaded so components can self-initialize
+      document.dispatchEvent(new Event('DOMContentLoaded', { bubbles: true }));
     }
   } catch {
-    // ignore import errors in non-browser contexts
+    // ignore initialization errors so UI continues to load
   }
 }
 

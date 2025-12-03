@@ -19,6 +19,18 @@ function ComponentDetail() {
   const [previewOverrides, setPreviewOverrides] = useState(() => getPreviewProps(id));
   const snippet = useMemo(() => getComponentSnippet(component), [component]);
 
+  // Friendly fallback if id is missing or component not found
+  if (!id || !component) {
+    return (
+      <div className="space-y-4">
+        <Breadcrumbs items={[{ label: 'Home', to: '/' }, { label: 'Components', to: '/' }]} />
+        <div className="rounded-lg border border-dashed p-6 text-center text-sm text-slate-600 dark:text-slate-300 dark:border-slate-700">
+          Component not found for id: <span className="font-mono">{id || '(missing)'}</span>
+        </div>
+      </div>
+    );
+  }
+
   const controls = Object.entries(previewOverrides || {})
     .map(([key, value]) => {
       if (typeof value === 'string') return { label: key, type: 'text', value };
