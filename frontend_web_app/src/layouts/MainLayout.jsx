@@ -4,6 +4,7 @@ import ThemeToggle from '../components/common/ThemeToggle';
 import { getCategories } from '../utils/data';
 import Sidebar from '../components/common/Sidebar';
 import { useTheme } from '../context/ThemeContext';
+import { usePreline } from '../utils/preline';
 
 /**
  * PUBLIC_INTERFACE
@@ -24,6 +25,9 @@ function MainLayout() {
   useEffect(() => {
     setSidebarOpen(false);
   }, [location.pathname]);
+
+  // Initialize Preline behaviors on route change
+  usePreline([location.pathname]);
 
   // Focus trap for mobile sidebar drawer
   useEffect(() => {

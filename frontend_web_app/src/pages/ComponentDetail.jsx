@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getComponentById } from '../utils/data';
 import Breadcrumbs from '../components/common/Breadcrumbs';
@@ -9,6 +9,7 @@ import { copyCodeSnippet } from '../utils/copy';
 import { getPreviewProps } from '../utils/preview';
 import Meta from '../components/common/Meta';
 import { getComponentSnippet, oceanTheme } from '../utils/tokens';
+import { initPreline } from '../utils/preline';
 
 /**
  * PUBLIC_INTERFACE
@@ -25,6 +26,13 @@ function ComponentDetail() {
 
   // Two-state toggle for Preview | Code
   const [mode, setMode] = useState('preview'); // 'preview' | 'code'
+
+  // Re-run Preline after switching to preview or when component id changes
+  useEffect(() => {
+    if (mode === 'preview') {
+      initPreline();
+    }
+  }, [mode, id]);
 
   const handleCopyInCode = async () => {
     await copyCodeSnippet(snippet);

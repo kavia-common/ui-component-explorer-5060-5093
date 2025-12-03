@@ -1,6 +1,22 @@
 /** @type {import('tailwindcss').Config} */
+const plugins = [];
+try {
+  // Guard against environments where preline plugin may reference `self`
+  // Only require if module is resolvable and within Node context
+  // eslint-disable-next-line global-require
+  const prelinePlugin = require('preline/dist/preline');
+  if (prelinePlugin) {
+    plugins.push(prelinePlugin);
+  }
+} catch (_e) {
+  // If Preline plugin cannot be loaded in this environment, skip it.
+}
+
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/preline/dist/*.js"
+  ],
   darkMode: "class",
   theme: {
     extend: {
@@ -23,5 +39,5 @@ module.exports = {
       }
     }
   },
-  plugins: []
+  plugins
 };
