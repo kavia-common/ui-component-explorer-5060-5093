@@ -1,21 +1,33 @@
+/**
+ * Tailwind configuration for the UI component explorer.
+ *
+ * Preline integration notes:
+ * - Use the official plugin from 'preline/plugin' (or 'preline/plugin.cjs' for older versions).
+ * - Ensure Tailwind scans compiled JS in node_modules to pick up Preline class usage.
+ * - Do NOT reference 'preline/src' or any TS paths; CRA/Webpack doesn't transpile TS in dependencies.
+ */
 /** @type {import('tailwindcss').Config} */
-const plugins = [];
-try {
-  // Guard against environments where preline plugin may reference `self`
-  // Only require if module is resolvable and within Node context
-  // eslint-disable-next-line global-require
-  const prelinePlugin = require('preline/dist/preline');
-  if (prelinePlugin) {
-    plugins.push(prelinePlugin);
+const prelinePlugin = (() => {
+  try {
+    // Preferred entry for Preline v3+
+    // eslint-disable-next-line global-require
+    return require('preline/plugin');
+  } catch {
+    try {
+      // Fallback for environments where CJS export is required
+      // eslint-disable-next-line global-require
+      return require('preline/plugin.cjs');
+    } catch {
+      return null;
+    }
   }
-} catch (_e) {
-  // If Preline plugin cannot be loaded in this environment, skip it.
-}
+})();
 
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/preline/dist/*.js"
+    // Include compiled JS files from Preline; this avoids scanning TS sources or d.ts.
+    "./node_modules/preline/**/*.js"
   ],
   darkMode: "class",
   theme: {
@@ -39,5 +51,7 @@ module.exports = {
       }
     }
   },
-  plugins
+  plugins: [
+    ...(prelinePlugin ? [prelinePlugin] : [])
+  ]
 };

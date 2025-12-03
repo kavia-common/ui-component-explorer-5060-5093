@@ -1,3 +1,10 @@
+/**
+ * Type hints for IDEs (JSDoc)
+ * @typedef {Object} RegistryEntry
+ * @property {any} component
+ * @property {Object<string, any>=} defaultProps
+ * @property {Object<string, any>=} previewProps
+ */
 //
 //
 // PUBLIC_INTERFACE

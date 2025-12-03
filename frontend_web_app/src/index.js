@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import RoutesIndex from './routes';
 import { ThemeProvider } from './context/ThemeContext';
 import { HelmetProvider } from 'react-helmet-async';
-import { initPreline } from './utils/preline';
+import { initPreline } from './utils/preline'; // Uses compiled 'preline' build via utils/preline.js
 
 function Bootstrap() {
   useEffect(() => {

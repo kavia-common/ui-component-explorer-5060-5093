@@ -2,6 +2,7 @@
   "name": "react-kavia",
   "version": "0.1.0",
   "private": true,
+  "types": "./types/components/registry/index.d.ts",
   "dependencies": {
     "preline": "^3.2.3",
     "react": "^18.2.0",
@@ -12,9 +13,9 @@
   },
   "scripts": {
     "validate:data": "node scripts/validate-components-json.js",
-    "start": "react-scripts start",
-    "build": "npm run validate:data && react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "npm run validate:data && craco build",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -33,6 +34,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "autoprefixer": "^10.4.18",
     "cross-env": "^7.0.3",
     "postcss": "^8.4.35",

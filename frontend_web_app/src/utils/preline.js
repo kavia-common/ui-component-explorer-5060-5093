@@ -4,19 +4,26 @@ import { useEffect } from 'react';
  * PUBLIC_INTERFACE
  * initPreline - Safely import and initialize Preline's DOM behaviors.
  * Use this after content updates so data-hs-* elements are wired.
+ *
+ * IMPORTANT:
+ * - We explicitly import from the compiled JS build 'preline' (NOT 'preline/src')
+ *   to avoid CRA/Webpack trying to parse TypeScript sources.
  */
 export async function initPreline() {
   try {
+    // Dynamically import the compiled distribution bundle to avoid TS sources.
     const mod = await import('preline');
     if (mod && typeof window !== 'undefined') {
       try {
+        // Prefer official autoInit when available
         if (window.HSStaticMethods && typeof window.HSStaticMethods.autoInit === 'function') {
           window.HSStaticMethods.autoInit();
         } else {
+          // Fallback: dispatch DOMContentLoaded so components can self-initialize
           document.dispatchEvent(new Event('DOMContentLoaded', { bubbles: true }));
         }
       } catch {
-        // ignore
+        // ignore initialization errors so UI continues to load
       }
     }
   } catch {
