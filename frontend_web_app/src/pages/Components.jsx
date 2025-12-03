@@ -10,27 +10,21 @@ import { oceanTheme } from '../utils/tokens';
 import CodeBlock from '../components/explorer/CodeBlock';
 import { initPreline } from '../utils/preline';
 
+// PUBLIC_INTERFACE
 /**
- * PUBLIC_INTERFACE
- * ComponentsPage - Renders a page for a given category slug, listing relevant component examples.
- * IMPORTANT: This page is only used for /category/:slug. It must not mount on /component/:id.
- * IMPORTANT: Do NOT attempt to render any single item detail here. No fallback to detail by id/slug.
- * Lets the layout's main content area handle scrolling. No extra overflow wrappers here.
+ * ComponentsPage
+ * Lists components for a given category slug.
+ * Hard guard: this page is used ONLY for /category/:slug. It must no-op elsewhere.
  */
 function ComponentsPage() {
   const { slug } = useParams();
   const { pathname } = useLocation();
 
-  // Determine route type early; do not return before hooks are declared to satisfy Rules of Hooks
+  // Identify if we are on a category route (do not return before hooks setup)
   const isCategoryRoute = typeof pathname === 'string' && pathname.startsWith('/category/');
-  if (typeof window !== 'undefined') {
-    // eslint-disable-next-line no-console
-    console.log('[ComponentsPage] pathname:', pathname, 'isCategoryRoute:', isCategoryRoute);
-  }
 
   const items = useMemo(() => {
     if (!isCategoryRoute) return [];
-    // Strict filter: only components whose category EXACTLY equals the active slug.
     if (!slug) return [];
     const all = getAllComponents();
     return all.filter((c) => typeof c.category === 'string' && c.category === slug);
@@ -47,12 +41,11 @@ function ComponentsPage() {
 
   const previewRootRef = useRef(null);
 
-  // Initialize Preline on mount and whenever items/modes change to support data-hs-* previews
+  // Initialize Preline and inline scripts only when on category route
   useEffect(() => {
     if (!isCategoryRoute) return;
     initPreline();
     if (!previewRootRef.current) return;
-    // Execute any inline scripts marked for execution in HTML snippets
     const scripts = previewRootRef.current.querySelectorAll('script[data-inline-execute="true"]');
     scripts.forEach((scriptEl) => {
       try {
@@ -65,7 +58,7 @@ function ComponentsPage() {
       }
     });
 
-    // Layout splitter wiring for inline HTML snippets on the list page
+    // Lightweight layout splitter wiring for demo snippets
     const root = previewRootRef.current;
     const containers = Array.from(
       root.querySelectorAll('[data-splitter="horizontal"],[data-splitter="vertical"]')
@@ -215,9 +208,8 @@ function ComponentsPage() {
     </div>
   );
 
+  // Hard guard: this page should not render outside /category/*
   if (!isCategoryRoute) {
-    // Explicit guard: never render anything (or run heavy effects) on non-category routes.
-    // Also avoid returning placeholder nodes that might mount stray previews.
     return null;
   }
 
@@ -240,24 +232,17 @@ function ComponentsPage() {
           const reg = registry[item.id];
           const PreviewComp = reg?.component;
 
-          // Compute code snippet priority: raw registry -> item.code -> jsxCode
           const jsxFromJson = item.jsxCode || reg?.exampleCode || '';
           const code = reg?.raw ? reg.raw : item.code ? item.code : jsxFromJson;
 
           const mode = modes[item.id] || 'preview';
 
-          // Prefer live React component when available; otherwise, if we have HTML code, render it verbatim
           let previewNode;
           if (PreviewComp) {
             previewNode = <PreviewComp {...(reg?.previewProps || item?.previewProps || {})} />;
           } else if (typeof code === 'string' && code.trim().length > 0) {
-            // Render HTML snippet directly so users see the real markup rendered
             previewNode = (
-              <div
-                className="w-full"
-                // Intentionally render exact snippet; do not wrap with extra centering that would change code semantics
-                dangerouslySetInnerHTML={{ __html: code }}
-              />
+              <div className="w-full" dangerouslySetInnerHTML={{ __html: code }} />
             );
           } else {
             previewNode = (
@@ -287,11 +272,9 @@ function ComponentsPage() {
 
               {mode === 'preview' ? (
                 <PreviewCanvas className="bg-background dark:bg-gray-900" title="Live Preview" mode={mode}>
-                  {/* Rely on main content scroll; no extra overflow wrapper */}
                   <div>{previewNode}</div>
                 </PreviewCanvas>
               ) : (
-                // Code panel must show the exact snippet string used for preview/copy
                 <CodeBlock code={code || jsxFromJson || ''} language="jsx" title="Code" />
               )}
             </section>

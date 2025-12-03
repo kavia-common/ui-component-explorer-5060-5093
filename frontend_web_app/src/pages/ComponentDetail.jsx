@@ -7,25 +7,27 @@ import { getComponentSnippet } from '../utils/tokens';
 import PreviewWithCode from '../components/explorer/PreviewWithCode';
 import { getPreviewProps } from '../utils/preview';
 
+// PUBLIC_INTERFACE
 /**
- * PUBLIC_INTERFACE
- * ComponentDetail shows a preview and code for a single component matched by id.
- * - Strictly renders ONLY the matched item; never maps or renders additional items.
- * - Defensive diagnostics log matched id and count once per mount.
+ * ComponentDetail
+ * Renders the detail page for a single component by id. This page:
+ * - Mounts ONLY on /component/:id routes.
+ * - Fetches the exact component by id, and renders a single PreviewWithCode.
+ * - Does not render related items or lists. No fallback mapping over multiple items.
  */
 function ComponentDetail() {
   const { id } = useParams();
   const { pathname } = useLocation();
   const didLogRef = useRef(false);
 
-  // Determine if this is a detail route early, but do not conditionally call hooks below
+  // Guard route detection (but don't conditionally call hooks)
   const isDetailRoute = typeof pathname === 'string' && /^\/component\/[^/]+$/.test(pathname);
 
-  // Prepare data up-front to avoid conditional hooks later
+  // Fetch all components and the specific one
   const allComponents = useMemo(() => getAllComponents(), []);
   const component = useMemo(() => (id ? getComponentById(id) : null), [id]);
 
-  // One-time diagnostic to verify match count and ensure single render path
+  // Diagnostic: log matched count once
   useEffect(() => {
     if (didLogRef.current) return;
     if (typeof window !== 'undefined') {
@@ -36,20 +38,16 @@ function ComponentDetail() {
     }
   }, [id, allComponents]);
 
-  // Local preview overrides and snippet for the single item (hooks declared before any early return)
+  // Prepare preview controls for single component
   const [previewOverrides, setPreviewOverrides] = useState(() => getPreviewProps(id));
   const snippet = useMemo(() => getComponentSnippet(component), [component]);
 
-  const controls = useMemo(
-    () =>
-      Object.entries(previewOverrides || {})
-        .map(([key, value]) => {
-          if (typeof value === 'string') return { label: key, type: 'text', value };
-          return null;
-        })
-        .filter(Boolean),
-    [previewOverrides]
-  );
+  const controls = useMemo(() => {
+    const entries = Object.entries(previewOverrides || {});
+    return entries
+      .map(([key, value]) => (typeof value === 'string' ? { label: key, type: 'text', value } : null))
+      .filter(Boolean);
+  }, [previewOverrides]);
 
   const handleControlChange = (index, value) => {
     const key = controls[index]?.label;
@@ -57,11 +55,12 @@ function ComponentDetail() {
     setPreviewOverrides((prev) => ({ ...prev, [key]: value }));
   };
 
-  // Now do guarded returns AFTER hooks
+  // Hard guard: only on /component routes
   if (!isDetailRoute) {
     return null;
   }
 
+  // Not found handling
   if (!id || !component) {
     return (
       <div className="space-y-4">
@@ -73,7 +72,7 @@ function ComponentDetail() {
     );
   }
 
-  // Double-check uniqueness and defend against duplicates
+  // Duplicate id defense (should not happen if data validated)
   const dupCount = allComponents.reduce((acc, c) => (c?.id === id ? acc + 1 : acc), 0);
   if (dupCount > 1) {
     return (
@@ -86,15 +85,13 @@ function ComponentDetail() {
     );
   }
 
-  // Render exactly one PreviewWithCode for the matched component
+  // Render only the selected component
   return (
     <div className="space-y-6 pb-4">
       <Meta
         title={component?.name || id}
         description={component?.description || 'Preview and copy code for this component.'}
-        canonical={
-          typeof window !== 'undefined' ? `${window.location.origin}/component/${encodeURIComponent(id)}` : undefined
-        }
+        canonical={typeof window !== 'undefined' ? `${window.location.origin}/component/${encodeURIComponent(id)}` : undefined}
         type="article"
         jsonLd={{
           '@context': 'https://schema.org',

@@ -5,13 +5,12 @@ import Home from '../pages/Home';
 import ComponentsPage from '../pages/Components';
 import ComponentDetail from '../pages/ComponentDetail';
 
+// PUBLIC_INTERFACE
 /**
- * PUBLIC_INTERFACE
- * RoutesIndex is the central router configuration.
- * It maps application paths to pages wrapped by MainLayout.
- * Rules:
- * - Category listings route to /category/:slug and mount ComponentsPage only (no detail logic here).
- * - Single component details route to /component/:id and mount ComponentDetail only (no list logic here).
+ * RoutesIndex
+ * Central routing table.
+ * - /category/:slug -> ComponentsPage (list only)
+ * - /component/:id -> ComponentDetail (single item only)
  */
 function RoutesIndex() {
   return (
@@ -19,18 +18,10 @@ function RoutesIndex() {
       <Route element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="/" element={<Home />} />
-        <Route
-          path="/category/:slug"
-          element={<ComponentsPage />}
-        />
-        {/* Ensure detail and list are never mounted together; keep them as sibling routes (no nested Outlet stacking) */}
-        <Route
-          path="/component/:id"
-          element={<ComponentDetail />}
-        />
+        <Route path="/category/:slug" element={<ComponentsPage />} />
+        {/* Keep detail and list strictly separate as sibling routes */}
+        <Route path="/component/:id" element={<ComponentDetail />} />
       </Route>
-
-      {/* Fallback to home for unknown routes */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

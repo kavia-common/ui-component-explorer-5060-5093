@@ -15,10 +15,11 @@ import { getIconComponent } from '../../utils/icons';
 
 /**
  * PUBLIC_INTERFACE
- * Sidebar - Renders a collapsible, accessible navigation from a data config with compact, adaptive layout.
- * - Group headers show an icon; leaf items render text only (no icon) to save horizontal space.
- * - Sticky, slim global filter; full-height auto-fill scroll area with custom scrollbar.
-
+ * Sidebar
+ * Collapsible navigation. Behavior:
+ * - Items with type:'component' must have a valid id and navigate to /component/:id
+ * - Items with type:'category' (default) navigate to /category/:slug
+ * No cross-routing: component leaves never go to category pages and vice versa.
  *
  * Props:
  * - onItemClick?: () => void (used by mobile drawer to close on navigate)
