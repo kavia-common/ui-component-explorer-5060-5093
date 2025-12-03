@@ -64,6 +64,8 @@ body {
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   height: 100%;
   min-height: 100%;
+  /* Do not force body overflow; allow inner regions to scroll */
+  overflow: initial;
 }
 
 /* Root layout helpers to ensure full-height flex column shell */
@@ -104,7 +106,6 @@ code {
 .bg-main-gradient {
   background: linear-gradient(45deg, #af2497 10%, #902d9a 20%, #1840a0 100%);
 }
-/* Removed transparent overlay utilities for Sidebar usage; rely on solid text treatments like underline */
 /* Text gradient using main accent */
 .text-main-gradient {
   background: linear-gradient(45deg, #af2497 10%, #902d9a 20%, #1840a0 100%);
@@ -294,5 +295,3 @@ a.text-main-gradient,
   -webkit-background-clip: text;
   background-clip: text;
 }
-
-

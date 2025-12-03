@@ -12,27 +12,21 @@ import CodeBlock from '../components/explorer/CodeBlock';
 /**
  * PUBLIC_INTERFACE
  * ComponentsPage - Renders a page for a given sidebar item slug, listing relevant component examples.
- * - URL: /category/:slug
- * - For each component: title, description, live preview or code view, and copy inside code view.
- * - Reads component metadata from local JSON (components.json) and uses the registry for live render when possible.
+ * Lets the layout's main content area handle scrolling. No extra overflow wrappers here.
  */
 function ComponentsPage() {
   const { slug } = useParams();
 
-  // Map sidebar slug to matching components. We match by slug or category or tag occurrences.
   const items = useMemo(() => {
     const all = getAllComponents();
     if (!slug) return [];
 
-    // Prefer exact slug match
     const exact = all.filter((c) => c.slug === slug);
     if (exact.length) return exact;
 
-    // If slug matches known category keys
     const byCategory = all.filter((c) => c.category === slug);
     if (byCategory.length) return byCategory;
 
-    // Fallback: tag/slug containment heuristics
     const lower = slug.toLowerCase();
     const byHeuristic = all.filter(
       (c) =>
@@ -41,7 +35,6 @@ function ComponentsPage() {
         c.tags?.some((t) => String(t).toLowerCase().includes(lower))
     );
 
-    // As another fallback for "tables" that groups multiple entries
     if (lower === 'tables') {
       return all.filter((c) => c.category === 'tables');
     }
@@ -54,11 +47,8 @@ function ComponentsPage() {
     return nice.charAt(0).toUpperCase() + nice.slice(1);
   }, [slug]);
 
-  // Local per-item mode state
   const [modes, setModes] = useState({}); // id -> 'preview' | 'code'
-
-  const setMode = (id, next) =>
-    setModes((m) => ({ ...m, [id]: next }));
+  const setMode = (id, next) => setModes((m) => ({ ...m, [id]: next }));
 
   const handleCopy = async (code) => {
     await copyCodeSnippet(code);
@@ -117,19 +107,13 @@ function ComponentsPage() {
           const PreviewComp = reg?.component;
 
           const jsxFromJson = item.jsxCode || reg?.exampleCode || '';
-          const code = reg?.raw
-            ? reg.raw
-            : item.code
-            ? item.code
-            : jsxFromJson;
+          const code = reg?.raw ? reg.raw : item.code ? item.code : jsxFromJson;
 
           const mode = modes[item.id] || 'preview';
 
-          // Build preview node
           const previewNode = PreviewComp ? (
             <PreviewComp {...(reg?.previewProps || item?.previewProps || {})} />
           ) : (
-            // Fallback: if no live component in registry, show a static block
             <div
               className="rounded-md border border-dashed border-gray-300 bg-gray-50 p-6 text-center text-sm text-slate-600 dark:border-gray-700 dark:bg-gray-900/40 dark:text-slate-300"
               role="img"
@@ -144,29 +128,22 @@ function ComponentsPage() {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{item.name}</h2>
-                  {item.short || item.description ? (
+                  {(item.short || item.description) && (
                     <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
                       {item.short || item.description}
                     </p>
-                  ) : null}
+                  )}
                 </div>
                 <Toggle id={item.id} mode={mode} />
               </div>
 
               {mode === 'preview' ? (
-                <PreviewCanvas
-                  className="bg-white dark:bg-gray-900"
-                  title="Live Preview"
-                  mode={mode}
-                >
-                  <div className="min-h-0">{previewNode}</div>
+                <PreviewCanvas className="bg-white dark:bg-gray-900" title="Live Preview" mode={mode}>
+                  {/* Rely on main content scroll; no extra overflow wrapper */}
+                  <div>{previewNode}</div>
                 </PreviewCanvas>
               ) : (
-                <CodeBlock
-                  code={(code || jsxFromJson || '')}
-                  language="jsx"
-                  title="Code"
-                />
+                <CodeBlock code={code || jsxFromJson || ''} language="jsx" title="Code" />
               )}
             </section>
           );

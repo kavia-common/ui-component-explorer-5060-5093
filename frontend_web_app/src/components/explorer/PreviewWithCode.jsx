@@ -8,15 +8,16 @@ import { initPreline, usePreline } from '../../utils/preline';
 /**
  * PUBLIC_INTERFACE
  * PreviewWithCode - Combined live preview and code viewer for a single registry component id.
+ * Does not impose its own overflow on the top container; the page main content handles scrolling.
  * Props:
- * - componentId: string (required) - registry id for the component to preview
- * - overrideProps: object - props to pass into the preview component (merged over registry defaults)
- * - code: string - code snippet to display in the code panel
- * - title: string - title for the preview panel
- * - height: number|string - the min height for preview area
- * - controls: array - control descriptors for PropControls
+ * - componentId: string (required)
+ * - overrideProps: object
+ * - code: string
+ * - title: string
+ * - height: number|string
+ * - controls: array
  * - onControlChange: function(index:number, value:any) -> void
- * - detailsPanel: ReactNode - Optional right-side details panel
+ * - detailsPanel: ReactNode
  */
 function PreviewWithCode({
   componentId,
@@ -31,23 +32,16 @@ function PreviewWithCode({
   const [mode, setMode] = useState('preview'); // 'preview' | 'code'
   const containerRef = useRef(null);
 
-  // Resolve component from registry; fallback is a placeholder safe component
   const PreviewComp = useMemo(() => getPreviewComponent(componentId), [componentId]);
 
-  // Ensure Preline init runs after the DOM updates with potentially data-hs-* markup
-  // This also guards for SSR/non-browser environments.
   usePreline([mode, componentId, code]);
 
-  // Execute inline scripts that are part of the rendered snippet (scoped to this preview)
   useEffect(() => {
     if (!containerRef.current) return;
-    // Re-init Preline first to wire data-hs-* attributes
     initPreline();
-    // Find and run inline scripts within the preview only
     const scripts = containerRef.current.querySelectorAll('script[data-inline-execute="true"]');
     scripts.forEach((scriptEl) => {
       try {
-        // Create a new Function with limited local scope, passing the preview root for scoping queries
         const fn = new Function('root', scriptEl.textContent || '');
         fn(containerRef.current);
       } catch (e) {
@@ -57,13 +51,13 @@ function PreviewWithCode({
     });
   }, [mode, componentId, code]);
 
-  // Guard numeric/string height
   const minHeightStyle =
-    typeof height === 'number' ? { minHeight: `${height}px` } :
-    typeof height === 'string' ? { minHeight: height } :
-    { minHeight: '200px' };
+    typeof height === 'number'
+      ? { minHeight: `${height}px` }
+      : typeof height === 'string'
+      ? { minHeight: height }
+      : { minHeight: '200px' };
 
-  // If id is missing, render a friendly fallback
   if (!componentId) {
     return (
       <div className="rounded-lg border border-dashed p-6 text-center text-sm text-slate-600 dark:text-slate-300 dark:border-slate-700">
@@ -76,7 +70,11 @@ function PreviewWithCode({
     <section className="space-y-4" ref={containerRef}>
       <div className="flex items-center justify-between">
         <h2 className="text-base font-semibold text-slate-900 dark:text-slate-100">{title}</h2>
-        <div role="group" aria-label="View mode" className="inline-flex rounded-md border border-gray-200 bg-white p-0.5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div
+          role="group"
+          aria-label="View mode"
+          className="inline-flex rounded-md border border-gray-200 bg-white p-0.5 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+        >
           <button
             type="button"
             onClick={() => setMode('preview')}
@@ -108,15 +106,15 @@ function PreviewWithCode({
         <div className="md:col-span-8">
           {mode === 'preview' ? (
             <PreviewCanvas className="bg-white dark:bg-gray-900" title={title} mode={mode}>
-              <div style={minHeightStyle} className="flex items-center justify-center min-h-0">
+              {/* Allow page main content to scroll; no extra overflow on container */}
+              <div style={minHeightStyle} className="flex items-center justify-center">
                 <PreviewComp {...overrideProps} />
               </div>
             </PreviewCanvas>
           ) : (
             <div className="rounded-lg border border-gray-200 bg-white p-0 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-              <div className="scrollable-y custom-scrollbar">
-                <CodeBlock code={code || ''} language="jsx" title="Code" />
-              </div>
+              {/* Keep code block unconstrained unless very large; let page scroll. */}
+              <CodeBlock code={code || ''} language="jsx" title="Code" />
             </div>
           )}
         </div>

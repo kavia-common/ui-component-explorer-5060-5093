@@ -8,10 +8,8 @@ import { usePreline } from '../utils/preline';
 
 /**
  * PUBLIC_INTERFACE
- * MainLayout provides the app shell (Header, Sidebar, Footer) and renders routed pages via <Outlet />.
- * - Header includes brand, search, and theme toggle.
- * - Sidebar collapses on mobile and lists sample categories with an accessible drawer.
- * - Footer shows minimal info.
+ * MainLayout provides the app shell with a fixed/sticky header and a sticky sidebar.
+ * Only the central content area scrolls vertically. Sidebar collapses on mobile.
  */
 function MainLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -69,25 +67,17 @@ function MainLayout() {
   }, [sidebarOpen]);
 
   const toggleSidebar = () => setSidebarOpen((s) => !s);
-  // Close on Ctrl+M (example keyboard shortcut) to toggle menu on mobile for accessibility
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.ctrlKey && (e.key === 'm' || e.key === 'M')) {
-        e.preventDefault();
-        setSidebarOpen((s) => !s);
-      }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
 
-  // Read categories from data helpers
-  const categories = getCategories();
+  // Read categories from data helpers (not directly used here, reserved for header widgets if needed)
+  getCategories();
+
+  // Header height (px) used for sticky sidebar offset. Keep in sync with header paddings.
+  const HEADER_PX = 64;
 
   return (
     <div className="root-layout min-h-screen flex flex-col text-text bg-app-gradient">
-      {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-transparent bg-main-gradient text-white" role="banner">
+      {/* Header - fixed/sticky at top */}
+      <header className="sticky top-0 z-50 border-b border-transparent bg-main-gradient text-white" role="banner">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-3">
             <button
@@ -103,17 +93,13 @@ function MainLayout() {
             </button>
             <Link to="/" className="flex items-center gap-2 focus-ring-main-gradient rounded-md">
               <div className="h-8 w-8 rounded-lg bg-white/10 shadow-sm ring-1 ring-white/20" />
-              <span className="text-lg font-semibold text-white">
-                UI Component Explorer
-              </span>
+              <span className="text-lg font-semibold text-white">UI Component Explorer</span>
             </Link>
           </div>
 
-          {/* Center spacer to preserve alignment without search */}
           <div className="hidden flex-1 items-center justify-center px-6 md:flex" />
 
           <div className="flex items-center gap-2">
-            {/* Ensure toggle is visible on gradient */}
             <div className="rounded-md ring-1 ring-white/20">
               <ThemeToggle />
             </div>
@@ -121,7 +107,32 @@ function MainLayout() {
         </div>
       </header>
 
-      {/* Mobile Sidebar Drawer */}
+      {/* Content Row: sidebar + main. Ensure min-h-0 so child can scroll */}
+      <div className="mx-auto grid max-w-7xl flex-1 grid-cols-1 md:grid-cols-[270px_minmax(0,1fr)] min-h-0 w-full">
+        {/* Sidebar (desktop): sticky below header */}
+        <aside
+          className="hidden md:block bg-main-gradient text-white sticky self-start overflow-hidden"
+          style={{ top: `${HEADER_PX}px`, height: `calc(100vh - ${HEADER_PX}px)` }}
+          role="complementary"
+          aria-label="Sidebar navigation"
+        >
+          <div className="h-full">
+            <Sidebar onItemClick={() => setSidebarOpen(false)} />
+          </div>
+        </aside>
+
+        {/* Main content column - must be min-h-0 so its child can scroll */}
+        <main className="min-h-0 flex flex-col">
+          <div className="p-4 md:p-6 min-h-0 flex flex-col">
+            {/* Scrollable pane with custom scrollbar; avoid body scroll */}
+            <div className="main-content flex-1 min-h-0 overflow-y-auto custom-scrollbar rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+              <Outlet />
+            </div>
+          </div>
+        </main>
+      </div>
+
+      {/* Mobile Sidebar Drawer (overlay) */}
       <div
         className={`fixed inset-0 z-50 transform transition ${
           sidebarOpen ? 'pointer-events-auto' : 'pointer-events-none'
@@ -142,7 +153,7 @@ function MainLayout() {
           aria-label="Navigation"
           className={`absolute left-0 top-0 h-full w-72 transform bg-main-gradient p-4 shadow-xl transition-transform ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          } overflow-y-auto text-white`}
+          } overflow-y-auto custom-scrollbar text-white`}
         >
           <div className="mb-3 flex items-center justify-between rounded-md px-2 py-2">
             <span className="text-sm font-semibold text-white">Menu</span>
@@ -164,35 +175,7 @@ function MainLayout() {
         </aside>
       </div>
 
-      {/* Desktop Layout: Sidebar + Main (single inner scroll) */}
-      <div className="mx-auto hidden max-w-7xl grid-cols-[270px_minmax(0,1fr)] md:grid flex-1">
-        {/* Sidebar: column */}
-        <aside
-          className="bg-main-gradient text-white"
-          role="complementary"
-          aria-label="Sidebar navigation"
-        >
-          <Sidebar onItemClick={() => setSidebarOpen(false)} />
-        </aside>
-
-        {/* Main content - scrollable area */}
-        <main className="p-4 md:p-6">
-          <div className="main-content scrollable-y custom-scrollbar rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-            <Outlet />
-          </div>
-        </main>
-      </div>
-
-      {/* Mobile Main content (full width, single inner scroll) */}
-      <div className="mx-auto max-w-7xl md:hidden flex-1">
-        <main className="p-4 md:p-6">
-          <div className="main-content scrollable-y custom-scrollbar rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-            <Outlet />
-          </div>
-        </main>
-      </div>
-
-      {/* Footer */}
+      {/* Footer remains outside scroll area; page height stays within viewport */}
       <footer className="border-t border-gray-200 bg-surface py-6 dark:border-gray-800 dark:bg-gray-900" role="contentinfo">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 text-sm text-slate-700 dark:text-slate-200">
           <span>© {new Date().getFullYear()} UI Component Explorer</span>

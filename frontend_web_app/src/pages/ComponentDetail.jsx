@@ -10,6 +10,7 @@ import { getPreviewProps } from '../utils/preview';
 /**
  * PUBLIC_INTERFACE
  * ComponentDetail shows a preview and code for a given component id using local data.
+ * Allows the page-level main content wrapper to control vertical scrolling.
  */
 function ComponentDetail() {
   const { id } = useParams();
