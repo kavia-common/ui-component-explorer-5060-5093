@@ -69,6 +69,118 @@ function ComponentsPage() {
         console.warn('Inline script error in Components preview:', e);
       }
     });
+
+    // Layout splitter wiring for inline HTML snippets on the list page
+    const root = previewRootRef.current;
+    const containers = Array.from(
+      root.querySelectorAll('[data-splitter="horizontal"],[data-splitter="vertical"]')
+    );
+    const cleanups = [];
+
+    containers.forEach((splitterEl) => {
+      const orientation = splitterEl.getAttribute('data-splitter');
+      const isHorizontal = orientation === 'horizontal';
+      const handles = Array.from(splitterEl.querySelectorAll('[data-splitter-handle]'));
+
+      handles.forEach((handle) => {
+        let dragging = false;
+
+        const onMouseMove = (e) => {
+          if (!dragging) return;
+          const rect = splitterEl.getBoundingClientRect();
+          const paneA = handle.previousElementSibling;
+          const paneB = handle.nextElementSibling;
+          if (!paneA || !paneB) return;
+
+          if (isHorizontal) {
+            const x = e.clientX - rect.left;
+            const pct = (x / rect.width) * 100;
+            const clamped = Math.min(90, Math.max(10, pct));
+            paneA.style.width = `${clamped}%`;
+            paneA.style.flexBasis = `${clamped}%`;
+            paneB.style.width = `${100 - clamped}%`;
+            paneB.style.flexBasis = `${100 - clamped}%`;
+          } else {
+            const y = e.clientY - rect.top;
+            const pct = (y / rect.height) * 100;
+            const clamped = Math.min(90, Math.max(10, pct));
+            splitterEl.style.gridTemplateRows = `${clamped}% auto ${100 - clamped}%`;
+          }
+        };
+
+        const onMouseUp = () => {
+          if (!dragging) return;
+          dragging = false;
+          document.body.style.userSelect = '';
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('mouseup', onMouseUp);
+        };
+
+        const onMouseDown = (e) => {
+          if (e.button !== 0) return;
+          dragging = true;
+          document.body.style.userSelect = 'none';
+          window.addEventListener('mousemove', onMouseMove);
+          window.addEventListener('mouseup', onMouseUp);
+        };
+
+        const onKeyDown = (e) => {
+          const paneA = handle.previousElementSibling;
+          const paneB = handle.nextElementSibling;
+          if (!paneA || !paneB) return;
+
+          if (e.key === 'ArrowLeft' && isHorizontal) {
+            e.preventDefault();
+            const rect = splitterEl.getBoundingClientRect();
+            const currentWidth = paneA.getBoundingClientRect().width;
+            const pct = (currentWidth / rect.width) * 100;
+            const clamped = Math.min(90, Math.max(10, pct - 2));
+            paneA.style.width = `${clamped}%`;
+            paneA.style.flexBasis = `${clamped}%`;
+            paneB.style.width = `${100 - clamped}%`;
+            paneB.style.flexBasis = `${100 - clamped}%`;
+          } else if (e.key === 'ArrowRight' && isHorizontal) {
+            e.preventDefault();
+            const rect = splitterEl.getBoundingClientRect();
+            const currentWidth = paneA.getBoundingClientRect().width;
+            const pct = (currentWidth / rect.width) * 100;
+            const clamped = Math.min(90, Math.max(10, pct + 2));
+            paneA.style.width = `${clamped}%`;
+            paneA.style.flexBasis = `${clamped}%`;
+            paneB.style.width = `${100 - clamped}%`;
+            paneB.style.flexBasis = `${100 - clamped}%`;
+          } else if (e.key === 'ArrowUp' && !isHorizontal) {
+            e.preventDefault();
+            const rect = splitterEl.getBoundingClientRect();
+            const topH = paneA.getBoundingClientRect().height;
+            const pct = (topH / rect.height) * 100;
+            const clamped = Math.min(90, Math.max(10, pct + 2));
+            splitterEl.style.gridTemplateRows = `${clamped}% auto ${100 - clamped}%`;
+          } else if (e.key === 'ArrowDown' && !isHorizontal) {
+            e.preventDefault();
+            const rect = splitterEl.getBoundingClientRect();
+            const topH = paneA.getBoundingClientRect().height;
+            const pct = (topH / rect.height) * 100;
+            const clamped = Math.min(90, Math.max(10, pct - 2));
+            splitterEl.style.gridTemplateRows = `${clamped}% auto ${100 - clamped}%`;
+          }
+        };
+
+        handle.addEventListener('mousedown', onMouseDown);
+        handle.addEventListener('keydown', onKeyDown);
+
+        cleanups.push(() => {
+          handle.removeEventListener('mousedown', onMouseDown);
+          handle.removeEventListener('keydown', onKeyDown);
+        });
+      });
+    });
+
+    return () => {
+      cleanups.forEach((fn) => {
+        try { fn(); } catch {}
+      });
+    };
   }, [items, modes]);
 
   const handleCopy = async (code) => {

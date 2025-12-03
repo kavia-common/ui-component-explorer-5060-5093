@@ -3,5 +3,6 @@
   { "name": "Cards", "slug": "cards", "description": "Container components for grouping content." },
   { "name": "Navigation", "slug": "navigation", "description": "Headers, navbars, sidebars, and menus." },
   { "name": "Forms", "slug": "forms", "description": "Inputs, selects, textareas, and form layouts." },
-  { "name": "Tables", "slug": "tables", "description": "Data tables with sorting, pagination, and responsive patterns." }
+  { "name": "Tables", "slug": "tables", "description": "Data tables with sorting, pagination, and responsive patterns." },
+  { "name": "Layout", "slug": "layout", "description": "Layout & content structures like grids, containers, and splitters." }
 ]
