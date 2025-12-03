@@ -216,6 +216,7 @@ function ComponentsPage() {
   );
 
   if (!isCategoryRoute) {
+    // Explicit guard: never render anything (or run heavy effects) on non-category routes.
     return null;
   }
 

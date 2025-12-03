@@ -19,9 +19,15 @@ function RoutesIndex() {
       <Route element={<MainLayout />}>
         <Route index element={<Home />} />
         <Route path="/" element={<Home />} />
-        <Route path="/category/:slug" element={<ComponentsPage />} />
+        <Route
+          path="/category/:slug"
+          element={<ComponentsPage />}
+        />
         {/* Ensure detail and list are never mounted together; keep them as sibling routes (no nested Outlet stacking) */}
-        <Route path="/component/:id" element={<ComponentDetail />} />
+        <Route
+          path="/component/:id"
+          element={<ComponentDetail />}
+        />
       </Route>
 
       {/* Fallback to home for unknown routes */}

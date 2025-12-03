@@ -131,7 +131,10 @@ function Sidebar({ onItemClick }) {
       return { pathname: '', hash: '' };
     }
     // Strict category listing page route /category/:slug (NEVER detail here)
-    const slug = typeof item?.slug === 'string' ? item.slug : '';
+    const slug = typeof item?.slug === 'string' ? item.slug.trim() : '';
+    if (!slug) {
+      return { pathname: '', hash: '' };
+    }
     return { pathname: `/category/${encodeURIComponent(slug)}`, hash: '' };
   };
 

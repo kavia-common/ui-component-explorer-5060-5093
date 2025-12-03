@@ -47,6 +47,7 @@ function ComponentDetail() {
 
   // If not on the exact detail route, render nothing (after hooks have been called)
   if (!isDetailRoute) {
+    // Strictly prevent any rendering when not on /component/:id
     return null;
   }
 
