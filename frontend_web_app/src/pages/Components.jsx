@@ -19,28 +19,23 @@ function ComponentsPage() {
   const { slug } = useParams();
 
   const items = useMemo(() => {
+    // Only surface items via the sidebar taxonomy:
+    // 1) If slug matches an item.slug (leaf), show components whose category equals that leaf slug
+    // 2) Else if slug matches a top-level category in components.json, show those category items
+    // 3) Otherwise, return empty (placeholder page can render)
     const all = getAllComponents();
     if (!slug) return [];
 
-    const exact = all.filter((c) => c.slug === slug);
-    if (exact.length) return exact;
+    // If a component's own slug matches the route slug, still list by its category slug (leaf taxonomy)
+    const byLeafCategory = all.filter((c) => c.category === slug);
+    if (byLeafCategory.length) return byLeafCategory;
 
-    const byCategory = all.filter((c) => c.category === slug);
-    if (byCategory.length) return byCategory;
+    // Fallback to any components whose slug equals the route slug (rare; typically detail pages)
+    const exactSlug = all.filter((c) => c.slug === slug);
+    if (exactSlug.length) return exactSlug;
 
-    const lower = slug.toLowerCase();
-    const byHeuristic = all.filter(
-      (c) =>
-        c.slug?.toLowerCase() === lower ||
-        c.name?.toLowerCase().includes(lower) ||
-        c.tags?.some((t) => String(t).toLowerCase().includes(lower))
-    );
-
-    if (lower === 'tables') {
-      return all.filter((c) => c.category === 'tables');
-    }
-
-    return byHeuristic;
+    // No heuristic or home injection; keep surface strictly sidebar/category controlled
+    return [];
   }, [slug]);
 
   const pageTitle = useMemo(() => {
