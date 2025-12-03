@@ -1,5 +1,6 @@
 import components from '../data/components.json';
 import categories from '../data/categories.json';
+import { assertUniqueComponentIds } from './validate';
 
 /**
  * Simple data utilities that read from local JSON files.
@@ -11,6 +12,9 @@ import categories from '../data/categories.json';
  * getAllComponents
  * Returns the complete list of component metadata.
  */
+/* Development-time validation: check for duplicate ids */
+assertUniqueComponentIds(components);
+
 export function getAllComponents() {
   /** Returns an array of all component objects available in the local registry. */
   return components;

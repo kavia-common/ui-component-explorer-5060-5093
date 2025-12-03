@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import Meta from '../components/common/Meta';
 import Breadcrumbs from '../components/common/Breadcrumbs';
 import PreviewCanvas from '../components/explorer/PreviewCanvas';
@@ -19,18 +19,27 @@ import { initPreline } from '../utils/preline';
  */
 function ComponentsPage() {
   const { slug } = useParams();
+  const { pathname } = useLocation();
+
+  // Determine route type early; do not return before hooks are declared to satisfy Rules of Hooks
+  const isCategoryRoute = typeof pathname === 'string' && pathname.startsWith('/category/');
+  if (typeof window !== 'undefined') {
+    // eslint-disable-next-line no-console
+    console.log('[ComponentsPage] pathname:', pathname, 'isCategoryRoute:', isCategoryRoute);
+  }
 
   const items = useMemo(() => {
+    if (!isCategoryRoute) return [];
     // Strict filter: only components whose category EXACTLY equals the active slug.
-    // Defensive: this page should only be mounted at /category/:slug by routing.
     if (!slug) return [];
     const all = getAllComponents();
     return all.filter((c) => typeof c.category === 'string' && c.category === slug);
-  }, [slug]);
+  }, [slug, isCategoryRoute]);
 
   const pageTitle = useMemo(() => {
-    const nice = slug?.replace(/-/g, ' ') ?? 'Components';
-    return nice.charAt(0).toUpperCase() + nice.slice(1);
+    const base = slug?.replace(/-/g, ' ') ?? 'Components';
+    const nice = base.charAt(0).toUpperCase() + base.slice(1);
+    return nice;
   }, [slug]);
 
   const [modes, setModes] = useState({}); // id -> 'preview' | 'code'
@@ -40,6 +49,7 @@ function ComponentsPage() {
 
   // Initialize Preline on mount and whenever items/modes change to support data-hs-* previews
   useEffect(() => {
+    if (!isCategoryRoute) return;
     initPreline();
     if (!previewRootRef.current) return;
     // Execute any inline scripts marked for execution in HTML snippets
@@ -166,7 +176,7 @@ function ComponentsPage() {
         try { fn(); } catch {}
       });
     };
-  }, [items, modes]);
+  }, [items, modes, isCategoryRoute]);
 
   const handleCopy = async (code) => {
     await copyCodeSnippet(code);
@@ -204,6 +214,10 @@ function ComponentsPage() {
       </button>
     </div>
   );
+
+  if (!isCategoryRoute) {
+    return null;
+  }
 
   return (
     <div className="space-y-6 pb-4" ref={previewRootRef}>

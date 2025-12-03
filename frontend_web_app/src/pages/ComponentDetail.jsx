@@ -34,14 +34,11 @@ function ComponentDetail() {
   // Fetch the single component by id
   const component = getComponentById(id);
 
-  // Diagnostics: instrument to ensure correct matching
+  // Diagnostics: instrument to ensure correct matching (TEMP - remove after verification)
   if (typeof window !== 'undefined') {
-    // eslint-disable-next-line no-console
-    console.log('[ComponentDetail] route param id:', id);
-    // Determine matched length (0 or 1) - getComponentById returns single item
     const matchedLen = component ? 1 : 0;
     // eslint-disable-next-line no-console
-    console.log('[ComponentDetail] matched component length:', matchedLen);
+    console.log('[ComponentDetail] detail check => id:', id, 'matchedLen:', matchedLen);
   }
 
   // Local preview overrides (basic control demo)
