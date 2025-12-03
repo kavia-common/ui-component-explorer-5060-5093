@@ -5,16 +5,13 @@
     "icon": "grid",
     "blurb": "Layout primitives and content presentation building blocks.",
     "items": [
-      { "label": "Container", "slug": "layout", "icon": "container", "to": "/category/layout", "blurb": "Responsive container widths for wrapping content." },
-      { "label": "Columns", "slug": "layout", "icon": "columns", "to": "/category/layout", "blurb": "Simple column layouts and utilities." },
-      { "label": "Grid", "slug": "layout", "icon": "grid", "to": "/category/layout", "blurb": "CSS grid presets for common layouts." },
-      { "label": "Layout Splitter", "slug": "layout", "icon": "layout-splitter", "to": "/category/layout", "blurb": "Resizable split layout patterns." },
-      { "label": "Typography", "slug": "typography", "icon": "typography", "to": "/category/typography", "blurb": "Headings, paragraphs, and text utilities." },
-      { "label": "Images", "slug": "images", "icon": "images", "to": "/category/images", "blurb": "Image styles and responsive behavior." },
-      { "label": "Links", "slug": "links", "icon": "links", "to": "/category/links", "blurb": "Anchor styles and link patterns." },
-      { "label": "Dividers", "slug": "dividers", "icon": "dividers-and-hr", "to": "/category/dividers", "blurb": "Horizontal rules and section separators." },
-      { "label": "KBD", "slug": "kbd", "icon": "kbd", "to": "/category/kbd", "blurb": "Keyboard hint badges for shortcuts." },
-      { "label": "Scrollbar", "slug": "scrollbar", "icon": "custom-scrollbar", "to": "/category/scrollbar", "blurb": "Scrollbar theming examples." }
+      { "label": "Splitters", "slug": "layout-splitters", "icon": "layout-splitter", "to": "/category/layout-splitters", "blurb": "Resizable split layout patterns (horizontal, vertical, nested)." },
+      { "label": "Typography", "slug": "layout-typography", "icon": "typography", "to": "/category/layout-typography", "blurb": "Headings, inline text, and typography utilities." },
+      { "label": "Images", "slug": "layout-images", "icon": "images", "to": "/category/layout-images", "blurb": "Image styles, covers, overlays, and thumbnails." },
+      { "label": "Links", "slug": "layout-links", "icon": "links", "to": "/category/layout-links", "blurb": "Anchor styles, underline utilities, and hover variants." },
+      { "label": "Dividers", "slug": "layout-dividers", "icon": "dividers-and-hr", "to": "/category/layout-dividers", "blurb": "Horizontal rules, labeled dividers, and separators." },
+      { "label": "KBD", "slug": "layout-kbd", "icon": "kbd", "to": "/category/layout-kbd", "blurb": "Keyboard key badges and shortcut combos." },
+      { "label": "Custom Scrollbar", "slug": "layout-scrollbar", "icon": "custom-scrollbar", "to": "/category/layout-scrollbar", "blurb": "Scrollbar theming examples and variants." }
     ]
   },
   {

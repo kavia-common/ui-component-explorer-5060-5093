@@ -30,9 +30,8 @@ function ComponentsPage() {
     const byLeafCategory = all.filter((c) => c.category === slug);
     if (byLeafCategory.length) return byLeafCategory;
 
-    // Fallback to any components whose slug equals the route slug (rare; typically detail pages)
-    const exactSlug = all.filter((c) => c.slug === slug);
-    if (exactSlug.length) return exactSlug;
+    // Do not aggregate by component slug; listing pages should be driven strictly by category (sidebar subgroup) slugs
+    // Keep listings empty if there is no exact category match.
 
     // No heuristic or home injection; keep surface strictly sidebar/category controlled
     return [];
