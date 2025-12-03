@@ -12,6 +12,18 @@ import { getPreviewProps } from '../utils/preview';
  * ComponentDetail shows a preview and code for a given component id using local data.
  * Allows the page-level main content wrapper to control vertical scrolling.
  */
+/**
+ * PUBLIC_INTERFACE
+ * ComponentDetail
+ * Renders a single component detail page for route /component/:id.
+ * - Fetches exactly one component by id (from components.json) using getComponentById.
+ * - Renders a single PreviewWithCode instance for that component only.
+ * - No related or multi-item rendering occurs here.
+ * Route params:
+ *   id: string - unique component id
+ * Returns:
+ *   React element for the detail page; shows a not-found message when id invalid.
+ */
 function ComponentDetail() {
   const { id } = useParams();
   const component = getComponentById(id);

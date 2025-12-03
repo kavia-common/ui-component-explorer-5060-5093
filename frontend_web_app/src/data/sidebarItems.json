@@ -20,7 +20,7 @@
     "icon": "badge",
     "blurb": "Fundamental UI elements reused across pages.",
     "items": [
-      { "type": "category", "label": "Accordion", "slug": "base", "icon": "accordion", "blurb": "Disclosure lists with expand/collapse." },
+      { "type": "component", "label": "Accordion", "id": "base-accordion", "slug": "base", "icon": "accordion", "blurb": "Disclosure lists with expand/collapse." },
       { "type": "category", "label": "Alerts", "slug": "cards", "icon": "alerts", "blurb": "Inline notices for statuses and messages." },
       { "type": "category", "label": "Avatar", "slug": "base", "icon": "avatar", "blurb": "User avatars and sizes." },
       { "type": "category", "label": "Avatar Group", "slug": "base", "icon": "avatar-group", "blurb": "Overlapping or stacked avatar sets." },

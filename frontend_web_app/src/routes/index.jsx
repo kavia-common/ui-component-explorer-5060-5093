@@ -10,8 +10,8 @@ import ComponentDetail from '../pages/ComponentDetail';
  * RoutesIndex is the central router configuration.
  * It maps application paths to pages wrapped by MainLayout.
  * Rules:
- * - Category listings route to /category/:slug and mount ComponentsPage only.
- * - Single component details route to /component/:id and mount ComponentDetail only.
+ * - Category listings route to /category/:slug and mount ComponentsPage only (no detail logic here).
+ * - Single component details route to /component/:id and mount ComponentDetail only (no list logic here).
  */
 function RoutesIndex() {
   return (

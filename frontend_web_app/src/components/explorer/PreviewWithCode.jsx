@@ -8,6 +8,7 @@ import { initPreline, usePreline } from '../../utils/preline';
 /**
  * PUBLIC_INTERFACE
  * PreviewWithCode - Combined live preview and code viewer for a single registry component id.
+ * It renders exactly one preview/snippet at a time and the Copy operation uses the same snippet shown.
  * Does not impose its own overflow on the top container; the page main content handles scrolling.
  * Props:
  * - componentId: string (required)
