@@ -112,16 +112,18 @@ function ComponentDetail() {
         </p>
       </div>
 
-      <PreviewWithCode
-        componentId={id}
-        overrideProps={previewOverrides}
-        code={snippet}
-        title="Live Preview"
-        height={component?.previewHeight || 140}
-        controls={controls}
-        onControlChange={handleControlChange}
-        detailsPanel={detailsPanel}
-      />
+      <div className="min-h-0">
+        <PreviewWithCode
+          componentId={id}
+          overrideProps={previewOverrides}
+          code={snippet}
+          title="Live Preview"
+          height={component?.previewHeight || 140}
+          controls={controls}
+          onControlChange={handleControlChange}
+          detailsPanel={detailsPanel}
+        />
+      </div>
     </div>
   );
 }

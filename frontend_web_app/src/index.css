@@ -55,17 +55,17 @@
 /* Bridge: ensure base font smoothing and body reset for CRA compatibility */
 html {
   -webkit-text-size-adjust: 100%;
-  height: auto;
+  height: 100%;
   min-height: 100%;
-  overflow-y: auto;
+  overflow: hidden; /* prevent global body scroll; inner regions manage scrolling */
 }
 
 body {
   @apply m-0 bg-background text-text antialiased;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  height: 100%;
   min-height: 100%;
-  height: auto;
-  overflow-y: auto;
+  overflow: hidden; /* prevent global scroll */
 }
 
 /* Root layout helpers to ensure full-height flex column shell */
@@ -73,27 +73,19 @@ body {
 .app-root,
 .root-layout {
   min-height: 100%;
-  height: auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-/* Remove inner scroll regions; allow document scroll */
+/* Restore inner scroll regions for main content area only */
 .main-content {
   flex: 1 1 auto;
-  min-height: auto;
-  overflow: visible;
+  min-height: 0;
+  overflow-y: auto;
 }
 
-/* Apply custom scrollbar globally to html/body */
-html,
-body {
-  scrollbar-width: thin;
-}
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  width: 8px;
-}
+/* Do NOT apply custom scrollbar globally; scope to .custom-scrollbar elements */
 
 /* Dark mode bridge for current data-theme approach; Tailwind dark mode will replace usage gradually */
 :root {

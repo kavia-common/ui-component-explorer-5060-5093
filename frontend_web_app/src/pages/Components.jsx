@@ -140,7 +140,7 @@ function ComponentsPage() {
           );
 
           return (
-            <section id={item.slug} key={item.id} className="scroll-mt-20 space-y-3">
+            <section id={item.slug} key={item.id} className="scroll-mt-20 space-y-3 min-h-0">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{item.name}</h2>
@@ -159,7 +159,7 @@ function ComponentsPage() {
                   title="Live Preview"
                   mode={mode}
                 >
-                  {previewNode}
+                  <div className="min-h-0">{previewNode}</div>
                 </PreviewCanvas>
               ) : (
                 <CodeBlock
