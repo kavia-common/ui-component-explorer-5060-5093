@@ -68,6 +68,20 @@ module.exports = {
           .filter(Boolean);
       }
 
+      // Add explicit ignore rules for Preline TS sources and declaration files
+      // Prevent webpack from attempting to parse Preline's TypeScript which includes `declare var` statements.
+      const prelineTsIgnoreRule = {
+        test: /node_modules\/preline\/.*\.(ts|tsx|d\.ts)$/,
+        type: 'javascript/auto',
+        use: [
+          {
+            loader: require.resolve('./loader/emptyLoader.cjs'),
+          },
+        ],
+      };
+
+      webpackConfig.module.rules.push(prelineTsIgnoreRule);
+
       // Silence source map parse warnings from third-party packages
       webpackConfig.ignoreWarnings = Array.from(
         new Set((webpackConfig.ignoreWarnings || []).concat([/Failed to parse source map/]))
