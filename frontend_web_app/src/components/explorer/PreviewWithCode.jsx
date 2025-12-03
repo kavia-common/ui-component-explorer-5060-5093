@@ -34,6 +34,9 @@ function PreviewWithCode({
 
   const PreviewComp = useMemo(() => getPreviewComponent(componentId), [componentId]);
 
+  // If a code snippet is provided, we can render it verbatim as HTML in preview when applicable.
+  const hasHtmlSnippet = typeof code === 'string' && code.trim().length > 0;
+
   usePreline([mode, componentId, code]);
 
   useEffect(() => {
@@ -57,6 +60,25 @@ function PreviewWithCode({
       : typeof height === 'string'
       ? { minHeight: height }
       : { minHeight: '200px' };
+
+  // Render raw HTML snippet exactly as provided inside a container, without additional wrappers
+  const HTMLPreview = useMemo(() => {
+    if (!hasHtmlSnippet) return null;
+    // Return a component that injects the snippet directly
+    // We keep a minimal wrapper to control minHeight and centering is left to the snippet itself
+    // so the code matches what is copied.
+    // We do not pretty-print or alter whitespace.
+    // For security, assume local snippets; the app is sandboxed for this explorer.
+    // eslint-disable-next-line react/display-name
+    return () => (
+      <div
+        // Apply minHeight so canvas has space but do not inject extra centering
+        style={minHeightStyle}
+        className="w-full"
+        dangerouslySetInnerHTML={{ __html: code }}
+      />
+    );
+  }, [hasHtmlSnippet, code, minHeightStyle]);
 
   if (!componentId) {
     return (
@@ -106,14 +128,17 @@ function PreviewWithCode({
         <div className="md:col-span-8">
           {mode === 'preview' ? (
             <PreviewCanvas className="bg-white dark:bg-gray-900" title={title} mode={mode}>
-              {/* Allow page main content to scroll; no extra overflow on container */}
-              <div style={minHeightStyle} className="flex items-center justify-center">
-                <PreviewComp {...overrideProps} />
-              </div>
+              {hasHtmlSnippet ? (
+                <HTMLPreview />
+              ) : (
+                // Component-driven preview
+                <div style={minHeightStyle} className="flex items-center justify-center">
+                  <PreviewComp {...overrideProps} />
+                </div>
+              )}
             </PreviewCanvas>
           ) : (
             <div className="rounded-lg border border-gray-200 bg-white p-0 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-              {/* Keep code block unconstrained unless very large; let page scroll. */}
               <CodeBlock code={code || ''} language="jsx" title="Code" />
             </div>
           )}

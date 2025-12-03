@@ -370,6 +370,7 @@ const registry = {
     },
     previewProps: undefined,
   },
+  // Back-compat: keep a functional React splitter example for interactive horizontal resize
   'layout-splitter': {
     component: LayoutSplitter,
     defaultProps: {
