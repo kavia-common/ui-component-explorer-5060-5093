@@ -121,8 +121,13 @@ function Sidebar({ onItemClick }) {
   const buildNav = (_groupSlug, item) => {
     // Distinguish between single component items and category listings.
     // Leaf single components: type === 'component' MUST navigate to /component/:id
-    if (item?.type === 'component' && item?.id) {
-      return { pathname: `/component/${encodeURIComponent(String(item.id))}`, hash: '' };
+    if (item?.type === 'component') {
+      const id = typeof item.id === 'string' ? item.id.trim() : '';
+      if (id.length > 0) {
+        return { pathname: `/component/${encodeURIComponent(id)}`, hash: '' };
+      }
+      // Invalid component id: return a disabled target (no navigation)
+      return { pathname: '', hash: '' };
     }
     // Fallback: strict category listing page route /category/:slug
     const slug = typeof item?.slug === 'string' ? item.slug : '';
@@ -286,12 +291,13 @@ function Sidebar({ onItemClick }) {
                       {group.items?.map((it) => {
                         const nav = buildNav(group.slug, it);
                         const key = `${nav.pathname}${nav.hash || ''}`;
-                        const active = key === activeKey;
-                        const isDisabled = it.disabled === true;
+                        const active = key === activeKey && key !== '';
+                        // Disable when author explicitly disabled OR when nav target is invalid (e.g., bad component id)
+                        const isDisabled = it.disabled === true || !nav.pathname;
                         return (
                           <li key={`${group.slug}-${it.label}`}>
                             <Link
-                              to={{ pathname: nav.pathname, search: preservedQS, hash: nav.hash }}
+                              to={nav.pathname ? { pathname: nav.pathname, search: preservedQS, hash: nav.hash } : '#'}
                               onClick={(e) => {
                                 if (isDisabled) {
                                   e.preventDefault();
