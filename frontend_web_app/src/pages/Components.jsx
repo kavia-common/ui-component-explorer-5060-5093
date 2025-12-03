@@ -19,10 +19,10 @@ function ComponentsPage() {
   const { slug } = useParams();
 
   const items = useMemo(() => {
-    // Strict: show only components whose category exactly matches the active slug.
+    // Strict filter: only components whose category EXACTLY equals the active slug.
     if (!slug) return [];
     const all = getAllComponents();
-    return all.filter((c) => c.category === slug);
+    return all.filter((c) => typeof c.category === 'string' && c.category === slug);
   }, [slug]);
 
   const pageTitle = useMemo(() => {

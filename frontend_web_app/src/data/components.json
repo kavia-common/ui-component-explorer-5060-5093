@@ -1518,7 +1518,7 @@
     "code": "<ul role=\"tree\" className=\"space-y-1 text-sm\"><li role=\"treeitem\" aria-expanded=\"true\"><span className=\"font-medium\">src</span><ul role=\"group\" className=\"ml-4 mt-1 space-y-1\"><li role=\"treeitem\">components</li><li role=\"treeitem\">pages</li></ul></li><li role=\"treeitem\" aria-expanded=\"true\"><span className=\"font-medium\">public</span><ul role=\"group\" className=\"ml-4 mt-1 space-y-1\"><li role=\"treeitem\">assets</li></ul></li></ul>"
   },
   {
-    "id": "navbar",
+    "id": "navigation-navbar",
     "name": "Navbar",
     "slug": "navbar",
     "category": "navigation",

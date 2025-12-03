@@ -54,8 +54,8 @@
     "icon": "navbar",
     "blurb": "Menus, headers, sidebars, and navigation controls.",
     "items": [
-      { "type": "category", "label": "Navbar", "slug": "navigation", "icon": "navbar", "blurb": "Top navigation bars with brand and links." },
-      { "type": "category", "label": "Mega Menu", "slug": "navigation", "icon": "mega-menu", "blurb": "Large menu panels with sections." },
+      { "type": "component", "label": "Navbar", "id": "navigation-navbar", "slug": "navigation", "icon": "navbar", "blurb": "Top navigation bars with brand and links." },
+      { "type": "component", "label": "Mega Menu", "id": "mega-menu", "slug": "navigation", "icon": "mega-menu", "blurb": "Large menu panels with sections." },
       { "type": "category", "label": "Navs", "slug": "navigation", "icon": "navs", "blurb": "Simple nav lists and pills." },
       { "type": "category", "label": "Tabs", "slug": "navigation", "icon": "tabs", "blurb": "Tabbed navigation sections." },
       { "type": "category", "label": "Sidebar", "slug": "navigation", "icon": "sidebar-new", "blurb": "Sidebar variants and states." },

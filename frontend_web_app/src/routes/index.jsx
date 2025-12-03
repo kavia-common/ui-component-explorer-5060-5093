@@ -9,6 +9,9 @@ import ComponentDetail from '../pages/ComponentDetail';
  * PUBLIC_INTERFACE
  * RoutesIndex is the central router configuration.
  * It maps application paths to pages wrapped by MainLayout.
+ * Rules:
+ * - Category listings route to /category/:slug and mount ComponentsPage only.
+ * - Single component details route to /component/:id and mount ComponentDetail only.
  */
 function RoutesIndex() {
   return (
