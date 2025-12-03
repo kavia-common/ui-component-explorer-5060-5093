@@ -19,22 +19,10 @@ function ComponentsPage() {
   const { slug } = useParams();
 
   const items = useMemo(() => {
-    // Only surface items via the sidebar taxonomy:
-    // 1) If slug matches an item.slug (leaf), show components whose category equals that leaf slug
-    // 2) Else if slug matches a top-level category in components.json, show those category items
-    // 3) Otherwise, return empty (placeholder page can render)
-    const all = getAllComponents();
+    // Strict: show only components whose category exactly matches the active slug.
     if (!slug) return [];
-
-    // If a component's own slug matches the route slug, still list by its category slug (leaf taxonomy)
-    const byLeafCategory = all.filter((c) => c.category === slug);
-    if (byLeafCategory.length) return byLeafCategory;
-
-    // Do not aggregate by component slug; listing pages should be driven strictly by category (sidebar subgroup) slugs
-    // Keep listings empty if there is no exact category match.
-
-    // No heuristic or home injection; keep surface strictly sidebar/category controlled
-    return [];
+    const all = getAllComponents();
+    return all.filter((c) => c.category === slug);
   }, [slug]);
 
   const pageTitle = useMemo(() => {

@@ -5,13 +5,13 @@
     "icon": "grid",
     "blurb": "Layout primitives and content presentation building blocks.",
     "items": [
-      { "label": "Splitters", "slug": "layout-splitters", "icon": "layout-splitter", "to": "/category/layout-splitters", "blurb": "Resizable split layout patterns (horizontal, vertical, nested)." },
-      { "label": "Typography", "slug": "layout-typography", "icon": "typography", "to": "/category/layout-typography", "blurb": "Headings, inline text, and typography utilities." },
-      { "label": "Images", "slug": "layout-images", "icon": "images", "to": "/category/layout-images", "blurb": "Image styles, covers, overlays, and thumbnails." },
-      { "label": "Links", "slug": "layout-links", "icon": "links", "to": "/category/layout-links", "blurb": "Anchor styles, underline utilities, and hover variants." },
-      { "label": "Dividers", "slug": "layout-dividers", "icon": "dividers-and-hr", "to": "/category/layout-dividers", "blurb": "Horizontal rules, labeled dividers, and separators." },
-      { "label": "KBD", "slug": "layout-kbd", "icon": "kbd", "to": "/category/layout-kbd", "blurb": "Keyboard key badges and shortcut combos." },
-      { "label": "Custom Scrollbar", "slug": "layout-scrollbar", "icon": "custom-scrollbar", "to": "/category/layout-scrollbar", "blurb": "Scrollbar theming examples and variants." }
+      { "type": "category", "label": "Splitters", "slug": "layout-splitters", "icon": "layout-splitter", "blurb": "Resizable split layout patterns (horizontal, vertical, nested)." },
+      { "type": "category", "label": "Typography", "slug": "layout-typography", "icon": "typography", "blurb": "Headings, inline text, and typography utilities." },
+      { "type": "category", "label": "Images", "slug": "layout-images", "icon": "images", "blurb": "Image styles, covers, overlays, and thumbnails." },
+      { "type": "category", "label": "Links", "slug": "layout-links", "icon": "links", "blurb": "Anchor styles, underline utilities, and hover variants." },
+      { "type": "category", "label": "Dividers", "slug": "layout-dividers", "icon": "dividers-and-hr", "blurb": "Horizontal rules, labeled dividers, and separators." },
+      { "type": "category", "label": "KBD", "slug": "layout-kbd", "icon": "kbd", "blurb": "Keyboard key badges and shortcut combos." },
+      { "type": "category", "label": "Custom Scrollbar", "slug": "layout-scrollbar", "icon": "custom-scrollbar", "blurb": "Scrollbar theming examples and variants." }
     ]
   },
   {
@@ -20,32 +20,32 @@
     "icon": "badge",
     "blurb": "Fundamental UI elements reused across pages.",
     "items": [
-      { "label": "Accordion", "slug": "base", "icon": "accordion", "to": "/category/base", "blurb": "Disclosure lists with expand/collapse." },
-      { "label": "Alerts", "slug": "cards", "icon": "alerts", "to": "/category/cards", "blurb": "Inline notices for statuses and messages." },
-      { "label": "Avatar", "slug": "base", "icon": "avatar", "to": "/category/base", "blurb": "User avatars and sizes." },
-      { "label": "Avatar Group", "slug": "base", "icon": "avatar-group", "to": "/category/base", "blurb": "Overlapping or stacked avatar sets." },
-      { "label": "Badge", "slug": "base", "icon": "badge", "to": "/category/base", "blurb": "Tiny labels for statuses and tags." },
-      { "label": "Blockquote", "slug": "base", "icon": "typography", "to": "/category/base", "blurb": "Quoted content styles." },
-      { "label": "Buttons", "slug": "buttons", "icon": "buttons", "to": "/category/buttons", "blurb": "Primary, secondary, and more button variants." },
-      { "label": "Button Group", "slug": "base", "icon": "buttons", "to": "/category/base", "blurb": "Grouped buttons with spacing." },
-      { "label": "Card", "slug": "cards", "icon": "card", "to": "/category/cards", "blurb": "Content containers with header and body." },
-      { "label": "Chat Bubbles", "slug": "base", "icon": "chat-bubbles", "to": "/category/base", "blurb": "Message bubbles for chat UIs." },
-      { "label": "Carousel", "slug": "base", "icon": "carousel", "to": "/category/base", "blurb": "Sliding content areas." },
-      { "label": "Collapse", "slug": "base", "icon": "collapse", "to": "/category/base", "blurb": "Hide/show content areas." },
-      { "label": "Datepicker", "slug": "forms", "icon": "datepicker", "to": "/category/forms", "blurb": "Pick dates with a calendar UI." },
-      { "label": "Devices", "slug": "base", "icon": "devices", "to": "/category/base", "blurb": "Device frames for screenshots." },
-      { "label": "Lists", "slug": "base", "icon": "lists", "to": "/category/base", "blurb": "Styled list patterns." },
-      { "label": "List Group", "slug": "base", "icon": "list-group", "to": "/category/base", "blurb": "Grouped list items with borders." },
-      { "label": "Legend Indicator", "slug": "base", "icon": "legend-indicator", "to": "/category/base", "blurb": "Small color indicators for legends." },
-      { "label": "Progress", "slug": "base", "icon": "progress", "to": "/category/base", "blurb": "Progress bars and loaders." },
-      { "label": "File Uploading Progress", "slug": "base", "icon": "progress", "to": "/category/base", "blurb": "File upload progress patterns." },
-      { "label": "Ratings", "slug": "base", "icon": "ratings", "to": "/category/base", "blurb": "Star and score rating components." },
-      { "label": "Skeleton", "slug": "base", "icon": "grid", "to": "/category/base", "blurb": "Loading placeholder elements." },
-      { "label": "Spinners", "slug": "base", "icon": "spinners", "to": "/category/base", "blurb": "Activity indicators and spinners." },
-      { "label": "Styled Icons", "slug": "base", "icon": "styled-icons", "to": "/category/base", "blurb": "Iconography with consistent styles." },
-      { "label": "Toasts", "slug": "base", "icon": "toasts", "to": "/category/base", "blurb": "Transient notifications." },
-      { "label": "Timeline", "slug": "base", "icon": "timeline", "to": "/category/base", "blurb": "Sequential timeline views." },
-      { "label": "Tree View", "slug": "base", "icon": "tree-view", "to": "/category/base", "blurb": "Hierarchical expandable lists." }
+      { "type": "category", "label": "Accordion", "slug": "base", "icon": "accordion", "blurb": "Disclosure lists with expand/collapse." },
+      { "type": "category", "label": "Alerts", "slug": "cards", "icon": "alerts", "blurb": "Inline notices for statuses and messages." },
+      { "type": "category", "label": "Avatar", "slug": "base", "icon": "avatar", "blurb": "User avatars and sizes." },
+      { "type": "category", "label": "Avatar Group", "slug": "base", "icon": "avatar-group", "blurb": "Overlapping or stacked avatar sets." },
+      { "type": "category", "label": "Badge", "slug": "base", "icon": "badge", "blurb": "Tiny labels for statuses and tags." },
+      { "type": "category", "label": "Blockquote", "slug": "base", "icon": "typography", "blurb": "Quoted content styles." },
+      { "type": "category", "label": "Buttons", "slug": "buttons", "icon": "buttons", "blurb": "Primary, secondary, and more button variants." },
+      { "type": "category", "label": "Button Group", "slug": "base", "icon": "buttons", "blurb": "Grouped buttons with spacing." },
+      { "type": "category", "label": "Card", "slug": "cards", "icon": "card", "blurb": "Content containers with header and body." },
+      { "type": "category", "label": "Chat Bubbles", "slug": "base", "icon": "chat-bubbles", "blurb": "Message bubbles for chat UIs." },
+      { "type": "category", "label": "Carousel", "slug": "base", "icon": "carousel", "blurb": "Sliding content areas." },
+      { "type": "category", "label": "Collapse", "slug": "base", "icon": "collapse", "blurb": "Hide/show content areas." },
+      { "type": "category", "label": "Datepicker", "slug": "forms", "icon": "datepicker", "blurb": "Pick dates with a calendar UI." },
+      { "type": "category", "label": "Devices", "slug": "base", "icon": "devices", "blurb": "Device frames for screenshots." },
+      { "type": "category", "label": "Lists", "slug": "base", "icon": "lists", "blurb": "Styled list patterns." },
+      { "type": "category", "label": "List Group", "slug": "base", "icon": "list-group", "blurb": "Grouped list items with borders." },
+      { "type": "category", "label": "Legend Indicator", "slug": "base", "icon": "legend-indicator", "blurb": "Small color indicators for legends." },
+      { "type": "category", "label": "Progress", "slug": "base", "icon": "progress", "blurb": "Progress bars and loaders." },
+      { "type": "category", "label": "File Uploading Progress", "slug": "base", "icon": "progress", "blurb": "File upload progress patterns." },
+      { "type": "category", "label": "Ratings", "slug": "base", "icon": "ratings", "blurb": "Star and score rating components." },
+      { "type": "category", "label": "Skeleton", "slug": "base", "icon": "grid", "blurb": "Loading placeholder elements." },
+      { "type": "category", "label": "Spinners", "slug": "base", "icon": "spinners", "blurb": "Activity indicators and spinners." },
+      { "type": "category", "label": "Styled Icons", "slug": "base", "icon": "styled-icons", "blurb": "Iconography with consistent styles." },
+      { "type": "category", "label": "Toasts", "slug": "base", "icon": "toasts", "blurb": "Transient notifications." },
+      { "type": "category", "label": "Timeline", "slug": "base", "icon": "timeline", "blurb": "Sequential timeline views." },
+      { "type": "category", "label": "Tree View", "slug": "base", "icon": "tree-view", "blurb": "Hierarchical expandable lists." }
     ]
   },
   {
@@ -54,15 +54,15 @@
     "icon": "navbar",
     "blurb": "Menus, headers, sidebars, and navigation controls.",
     "items": [
-      { "label": "Navbar", "slug": "navigation", "icon": "navbar", "to": "/category/navigation", "blurb": "Top navigation bars with brand and links." },
-      { "label": "Mega Menu", "slug": "navigation", "icon": "mega-menu", "to": "/category/navigation", "blurb": "Large menu panels with sections." },
-      { "label": "Navs", "slug": "navigation", "icon": "navs", "to": "/category/navigation", "blurb": "Simple nav lists and pills." },
-      { "label": "Tabs", "slug": "navigation", "icon": "tabs", "to": "/category/navigation", "blurb": "Tabbed navigation sections." },
-      { "label": "Sidebar", "slug": "navigation", "icon": "sidebar-new", "to": "/category/navigation", "blurb": "Sidebar variants and states." },
-      { "label": "Scrollspy", "slug": "navigation", "icon": "scrollspy", "to": "/category/navigation", "blurb": "Track active section while scrolling." },
-      { "label": "Breadcrumb", "slug": "navigation", "icon": "breadcrumb", "to": "/category/navigation", "blurb": "Breadcrumb trails for hierarchy." },
-      { "label": "Pagination", "slug": "navigation", "icon": "pagination", "to": "/category/navigation", "blurb": "Page navigation controls." },
-      { "label": "Stepper", "slug": "navigation", "icon": "stepper", "to": "/category/navigation", "blurb": "Multi-step progress navigation." }
+      { "type": "category", "label": "Navbar", "slug": "navigation", "icon": "navbar", "blurb": "Top navigation bars with brand and links." },
+      { "type": "category", "label": "Mega Menu", "slug": "navigation", "icon": "mega-menu", "blurb": "Large menu panels with sections." },
+      { "type": "category", "label": "Navs", "slug": "navigation", "icon": "navs", "blurb": "Simple nav lists and pills." },
+      { "type": "category", "label": "Tabs", "slug": "navigation", "icon": "tabs", "blurb": "Tabbed navigation sections." },
+      { "type": "category", "label": "Sidebar", "slug": "navigation", "icon": "sidebar-new", "blurb": "Sidebar variants and states." },
+      { "type": "category", "label": "Scrollspy", "slug": "navigation", "icon": "scrollspy", "blurb": "Track active section while scrolling." },
+      { "type": "category", "label": "Breadcrumb", "slug": "navigation", "icon": "breadcrumb", "blurb": "Breadcrumb trails for hierarchy." },
+      { "type": "category", "label": "Pagination", "slug": "navigation", "icon": "pagination", "blurb": "Page navigation controls." },
+      { "type": "category", "label": "Stepper", "slug": "navigation", "icon": "stepper", "blurb": "Multi-step progress navigation." }
     ]
   },
   {
@@ -71,17 +71,17 @@
     "icon": "input",
     "blurb": "Core form controls and basic inputs.",
     "items": [
-      { "label": "Input", "slug": "forms", "icon": "input", "to": "/category/forms", "blurb": "Text input fields." },
-      { "label": "Input Group", "slug": "forms", "icon": "input", "to": "/category/forms", "blurb": "Inputs with addons and icons." },
-      { "label": "Textarea", "slug": "forms", "icon": "input", "to": "/category/forms", "blurb": "Multi-line text fields." },
-      { "label": "File Input", "slug": "forms", "icon": "file-input", "to": "/category/forms", "blurb": "File chooser controls." },
-      { "label": "Checkbox", "slug": "forms", "icon": "checkbox", "to": "/category/forms", "blurb": "Checkbox selections." },
-      { "label": "Radio", "slug": "forms", "icon": "radio", "to": "/category/forms", "blurb": "Radio options." },
-      { "label": "Switch", "slug": "forms", "icon": "switch", "to": "/category/forms", "blurb": "Toggle switches." },
-      { "label": "Select", "slug": "forms", "icon": "select", "to": "/category/forms", "blurb": "Dropdown selections." },
-      { "label": "Range Slider", "slug": "forms", "icon": "range-slider", "to": "/category/forms", "blurb": "Range input sliders." },
-      { "label": "Color Picker", "slug": "forms", "icon": "color-picker", "to": "/category/forms", "blurb": "Color selection inputs." },
-      { "label": "TimePicker", "slug": "forms", "icon": "timepicker", "to": "/category/forms", "blurb": "Time selection controls." }
+      { "type": "category", "label": "Input", "slug": "forms", "icon": "input", "blurb": "Text input fields." },
+      { "type": "category", "label": "Input Group", "slug": "forms", "icon": "input", "blurb": "Inputs with addons and icons." },
+      { "type": "category", "label": "Textarea", "slug": "forms", "icon": "input", "blurb": "Multi-line text fields." },
+      { "type": "category", "label": "File Input", "slug": "forms", "icon": "file-input", "blurb": "File chooser controls." },
+      { "type": "category", "label": "Checkbox", "slug": "forms", "icon": "checkbox", "blurb": "Checkbox selections." },
+      { "type": "category", "label": "Radio", "slug": "forms", "icon": "radio", "blurb": "Radio options." },
+      { "type": "category", "label": "Switch", "slug": "forms", "icon": "switch", "blurb": "Toggle switches." },
+      { "type": "category", "label": "Select", "slug": "forms", "icon": "select", "blurb": "Dropdown selections." },
+      { "type": "category", "label": "Range Slider", "slug": "forms", "icon": "range-slider", "blurb": "Range input sliders." },
+      { "type": "category", "label": "Color Picker", "slug": "forms", "icon": "color-picker", "blurb": "Color selection inputs." },
+      { "type": "category", "label": "TimePicker", "slug": "forms", "icon": "timepicker", "blurb": "Time selection controls." }
     ]
   },
   {
@@ -90,22 +90,22 @@
     "icon": "select",
     "blurb": "Enhanced inputs, overlays, and interaction patterns.",
     "items": [
-      { "label": "Advanced Select", "slug": "forms", "icon": "advanced-select", "to": "/category/forms", "blurb": "Searchable, async, and multi selects." },
-      { "label": "ComboBox", "slug": "forms", "icon": "combobox", "to": "/category/forms", "blurb": "Typeahead combobox field." },
-      { "label": "SearchBox", "slug": "forms", "icon": "searchbox", "to": "/category/forms", "blurb": "Search input with suggestions." },
-      { "label": "Input Number", "slug": "forms", "icon": "input-number", "to": "/category/forms", "blurb": "Numeric input with steppers." },
-      { "label": "Strong Password", "slug": "forms", "icon": "strong-password", "to": "/category/forms", "blurb": "Password strength helpers." },
-      { "label": "Toggle Password", "slug": "forms", "icon": "toggle-password", "to": "/category/forms", "blurb": "Show/hide password input." },
-      { "label": "Toggle Count", "slug": "forms", "icon": "toggle-count", "to": "/category/forms", "blurb": "Counter toggles with limits." },
-      { "label": "Copy Markup", "slug": "forms", "icon": "copy-markup", "to": "/category/forms", "blurb": "Copy-to-clipboard helpers." },
-      { "label": "PIN Input", "slug": "forms", "icon": "pin-input", "to": "/category/forms", "blurb": "PIN entry fields." },
-      { "label": "Overlays", "slug": "overlays", "icon": "overlays", "to": "/category/overlays", "blurb": "Modal, popover, tooltip foundations." },
-      { "label": "Dropdown", "slug": "overlays", "icon": "dropdown", "to": "/category/overlays", "blurb": "Dropdown menus and triggers." },
-      { "label": "Context Menu", "slug": "overlays", "icon": "context-menu", "to": "/category/overlays", "blurb": "Right-click context menus." },
-      { "label": "Modal", "slug": "overlays", "icon": "modal", "to": "/category/overlays", "blurb": "Dialog windows with overlay." },
-      { "label": "Offcanvas (Drawer)", "slug": "overlays", "icon": "offcanvas-drawer", "to": "/category/overlays", "blurb": "Slide-in side panels." },
-      { "label": "Popover", "slug": "overlays", "icon": "popover", "to": "/category/overlays", "blurb": "Small overlay panels." },
-      { "label": "Tooltip", "slug": "overlays", "icon": "tooltip", "to": "/category/overlays", "blurb": "Text hints on hover/focus." }
+      { "type": "category", "label": "Advanced Select", "slug": "forms", "icon": "advanced-select", "blurb": "Searchable, async, and multi selects." },
+      { "type": "category", "label": "ComboBox", "slug": "forms", "icon": "combobox", "blurb": "Typeahead combobox field." },
+      { "type": "category", "label": "SearchBox", "slug": "forms", "icon": "searchbox", "blurb": "Search input with suggestions." },
+      { "type": "category", "label": "Input Number", "slug": "forms", "icon": "input-number", "blurb": "Numeric input with steppers." },
+      { "type": "category", "label": "Strong Password", "slug": "forms", "icon": "strong-password", "blurb": "Password strength helpers." },
+      { "type": "category", "label": "Toggle Password", "slug": "forms", "icon": "toggle-password", "blurb": "Show/hide password input." },
+      { "type": "category", "label": "Toggle Count", "slug": "forms", "icon": "toggle-count", "blurb": "Counter toggles with limits." },
+      { "type": "category", "label": "Copy Markup", "slug": "forms", "icon": "copy-markup", "blurb": "Copy-to-clipboard helpers." },
+      { "type": "category", "label": "PIN Input", "slug": "forms", "icon": "pin-input", "blurb": "PIN entry fields." },
+      { "type": "category", "label": "Overlays", "slug": "overlays", "icon": "overlays", "blurb": "Modal, popover, tooltip foundations." },
+      { "type": "category", "label": "Dropdown", "slug": "overlays", "icon": "dropdown", "blurb": "Dropdown menus and triggers." },
+      { "type": "category", "label": "Context Menu", "slug": "overlays", "icon": "context-menu", "blurb": "Right-click context menus." },
+      { "type": "category", "label": "Modal", "slug": "overlays", "icon": "modal", "blurb": "Dialog windows with overlay." },
+      { "type": "category", "label": "Offcanvas (Drawer)", "slug": "overlays", "icon": "offcanvas-drawer", "blurb": "Slide-in side panels." },
+      { "type": "category", "label": "Popover", "slug": "overlays", "icon": "popover", "blurb": "Small overlay panels." },
+      { "type": "category", "label": "Tooltip", "slug": "overlays", "icon": "tooltip", "blurb": "Text hints on hover/focus." }
     ]
   },
   {
@@ -114,7 +114,7 @@
     "icon": "data-tables",
     "blurb": "Tabular data display components.",
     "items": [
-      { "label": "Data Tables", "slug": "tables", "icon": "data-tables", "to": "/category/tables", "blurb": "Sortable and pageable data grids." }
+      { "type": "category", "label": "Data Tables", "slug": "tables", "icon": "data-tables", "blurb": "Sortable and pageable data grids." }
     ]
   }
 ]

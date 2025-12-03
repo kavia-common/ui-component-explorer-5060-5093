@@ -119,17 +119,14 @@ function Sidebar({ onItemClick }) {
   const preservedQS = useMemo(() => buildQueryString(currentQuery), [currentQuery]);
 
   const buildNav = (_groupSlug, item) => {
-    const base = `/category/${encodeURIComponent(item.slug)}`;
-    let itemHash = '';
-    if (item.to) {
-      try {
-        const url = new URL(item.to, window.location.origin);
-        itemHash = url.hash || '';
-      } catch {
-        // ignore bad url in data
-      }
+    // Distinguish between subgroup listings and single component items.
+    // Default behavior: treat as subgroup category listing.
+    const type = item?.type || 'category';
+    if (type === 'component' && item?.id) {
+      return { pathname: `/component/${encodeURIComponent(String(item.id))}`, hash: '' };
     }
-    return { pathname: base, hash: itemHash };
+    // Category listing page
+    return { pathname: `/category/${encodeURIComponent(String(item.slug || ''))}`, hash: '' };
   };
 
   const go = (groupSlug, item) => (e) => {
