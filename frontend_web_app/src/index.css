@@ -42,16 +42,57 @@
   .custom-scrollbar-rounded::-webkit-scrollbar-thumb {
     border-radius: 9999px;
   }
+
+  /* PUBLIC_INTERFACE
+     Scroll container utility to constrain and enable vertical scrolling with custom scrollbar.
+  */
+  .scrollable-y {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* Bridge: ensure base font smoothing and body reset for CRA compatibility */
 html {
   -webkit-text-size-adjust: 100%;
+  height: 100%;
 }
 
 body {
   @apply m-0 bg-background text-text antialiased;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  min-height: 100%;
+  height: 100%;
+  /* Force stable vertical scrollbar to prevent layout shift */
+  overflow-y: scroll;
+}
+
+/* Root layout helpers to ensure full-height flex column shell */
+#root,
+.app-root,
+.root-layout {
+  min-height: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content region should not extend beyond viewport; rely on internal scroll */
+.main-content {
+  /* header + footer heights vary; use flex to occupy remaining */
+  flex: 1 1 auto;
+  min-height: 0; /* allow children to define scrollable areas */
+  overflow-y: auto;
+}
+
+/* Apply custom scrollbar to body and main content for visibility */
+body,
+.main-content {
+  scrollbar-width: thin;
+}
+body.custom-scrollbar::-webkit-scrollbar,
+.main-content.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
 }
 
 /* Dark mode bridge for current data-theme approach; Tailwind dark mode will replace usage gradually */

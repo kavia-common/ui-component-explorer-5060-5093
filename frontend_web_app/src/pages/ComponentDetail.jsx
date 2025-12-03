@@ -112,16 +112,18 @@ function ComponentDetail() {
         </p>
       </div>
 
-      <PreviewWithCode
-        componentId={id}
-        overrideProps={previewOverrides}
-        code={snippet}
-        title="Live Preview"
-        height={component?.previewHeight || 140}
-        controls={controls}
-        onControlChange={handleControlChange}
-        detailsPanel={detailsPanel}
-      />
+      <div className="max-h-[75vh] overflow-y-auto custom-scrollbar custom-scrollbar-rounded">
+        <PreviewWithCode
+          componentId={id}
+          overrideProps={previewOverrides}
+          code={snippet}
+          title="Live Preview"
+          height={component?.previewHeight || 140}
+          controls={controls}
+          onControlChange={handleControlChange}
+          detailsPanel={detailsPanel}
+        />
+      </div>
     </div>
   );
 }

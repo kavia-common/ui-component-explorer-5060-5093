@@ -154,13 +154,15 @@ function ComponentsPage() {
               </div>
 
               {mode === 'preview' ? (
-                <PreviewCanvas
-                  className="bg-white dark:bg-gray-900"
-                  title="Live Preview"
-                  mode={mode}
-                >
-                  {previewNode}
-                </PreviewCanvas>
+                <div className="max-h-[70vh] overflow-y-auto custom-scrollbar custom-scrollbar-rounded">
+                  <PreviewCanvas
+                    className="bg-white dark:bg-gray-900"
+                    title="Live Preview"
+                    mode={mode}
+                  >
+                    {previewNode}
+                  </PreviewCanvas>
+                </div>
               ) : (
                 <CodeBlock
                   code={(code || jsxFromJson || '')}
