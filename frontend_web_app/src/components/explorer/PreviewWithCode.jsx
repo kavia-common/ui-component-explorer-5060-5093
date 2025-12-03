@@ -105,7 +105,7 @@ function PreviewWithCode({
       </div>
 
       <div className="grid gap-4 md:grid-cols-12">
-        <div className="md:col-span-8 min-h-0">
+        <div className="md:col-span-8">
           {mode === 'preview' ? (
             <PreviewCanvas className="bg-white dark:bg-gray-900" title={title} mode={mode}>
               <div style={minHeightStyle} className="flex items-center justify-center">
@@ -117,7 +117,7 @@ function PreviewWithCode({
           )}
         </div>
 
-        <div className="md:col-span-4 space-y-4 min-h-0">
+        <div className="md:col-span-4 space-y-4">
           {Array.isArray(controls) && controls.length > 0 ? (
             <div className="rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
               <div className="border-b border-gray-200 p-3 text-sm font-medium text-slate-800 dark:border-gray-800 dark:text-slate-100">

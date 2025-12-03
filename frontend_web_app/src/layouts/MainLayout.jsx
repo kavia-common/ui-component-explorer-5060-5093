@@ -85,7 +85,7 @@ function MainLayout() {
   const categories = getCategories();
 
   return (
-    <div className="root-layout min-h-screen text-text bg-app-gradient">
+    <div className="root-layout min-h-screen flex flex-col text-text bg-app-gradient">
       {/* Header */}
       <header className="sticky top-0 z-40 border-b border-transparent bg-main-gradient text-white" role="banner">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
@@ -165,36 +165,28 @@ function MainLayout() {
       </div>
 
       {/* Desktop Layout: Sidebar + Main */}
-      <div className="mx-auto hidden max-w-7xl grid-cols-[270px_minmax(0,1fr)] md:grid main-content custom-scrollbar custom-scrollbar-rounded">
-        {/* Sidebar: full-height column with sticky, slim search and scrollable list */}
+      <div className="mx-auto hidden max-w-7xl grid-cols-[270px_minmax(0,1fr)] md:grid">
+        {/* Sidebar: column */}
         <aside
-          className="bg-main-gradient text-white flex flex-col min-h-[calc(100vh-64px)]"
+          className="bg-main-gradient text-white"
           role="complementary"
           aria-label="Sidebar navigation"
         >
-          <div className="flex-1 min-h-0 overflow-hidden">
-            <div className="h-full flex flex-col min-h-0">
-              {/* Sidebar provides sticky header and internal scroll; outer containers ensure no dead space */}
-              <div className="flex-1 min-h-0">
-                <Sidebar onItemClick={() => setSidebarOpen(false)} />
-              </div>
-            </div>
-          </div>
+          <Sidebar onItemClick={() => setSidebarOpen(false)} />
         </aside>
 
         {/* Main content */}
-        <main className="min-h-0 p-4 md:p-6">
-          {/* make inner box scroll within main if content grows too tall without causing double scroll */}
-          <div className="rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900 min-h-0">
+        <main className="p-4 md:p-6">
+          <div className="rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <Outlet />
           </div>
         </main>
       </div>
 
       {/* Mobile Main content (full width) */}
-      <div className="mx-auto max-w-7xl md:hidden main-content custom-scrollbar custom-scrollbar-rounded">
-        <main className="min-h-0 p-4 md:p-6">
-          <div className="rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900 min-h-0">
+      <div className="mx-auto max-w-7xl md:hidden">
+        <main className="p-4 md:p-6">
+          <div className="rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <Outlet />
           </div>
         </main>

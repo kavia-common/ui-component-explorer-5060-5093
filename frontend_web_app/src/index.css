@@ -55,16 +55,17 @@
 /* Bridge: ensure base font smoothing and body reset for CRA compatibility */
 html {
   -webkit-text-size-adjust: 100%;
-  height: 100%;
+  height: auto;
+  min-height: 100%;
+  overflow-y: auto;
 }
 
 body {
   @apply m-0 bg-background text-text antialiased;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   min-height: 100%;
-  height: 100%;
-  /* Force stable vertical scrollbar to prevent layout shift */
-  overflow-y: scroll;
+  height: auto;
+  overflow-y: auto;
 }
 
 /* Root layout helpers to ensure full-height flex column shell */
@@ -72,26 +73,25 @@ body {
 .app-root,
 .root-layout {
   min-height: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
 }
 
-/* Main content region should not extend beyond viewport; rely on internal scroll */
+/* Remove inner scroll regions; allow document scroll */
 .main-content {
-  /* header + footer heights vary; use flex to occupy remaining */
   flex: 1 1 auto;
-  min-height: 0; /* allow children to define scrollable areas */
-  overflow-y: auto;
+  min-height: auto;
+  overflow: visible;
 }
 
-/* Apply custom scrollbar to body and main content for visibility */
-body,
-.main-content {
+/* Apply custom scrollbar globally to html/body */
+html,
+body {
   scrollbar-width: thin;
 }
-body.custom-scrollbar::-webkit-scrollbar,
-.main-content.custom-scrollbar::-webkit-scrollbar {
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
   width: 8px;
 }
 
