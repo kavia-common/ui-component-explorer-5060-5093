@@ -121,6 +121,7 @@ function Sidebar({ onItemClick }) {
   const buildNav = (_groupSlug, item) => {
     // Distinguish between single component items and category listings.
     // Leaf single components: type === 'component' MUST navigate to /component/:id
+    // Contract: item with type 'component' must include a unique 'id' that maps to components.json id.
     if (item?.type === 'component') {
       const id = typeof item.id === 'string' ? item.id.trim() : '';
       if (id.length > 0) {
@@ -129,7 +130,7 @@ function Sidebar({ onItemClick }) {
       // Invalid component id: return a disabled target (no navigation)
       return { pathname: '', hash: '' };
     }
-    // Fallback: strict category listing page route /category/:slug
+    // Strict category listing page route /category/:slug (NEVER detail here)
     const slug = typeof item?.slug === 'string' ? item.slug : '';
     return { pathname: `/category/${encodeURIComponent(slug)}`, hash: '' };
   };

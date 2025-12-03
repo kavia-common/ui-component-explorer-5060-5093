@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { getComponentById } from '../utils/data';
 import Breadcrumbs from '../components/common/Breadcrumbs';
 import Meta from '../components/common/Meta';
@@ -26,11 +26,21 @@ import { getPreviewProps } from '../utils/preview';
  */
 function ComponentDetail() {
   const { id } = useParams();
+  const { pathname } = useLocation();
+
+  // Compute guard first, but do not return before hooks are declared
+  const isDetailRoute = /^\/component\/[^/]+$/.test(pathname || '');
+
   const component = getComponentById(id);
 
   // Local preview overrides (basic control demo)
   const [previewOverrides, setPreviewOverrides] = useState(() => getPreviewProps(id));
   const snippet = useMemo(() => getComponentSnippet(component), [component]);
+
+  // If not on the exact detail route, render nothing (after hooks have been called)
+  if (!isDetailRoute) {
+    return null;
+  }
 
   // Friendly fallback if id is missing or component not found
   if (!id || !component) {
@@ -85,6 +95,7 @@ function ComponentDetail() {
     </div>
   );
 
+  // Render a single item preview exactly once
   return (
     <div className="space-y-6 pb-4">
       <Meta

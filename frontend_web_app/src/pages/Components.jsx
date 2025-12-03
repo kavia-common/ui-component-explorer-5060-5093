@@ -14,6 +14,7 @@ import { initPreline } from '../utils/preline';
  * PUBLIC_INTERFACE
  * ComponentsPage - Renders a page for a given category slug, listing relevant component examples.
  * IMPORTANT: This page is only used for /category/:slug. It must not mount on /component/:id.
+ * IMPORTANT: Do NOT attempt to render any single item detail here. No fallback to detail by id/slug.
  * Lets the layout's main content area handle scrolling. No extra overflow wrappers here.
  */
 function ComponentsPage() {
