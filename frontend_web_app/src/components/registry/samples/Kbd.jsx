@@ -45,9 +45,12 @@ export default function KbdSample() {
  * KBD
  * Keyboard key UI element used in KbdSample.
  */
-export function KBD({ children }) {
+export function KBD({ children, ariaLabel }) {
   return (
-    <kbd className="rounded border border-gray-200 bg-white px-1.5 py-0.5 text-xs font-medium text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200">
+    <kbd
+      aria-label={ariaLabel}
+      className="inline-flex items-center rounded-md border border-gray-300 bg-gray-50 px-2 py-0.5 text-xs font-medium text-slate-700 shadow-[inset_0_-1px_0_rgba(0,0,0,0.05)] dark:border-gray-700 dark:bg-gray-800 dark:text-slate-200"
+    >
       {children}
     </kbd>
   );

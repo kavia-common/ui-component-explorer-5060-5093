@@ -3,7 +3,7 @@ import PreviewCanvas from './PreviewCanvas';
 import CodeBlock from './CodeBlock';
 import PropControls from './PropControls';
 import { getPreviewComponent } from '../../utils/preview';
-import { usePreline } from '../../utils/preline';
+import { initPreline, usePreline } from '../../utils/preline';
 
 /**
  * PUBLIC_INTERFACE
@@ -37,6 +37,25 @@ function PreviewWithCode({
   // Ensure Preline init runs after the DOM updates with potentially data-hs-* markup
   // This also guards for SSR/non-browser environments.
   usePreline([mode, componentId, code]);
+
+  // Execute inline scripts that are part of the rendered snippet (scoped to this preview)
+  useEffect(() => {
+    if (!containerRef.current) return;
+    // Re-init Preline first to wire data-hs-* attributes
+    initPreline();
+    // Find and run inline scripts within the preview only
+    const scripts = containerRef.current.querySelectorAll('script[data-inline-execute="true"]');
+    scripts.forEach((scriptEl) => {
+      try {
+        // Create a new Function with limited local scope, passing the preview root for scoping queries
+        const fn = new Function('root', scriptEl.textContent || '');
+        fn(containerRef.current);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.warn('Inline script error in preview:', e);
+      }
+    });
+  }, [mode, componentId, code]);
 
   // Guard numeric/string height
   const minHeightStyle =
