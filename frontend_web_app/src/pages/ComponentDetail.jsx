@@ -74,7 +74,7 @@ function ComponentDetail() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-4">
       <Meta
         title={component?.name || id}
         description={component?.description || 'Preview and copy code for this component.'}

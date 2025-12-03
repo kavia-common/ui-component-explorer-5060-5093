@@ -88,7 +88,7 @@ function ComponentsPage() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-4">
       <Meta
         title={`${pageTitle} Components`}
         description={`Browse ready-to-use ${pageTitle} components. Live preview and code snippets.`}
@@ -138,7 +138,7 @@ function ComponentsPage() {
               </div>
 
               {mode === 'preview' ? (
-                <PreviewCanvas className="bg-white dark:bg-gray-900" title="Live Preview" mode={mode}>
+                <PreviewCanvas className="bg-background dark:bg-gray-900" title="Live Preview" mode={mode}>
                   {/* Rely on main content scroll; no extra overflow wrapper */}
                   <div>{previewNode}</div>
                 </PreviewCanvas>

@@ -25,7 +25,7 @@
   text-align: center;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  min-height: 100vh;
+  /* Do not force 100vh here to avoid conflicts with layout height calculations */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 

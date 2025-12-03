@@ -75,7 +75,7 @@ function MainLayout() {
   const HEADER_PX = 64;
 
   return (
-    <div className="root-layout min-h-screen flex flex-col text-text bg-app-gradient">
+    <div className="root-layout min-h-screen flex flex-col text-text bg-background dark:bg-gray-900">
       {/* Header - fixed/sticky at top */}
       <header className="sticky top-0 z-50 border-b border-transparent bg-main-gradient text-white" role="banner">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
@@ -108,7 +108,7 @@ function MainLayout() {
       </header>
 
       {/* Content Row: sidebar + main. Ensure min-h-0 so child can scroll */}
-      <div className="mx-auto grid max-w-7xl flex-1 grid-cols-1 md:grid-cols-[270px_minmax(0,1fr)] min-h-0 w-full">
+      <div className="mx-auto grid max-w-7xl flex-1 grid-cols-1 md:grid-cols-[270px_minmax(0,1fr)] min-h-0 w-full gap-0">
         {/* Sidebar (desktop): sticky below header */}
         <aside
           className="hidden md:block bg-main-gradient text-white sticky self-start overflow-hidden"
@@ -122,10 +122,10 @@ function MainLayout() {
         </aside>
 
         {/* Main content column - must be min-h-0 so its child can scroll */}
-        <main className="min-h-0 flex flex-col">
-          <div className="p-4 md:p-6 min-h-0 flex flex-col">
+        <main className="min-h-0 flex flex-col bg-background dark:bg-gray-900">
+          <div className="min-h-0 flex flex-col p-4 md:p-6">
             {/* Scrollable pane with custom scrollbar; avoid body scroll */}
-            <div className="main-content flex-1 min-h-0 overflow-y-auto custom-scrollbar rounded-xl border border-gray-200 bg-surface p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="main-content flex-1 min-h-0 overflow-y-auto custom-scrollbar rounded-xl border border-gray-200 bg-background p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <Outlet />
             </div>
           </div>
@@ -176,7 +176,7 @@ function MainLayout() {
       </div>
 
       {/* Footer remains outside scroll area; page height stays within viewport */}
-      <footer className="border-t border-gray-200 bg-surface py-6 dark:border-gray-800 dark:bg-gray-900" role="contentinfo">
+      <footer className="border-t border-gray-200 bg-background py-6 dark:border-gray-800 dark:bg-gray-900" role="contentinfo">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 text-sm text-slate-700 dark:text-slate-200">
           <span>© {new Date().getFullYear()} UI Component Explorer</span>
           <a
