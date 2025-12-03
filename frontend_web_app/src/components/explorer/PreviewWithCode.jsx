@@ -42,6 +42,8 @@ function PreviewWithCode({
   useEffect(() => {
     if (!containerRef.current) return;
     initPreline();
+
+    // Execute inline scripts marked for execution
     const scripts = containerRef.current.querySelectorAll('script[data-inline-execute="true"]');
     scripts.forEach((scriptEl) => {
       try {
@@ -52,6 +54,139 @@ function PreviewWithCode({
         console.warn('Inline script error in preview:', e);
       }
     });
+
+    // Splitter wiring (independent of Preline). Scope to this preview root.
+    // Supports containers with data-splitter="horizontal|vertical" and handles with data-splitter-handle.
+    // No nested scrollbars introduced; panes can overflow as needed and page-level scroll handles overflow.
+    const root = containerRef.current;
+    const containers = Array.from(
+      root.querySelectorAll('[data-splitter="horizontal"],[data-splitter="vertical"]')
+    );
+
+    const cleanups = [];
+
+    containers.forEach((splitterEl) => {
+      const orientation = splitterEl.getAttribute('data-splitter');
+      const isHorizontal = orientation === 'horizontal';
+
+      // For horizontal: expect structure [paneA][handle][paneB]
+      // For vertical: expect structure [paneA][handle][paneB] using grid rows
+      const handles = Array.from(
+        splitterEl.querySelectorAll('[data-splitter-handle]')
+      );
+
+      handles.forEach((handle) => {
+        let dragging = false;
+        let startPos = 0;
+        let paneA, paneB;
+        // Identify adjacent panes relative to handle within the same splitter container
+        if (isHorizontal) {
+          paneA = handle.previousElementSibling;
+          paneB = handle.nextElementSibling;
+        } else {
+          // vertical grid rows: previous and next siblings are rows
+          paneA = handle.previousElementSibling;
+          paneB = handle.nextElementSibling;
+        }
+        if (!paneA || !paneB) return;
+
+        // Helper to set width/height based on cursor position
+        const onMouseMove = (e) => {
+          if (!dragging) return;
+          const rect = splitterEl.getBoundingClientRect();
+          if (isHorizontal) {
+            const x = e.clientX - rect.left;
+            const pct = (x / rect.width) * 100;
+            const clamped = Math.min(90, Math.max(10, pct)); // simple bounds to avoid collapse
+            paneA.style.width = `${clamped}%`;
+            paneA.style.flexBasis = `${clamped}%`;
+            paneB.style.width = `${100 - clamped}%`;
+            paneB.style.flexBasis = `${100 - clamped}%`;
+          } else {
+            const y = e.clientY - rect.top;
+            const pct = (y / rect.height) * 100;
+            const clamped = Math.min(90, Math.max(10, pct));
+            // Use CSS grid row sizes for vertical split
+            // If the parent uses grid-rows [1fr auto 1fr], we can override by inline gridTemplateRows
+            splitterEl.style.gridTemplateRows = `${clamped}% auto ${100 - clamped}%`;
+          }
+        };
+
+        const onMouseUp = () => {
+          if (!dragging) return;
+          dragging = false;
+          document.body.style.userSelect = '';
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('mouseup', onMouseUp);
+        };
+
+        const onMouseDown = (e) => {
+          // Only left click
+          if (e.button !== 0) return;
+          dragging = true;
+          startPos = isHorizontal ? e.clientX : e.clientY;
+          document.body.style.userSelect = 'none';
+          window.addEventListener('mousemove', onMouseMove);
+          window.addEventListener('mouseup', onMouseUp);
+        };
+
+        handle.addEventListener('mousedown', onMouseDown);
+
+        // Accessibility: basic keyboard support: arrow keys nudge by 2%
+        const onKeyDown = (e) => {
+          if (e.key === 'ArrowLeft' && isHorizontal) {
+            e.preventDefault();
+            const rect = splitterEl.getBoundingClientRect();
+            const currentWidth = paneA.getBoundingClientRect().width;
+            const pct = (currentWidth / rect.width) * 100;
+            const clamped = Math.min(90, Math.max(10, pct - 2));
+            paneA.style.width = `${clamped}%`;
+            paneA.style.flexBasis = `${clamped}%`;
+            paneB.style.width = `${100 - clamped}%`;
+            paneB.style.flexBasis = `${100 - clamped}%`;
+          } else if (e.key === 'ArrowRight' && isHorizontal) {
+            e.preventDefault();
+            const rect = splitterEl.getBoundingClientRect();
+            const currentWidth = paneA.getBoundingClientRect().width;
+            const pct = (currentWidth / rect.width) * 100;
+            const clamped = Math.min(90, Math.max(10, pct + 2));
+            paneA.style.width = `${clamped}%`;
+            paneA.style.flexBasis = `${clamped}%`;
+            paneB.style.width = `${100 - clamped}%`;
+            paneB.style.flexBasis = `${100 - clamped}%`;
+          } else if (e.key === 'ArrowUp' && !isHorizontal) {
+            e.preventDefault();
+            const rect = splitterEl.getBoundingClientRect();
+            const rows = window.getComputedStyle(splitterEl).gridTemplateRows.split(' ');
+            // Approximate current pct from top pane height
+            const topH = paneA.getBoundingClientRect().height;
+            const pct = (topH / rect.height) * 100;
+            const clamped = Math.min(90, Math.max(10, pct + 2));
+            splitterEl.style.gridTemplateRows = `${clamped}% auto ${100 - clamped}%`;
+          } else if (e.key === 'ArrowDown' && !isHorizontal) {
+            e.preventDefault();
+            const rect = splitterEl.getBoundingClientRect();
+            const topH = paneA.getBoundingClientRect().height;
+            const pct = (topH / rect.height) * 100;
+            const clamped = Math.min(90, Math.max(10, pct - 2));
+            splitterEl.style.gridTemplateRows = `${clamped}% auto ${100 - clamped}%`;
+          }
+        };
+
+        handle.addEventListener('keydown', onKeyDown);
+
+        cleanups.push(() => {
+          handle.removeEventListener('mousedown', onMouseDown);
+          handle.removeEventListener('keydown', onKeyDown);
+        });
+      });
+    });
+
+    return () => {
+      cleanups.forEach((fn) => {
+        try { fn(); } catch {}
+      });
+    };
   }, [mode, componentId, code]);
 
   const minHeightStyle =

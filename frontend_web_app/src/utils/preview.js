@@ -1,5 +1,7 @@
 import React from 'react';
 import registry from '../components/registry';
+// Note: Preview rendering is driven by the exact snippet string provided by data consumers.
+// This module intentionally does not attempt to generate or merge fallback snippets to avoid duplication.
 
 /**
  * PUBLIC_INTERFACE

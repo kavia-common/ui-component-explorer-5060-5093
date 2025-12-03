@@ -670,7 +670,7 @@
     "description": "Resizable two-column layout with an accessible separator handle.",
     "notes": "role=separator and aria-orientation='vertical' on the handle; keyboard support can be added for production.",
     "libraries": [],
-    "code": "<div class=\"flex w-full rounded-lg border bg-white dark:border-gray-800 dark:bg-gray-900\" style=\"min-height:320px\"><div class=\"w-[40%] min-w-[20%] p-3\"><div class=\"space-y-2\"><div class=\"h-16 rounded bg-gray-100 dark:bg-gray-800\"></div><div class=\"h-16 rounded bg-gray-100 dark:bg-gray-800\"></div></div></div><div role=\"separator\" aria-orientation=\"vertical\" aria-label=\"Resize\" class=\"w-1 cursor-col-resize bg-gray-200 dark:bg-gray-700\" tabindex=\"0\"></div><div class=\"flex-1 p-3\"><div class=\"h-32 rounded bg-gray-100 dark:bg-gray-800\"></div></div></div>"
+    "code": "<div data-splitter=\"horizontal\" class=\"flex w-full rounded-lg border bg-white dark:border-gray-800 dark:bg-gray-900\" style=\"min-height:320px\"><div class=\"splitter-pane-left w-[40%] min-w-[20%] p-3\"><div class=\"space-y-2\"><div class=\"h-16 rounded bg-gray-100 dark:bg-gray-800\"></div><div class=\"h-16 rounded bg-gray-100 dark:bg-gray-800\"></div></div></div><div role=\"separator\" aria-orientation=\"vertical\" aria-label=\"Resize horizontally\" class=\"splitter-handle w-1 cursor-col-resize bg-gray-200 dark:bg-gray-700\" data-splitter-handle tabindex=\"0\"></div><div class=\"splitter-pane-right flex-1 p-3\"><div class=\"h-32 rounded bg-gray-100 dark:bg-gray-800\"></div></div></div>"
   },
   {
     "id": "layout-splitter-vertical",
@@ -679,14 +679,14 @@
     "category": "layout",
     "tags": ["layout", "split", "resizable", "vertical"],
     "difficulty": "intermediate",
-    "jsxCode": "<div className='h-[360px]'><div className='grid h-full grid-rows-[1fr_auto_1fr] rounded-lg border bg-white dark:border-gray-800 dark:bg-gray-900'><div className='p-3'><div className='h-24 rounded bg-gray-100 dark:bg-gray-800'/></div><div role='separator' aria-orientation='horizontal' aria-label='Resize' tabIndex={0} className='h-1 cursor-row-resize bg-gray-200 dark:bg-gray-700'/><div className='p-3'><div className='h-24 rounded bg-gray-100 dark:bg-gray-800'/></div></div></div>",
+    "jsxCode": "<div className='h-[360px]'><div className='grid h-full grid-rows-[1fr_auto_1fr] rounded-lg border bg-white dark:border-gray-800 dark:bg-gray-900'><div className='p-3'><div className='h-24 rounded bg-gray-100 dark:bg-gray-800'/></div><div role='separator' aria-orientation='horizontal' aria-label='Resize vertically' tabIndex={0} className='h-1 cursor-row-resize bg-gray-200 dark:bg-gray-700'/><div className='p-3'><div className='h-24 rounded bg-gray-100 dark:bg-gray-800'/></div></div></div>",
     "props": {},
     "previewProps": {},
     "short": "Two-row layout separated by a draggable horizontal bar.",
-    "description": "Static vertical splitter example using CSS grid with an accessible separator.",
-    "notes": "Use role=separator and aria-orientation='horizontal'. Implement drag logic in React if needed.",
+    "description": "Vertical splitter using CSS grid with an accessible separator.",
+    "notes": "Use role=separator and aria-orientation='horizontal'.",
     "libraries": [],
-    "code": "<div class=\"h-[360px]\"><div class=\"grid h-full grid-rows-[1fr_auto_1fr] rounded-lg border bg-white dark:border-gray-800 dark:bg-gray-900\"><div class=\"p-3\"><div class=\"h-24 rounded bg-gray-100 dark:bg-gray-800\"></div></div><div role=\"separator\" aria-orientation=\"horizontal\" aria-label=\"Resize\" tabindex=\"0\" class=\"h-1 cursor-row-resize bg-gray-200 dark:bg-gray-700\"></div><div class=\"p-3\"><div class=\"h-24 rounded bg-gray-100 dark:bg-gray-800\"></div></div></div></div>"
+    "code": "<div class=\"h-[360px]\"><div data-splitter=\"vertical\" class=\"grid h-full grid-rows-[1fr_auto_1fr] rounded-lg border bg-white dark:border-gray-800 dark:bg-gray-900\"><div class=\"splitter-pane-top p-3\"><div class=\"h-24 rounded bg-gray-100 dark:bg-gray-800\"></div></div><div role=\"separator\" aria-orientation=\"horizontal\" aria-label=\"Resize vertically\" tabindex=\"0\" class=\"splitter-handle h-1 cursor-row-resize bg-gray-200 dark:bg-gray-700\" data-splitter-handle></div><div class=\"splitter-pane-bottom p-3\"><div class=\"h-24 rounded bg-gray-100 dark:bg-gray-800\"></div></div></div></div>"
   },
   {
     "id": "layout-splitter-mixed",
@@ -695,14 +695,14 @@
     "category": "layout",
     "tags": ["layout", "split", "resizable", "nested"],
     "difficulty": "intermediate",
-    "jsxCode": "<div className='grid h-[360px] grid-cols-2 gap-0 rounded-lg border bg-white dark:border-gray-800 dark:bg-gray-900'><div className='border-r dark:border-gray-800 p-3'><div className='h-24 rounded bg-gray-100 dark:bg-gray-800'/></div><div className='grid grid-rows-[1fr_auto_1fr]'><div className='p-3'><div className='h-16 rounded bg-gray-100 dark:bg-gray-800'/></div><div role='separator' aria-orientation='horizontal' aria-label='Resize' tabIndex={0} className='h-1 bg-gray-200 dark:bg-gray-700'/><div className='p-3'><div className='h-16 rounded bg-gray-100 dark:bg-gray-800'/></div></div></div>",
+    "jsxCode": "<div className='grid h-[360px] grid-cols-[1fr_auto_1fr] gap-0 rounded-lg border bg-white dark:border-gray-800 dark:bg-gray-900'><div className='p-3'><div className='h-24 rounded bg-gray-100 dark:bg-gray-800'/></div><div role='separator' aria-orientation='vertical' aria-label='Resize horizontally' tabIndex={0} className='w-1 cursor-col-resize bg-gray-200 dark:bg-gray-700'/><div className='grid grid-rows-[1fr_auto_1fr]'><div className='p-3'><div className='h-16 rounded bg-gray-100 dark:bg-gray-800'/></div><div role='separator' aria-orientation='horizontal' aria-label='Resize vertically' tabIndex={0} className='h-1 cursor-row-resize bg-gray-200 dark:bg-gray-700'/><div className='p-3'><div className='h-16 rounded bg-gray-100 dark:bg-gray-800'/></div></div></div>",
     "props": {},
     "previewProps": {},
     "short": "Nested horizontal + vertical split with accessible handles.",
-    "description": "Mix of column split and an internal row split. The handles are labeled for accessibility.",
-    "notes": "Add drag logic if required. This static version communicates structure and semantics.",
+    "description": "Horizontal split with right side further split vertically. Both handles can be dragged independently.",
+    "notes": "role=separator on both handles; aria labels specify directions.",
     "libraries": [],
-    "code": "<div class=\"grid h-[360px] grid-cols-2 gap-0 rounded-lg border bg-white dark:border-gray-800 dark:bg-gray-900\"><div class=\"border-r p-3 dark:border-gray-800\"><div class=\"h-24 rounded bg-gray-100 dark:bg-gray-800\"></div></div><div class=\"grid grid-rows-[1fr_auto_1fr]\"><div class=\"p-3\"><div class=\"h-16 rounded bg-gray-100 dark:bg-gray-800\"></div></div><div role=\"separator\" aria-orientation=\"horizontal\" aria-label=\"Resize\" tabindex=\"0\" class=\"h-1 bg-gray-200 dark:bg-gray-700\"></div><div class=\"p-3\"><div class=\"h-16 rounded bg-gray-100 dark:bg-gray-800\"></div></div></div></div>"
+    "code": "<div class=\"grid h-[360px] grid-cols-[1fr_auto_1fr] gap-0 rounded-lg border bg-white dark:border-gray-800 dark:bg-gray-900\" data-splitter=\"horizontal\"><div class=\"splitter-pane-left p-3\"><div class=\"h-24 rounded bg-gray-100 dark:bg-gray-800\"></div></div><div role=\"separator\" aria-orientation=\"vertical\" aria-label=\"Resize horizontally\" tabindex=\"0\" class=\"splitter-handle w-1 cursor-col-resize bg-gray-200 dark:bg-gray-700\" data-splitter-handle></div><div class=\"grid grid-rows-[1fr_auto_1fr]\" data-splitter=\"vertical\"><div class=\"splitter-pane-top p-3\"><div class=\"h-16 rounded bg-gray-100 dark:bg-gray-800\"></div></div><div role=\"separator\" aria-orientation=\"horizontal\" aria-label=\"Resize vertically\" tabindex=\"0\" class=\"splitter-handle h-1 cursor-row-resize bg-gray-200 dark:bg-gray-700\" data-splitter-handle></div><div class=\"splitter-pane-bottom p-3\"><div class=\"h-16 rounded bg-gray-100 dark:bg-gray-800\"></div></div></div></div>"
   },
   {
     "id": "typography-headings",

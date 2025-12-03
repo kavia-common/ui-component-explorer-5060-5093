@@ -29,15 +29,13 @@ function PreviewCanvas({
   // Internal container for the preview area
   const Container = ({ children: c }) => (
     <div
-      className={`flex items-center justify-center rounded-md border border-dashed border-gray-300 ${oceanTheme.classes.gradientSubtle} p-4 dark:border-gray-700`}
+      className={`rounded-md border border-dashed border-gray-300 ${oceanTheme.classes.gradientSubtle} p-4 dark:border-gray-700`}
       style={{ minHeight: `${height}px` }}
       aria-live="polite"
       aria-label={title}
       data-mode={mode}
     >
-      <div className="w-full">
-        <div className="mx-auto flex w-full max-w-3xl items-center justify-center">{c}</div>
-      </div>
+      <div className="w-full">{c}</div>
     </div>
   );
 
