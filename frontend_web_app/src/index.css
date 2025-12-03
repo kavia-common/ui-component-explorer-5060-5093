@@ -2,6 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+/* PUBLIC_INTERFACE
+   Custom scrollbar utilities used by examples.
+   Ocean Professional colors with dark mode support.
+*/
+@layer utilities {
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #9ca3af transparent; /* thumb | track (Firefox) */
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #9ca3af; /* gray-400 */
+    border-radius: 6px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  .dark .custom-scrollbar {
+    scrollbar-color: #475569 transparent; /* slate-600 */
+  }
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #475569;
+  }
+
+  .custom-scrollbar-rounded::-webkit-scrollbar-track {
+    border-radius: 8px;
+  }
+  .custom-scrollbar-rounded::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+  }
+}
+
 /* Custom scrollbar utility */
 .custom-scrollbar {
   scrollbar-width: thin;
