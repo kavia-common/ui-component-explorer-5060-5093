@@ -1,5 +1,14 @@
 [
   {
+    "group": "Getting Started",
+    "slug": "getting-started",
+    "icon": "book",
+    "blurb": "Project setup and usage guidance.",
+    "items": [
+      { "type": "category", "label": "Installation", "slug": "installation", "to": "/installation", "icon": "book", "blurb": "Set up Tailwind and use components." }
+    ]
+  },
+  {
     "group": "Layout & Content",
     "slug": "layout-content",
     "icon": "grid",
@@ -115,15 +124,6 @@
     "blurb": "Tabular data display components.",
     "items": [
       { "type": "category", "label": "Data Tables", "slug": "tables", "icon": "data-tables", "blurb": "Sortable and pageable data grids." }
-    ]
-  },
-  {
-    "group": "Getting Started",
-    "slug": "getting-started",
-    "icon": "book",
-    "blurb": "Project setup and usage guidance.",
-    "items": [
-      { "type": "category", "label": "Installation", "slug": "installation", "to": "/installation", "icon": "book", "blurb": "Set up Tailwind and use components." }
     ]
   }
 ]
