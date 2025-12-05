@@ -3,7 +3,6 @@ import PreviewCanvas from './PreviewCanvas';
 import CodeBlock from './CodeBlock';
 import PropControls from './PropControls';
 import { getPreviewComponent } from '../../utils/preview';
-import { initPreline, usePreline } from '../../utils/preline';
 
 /**
  * PUBLIC_INTERFACE
@@ -38,11 +37,8 @@ function PreviewWithCode({
   // If a code snippet is provided, we can render it verbatim as HTML in preview when applicable.
   const hasHtmlSnippet = typeof code === 'string' && code.trim().length > 0;
 
-  usePreline([mode, componentId, code]);
-
   useEffect(() => {
     if (!containerRef.current) return;
-    initPreline();
 
     // Execute inline scripts marked for execution
     const scripts = containerRef.current.querySelectorAll('script[data-inline-execute="true"]');

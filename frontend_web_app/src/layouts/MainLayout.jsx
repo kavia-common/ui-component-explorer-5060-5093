@@ -4,7 +4,6 @@ import ThemeToggle from '../components/common/ThemeToggle';
 import { getCategories } from '../utils/data';
 import Sidebar from '../components/common/Sidebar';
 import { useTheme } from '../context/ThemeContext';
-import { usePreline } from '../utils/preline';
 
 /**
  * PUBLIC_INTERFACE
@@ -24,8 +23,7 @@ function MainLayout() {
     setSidebarOpen(false);
   }, [location.pathname]);
 
-  // Initialize Preline behaviors on route change
-  usePreline([location.pathname]);
+
 
   // Focus trap for mobile sidebar drawer
   useEffect(() => {
@@ -75,7 +73,7 @@ function MainLayout() {
   const HEADER_PX = 64;
 
   return (
-    <div className="root-layout min-h-screen flex flex-col text-text bg-background dark:bg-gray-900">
+    <div className="root-layout min-h-screen flex flex-col text-gray-900 bg-gray-50 dark:text-gray-100 dark:bg-gray-900">
       {/* Header - fixed/sticky at top */}
       <header className="sticky top-0 z-50 border-b border-transparent bg-main-gradient text-white" role="banner">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
@@ -125,7 +123,7 @@ function MainLayout() {
         <main className="min-h-0 flex flex-col bg-background dark:bg-gray-900">
           <div className="min-h-0 flex flex-col p-4 md:p-6">
             {/* Scrollable pane with custom scrollbar; avoid body scroll */}
-            <div className="main-content flex-1 min-h-0 overflow-y-auto custom-scrollbar rounded-xl border border-gray-200 bg-background p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="main-content flex-1 min-h-0 overflow-y-auto custom-scrollbar rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
               <Outlet />
             </div>
           </div>

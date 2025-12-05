@@ -8,7 +8,6 @@ import { getAllComponents } from '../utils/data';
 import { copyCodeSnippet } from '../utils/copy';
 import { oceanTheme } from '../utils/tokens';
 import CodeBlock from '../components/explorer/CodeBlock';
-import { initPreline } from '../utils/preline';
 
 // PUBLIC_INTERFACE
 /**
@@ -41,10 +40,9 @@ function ComponentsPage() {
 
   const previewRootRef = useRef(null);
 
-  // Initialize Preline and inline scripts only when on category route
+  // Initialize inline scripts and demo splitter only when on category route
   useEffect(() => {
     if (!isCategoryRoute) return;
-    initPreline();
     if (!previewRootRef.current) return;
     const scripts = previewRootRef.current.querySelectorAll('script[data-inline-execute="true"]');
     scripts.forEach((scriptEl) => {

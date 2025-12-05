@@ -1,20 +1,7 @@
  /** @type {import('tailwindcss').Config} */
-const prelinePlugin = (() => {
-  try {
-    return require('preline/plugin');
-  } catch {
-    try {
-      return require('preline/plugin.cjs');
-    } catch {
-      return null;
-    }
-  }
-})();
-
 module.exports = {
   content: [
     './src/**/*.{js,jsx,ts,tsx}',
-    './node_modules/preline/**/*.js'
   ],
   darkMode: 'class',
   theme: {
@@ -35,7 +22,5 @@ module.exports = {
       }
     }
   },
-  plugins: [
-    ...(prelinePlugin ? [prelinePlugin] : [])
-  ]
+  plugins: []
 };
